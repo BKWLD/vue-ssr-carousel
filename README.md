@@ -21,3 +21,10 @@ A bespoke Vue based carousel.
 
 - *Difficulty determining if there's overflow after Slick inits*.  When Slick is initialized and `infinite: true`, Slick adds a full set of `.slick-cloned` slides before the "real" slides, and another full set after them.  This makes it difficult to measure the width of the contents to determine if the slides don't overflow the container anymore, which makes it difficult to determine if we can un-init Slick.  I figured it out and got it working, but it was non-trivial and I'm concerned the code is brittle.
 
+- Would be nice if it could handle being empty.  I had to put `(v-if='!$fetchState.pending')` because it errored during fetch.
+
+
+Things `vue-slick-carousel` does well:
+
+- Adding slides via the default slot.  Very easy.
+- Adding custom arrows with named slots.  I like this.
