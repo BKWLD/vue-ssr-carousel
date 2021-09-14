@@ -30,7 +30,7 @@ A bespoke Vue based carousel.
 - When using custom arrows or dots, it would show a warning that the Nodes does not match(like what renders from SSR and what is showing in the browser or something like that)
 - It is a little difficult to add gutters between slides.
 - Slick reinits like 3 or 4 times when changing columns(like when you get the browser narrower).
-- 
+- Last update was Jul 4, 2020
 
 
 Things `vue-slick-carousel` does well:
