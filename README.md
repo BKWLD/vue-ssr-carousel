@@ -27,6 +27,7 @@ A bespoke Vue based carousel.
 
 - There are some classes and functions from the original Slick Carousel like `.slick-loading` or `.dragging` that aren't working in this Vue implementation. 
 - If you set the property `columns` to `4` for example, it first renders 4 columns and just after JS inits it takes the breakpoint you put in the `responsive` prop. This affects mobile scores as it would first render 4 columns instead of 1 column. (It would be nice to set breakpoints with CSS instead of JS)
+  - This also results in getting a `Mismatching childNodes vs. VNodes` error when the page hydrates at a viewport width that changes the `slidesToShow`
 - When using custom arrows or dots, it would show a warning that the Nodes does not match(like what renders from SSR and what is showing in the browser or something like that)
 - It is a little difficult to add gutters between slides.
 - Slick reinits like 3 or 4 times when changing columns(like when you get the browser narrower).
