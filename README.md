@@ -42,3 +42,8 @@ Things `vue-slick-carousel` does well:
 ----
 - It supports SSR
 - It supports some Accessibility stuff
+
+----
+
+- Doesn't feel as nice as Flickity; like I can't easily flick to next slide, I have to drag it really far
+- No option to _not_ snap
