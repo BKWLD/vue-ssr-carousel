@@ -48,3 +48,4 @@ Things `vue-slick-carousel` does well:
 - Doesn't feel as nice as Flickity; like I can't easily flick to next slide, I have to drag it really far
 - No option to _not_ snap
 - Dragging is a little buggy, with multiple items per slide, it can get stuck with an empty space on the right
+- Doesn't do a good job of preventing images and links within slides from preventing dragging
