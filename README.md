@@ -1,6 +1,12 @@
 # vue-carousel
 
-A bespoke Vue based carousel.
+A Vue carousel focused on designed with SSR in mind.  No JS is used to layout the carousel or it's slides.  The goal is to improve LCP and CLS scores because there is no layout or markup changes when JS hydates.  It's primarily designed for rendering "card" style slides (like for linking to articles or products") where the carousel-ness is conditionally applied based on the number of cards that are slotted in as well as the viewport width.
+
+**Don't** use this carousel if
+
+- Your slides require client side JS to render
+- You have variable width slides
+
 
 ## Why another carousel component
 
