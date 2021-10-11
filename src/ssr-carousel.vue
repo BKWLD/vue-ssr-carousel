@@ -22,6 +22,7 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
+import debounce from 'lodash/debounce'
 import SsrCarouselSlide from './ssr-carousel-slide'
 export default
 
@@ -33,15 +34,22 @@ export default
 		slidesPerViewport: Number
 
 	data: ->
+		carouselWidth: null # The width of the carousel container
 		dragging: false # The user is currently dragging
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 		lastDragX: null # Where was the mouse with the drag started
 
+	# Default listeners
+	mounted: ->
+		@onResize()
+		window.addEventListener 'resize', @onResize
+
 	# Cleanup listeners
 	beforeDestroy: ->
-		document.body.removeEventListener 'mousemove', @onDrag
-		document.body.removeEventListener 'mouseup', @onStopDrag
+		window.removeEventListener 'resize', @onResize
+		window.removeEventListener 'mousemove', @onDrag
+		window.removeEventListener 'mouseup', @onStopDrag
 
 	computed:
 
@@ -49,18 +57,36 @@ export default
 		trackStyles: -> transform: "translateX(#{@currentX}px)"
 		trackClasses: -> { @dragging }
 
+		# Shorthand for the number of slides
+		slidesCount: -> @$slots.default.length
+
+		# Calculate the current slides shown per viewport
+		# TODO: Support responsive props
+		currentSlidesPerViewport: -> @slidesPerViewport
+
+		# The current number of pages
+		pages: -> Math.round @slidesCount / @currentSlidesPerViewport
+
+		# Calculate the width of the track
+		trackWidth: -> @carouselWidth * (@pages - 1)
+
 	watch:
 
 		# Watch for mouse move changes when the user starts dragging
 		dragging: ->
 			if @dragging
-				document.body.addEventListener 'mousemove', @onDrag
-				document.body.addEventListener 'mouseup', @onStopDrag
+				window.addEventListener 'mousemove', @onDrag
+				window.addEventListener 'mouseup', @onStopDrag
 			else
-				document.body.removeEventListener 'mousemove', @onDrag
-				document.body.removeEventListener 'mouseup', @onStopDrag
+				window.removeEventListener 'mousemove', @onDrag
+				window.removeEventListener 'mouseup', @onStopDrag
 
 	methods:
+
+		# Measure the component width for various calculations
+		onResize: debounce ->
+			@carouselWidth = @$el.clientWidth
+		, 300
 
 		# Keep track of whether user is dragging
 		onStartDrag: (e) ->
@@ -70,8 +96,16 @@ export default
 
 		# Keep x values up to date while dragging
 		onDrag: (e) ->
-			@currentX += e.pageX - @lastDragX
+			@targetX += e.pageX - @lastDragX
+			@currentX = @applyDragBounds @targetX
 			@lastDragX = e.pageX
+
+		# Prevent dragging from exceeding the min/max edges
+		# TODO Add elastic effect
+		applyDragBounds: (x) ->
+			start = 0
+			end = @trackWidth * -1
+			Math.max end, Math.min start, x
 
 </script>
 
