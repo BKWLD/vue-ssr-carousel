@@ -105,7 +105,11 @@ export default
 		applyDragBounds: (x) ->
 			start = 0
 			end = @trackWidth * -1
-			Math.max end, Math.min start, x
+			dampening = 0.5 # Increase for less
+			switch
+				when x > start then Math.pow x, dampening
+				when x < end then end - Math.pow end - x, dampening
+				else Math.max end, Math.min start, x
 
 </script>
 
