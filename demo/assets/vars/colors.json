@@ -1,6 +1,6 @@
 {
-	"primary-color": "#009c4b",
-	"primary-color-dark": "#008c44",
-	"secondary-color": "#e8179e",
-	"offwhite": "#edf0f5"
+	"primary-background": "#272760",
+	"secondary-background": "#442768",
+	"primary-color": "#0cffe1",
+	"secondary-color": "#ed1e79"
 }

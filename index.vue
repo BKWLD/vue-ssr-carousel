@@ -2,7 +2,8 @@
 
 <template lang='pug'>
 
-h1 Testing adding to demo {{ slides }}
+.ssr-carousel
+	slot
 
 </template>
 

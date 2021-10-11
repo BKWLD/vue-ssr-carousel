@@ -4,7 +4,10 @@
 
 .example.max-w
 	h1 {{ page.title }}
+
+	//- Make the carousel with a
 	ssr-carousel(v-bind='page.carousel')
+		slide(v-for='i in page.slides' :key='i' :index='i')
 
 </template>
 
@@ -38,5 +41,14 @@ export default
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <style lang='stylus' scoped>
+
+.example
+	+tablet-up()
+		padding-top header-h
+	+tablet-down()
+		padding-top header-h-min
+
+h1
+	fluid-space margin-bottom, 'm'
 
 </style>
