@@ -25,6 +25,7 @@ export default
 		lighten(primary-background, 10%),
 		secondary-background)
 	box-shadow inset 0 0 20px 4px secondary-color
+	border-radius 10px
 
 	// Increase slide text size
 	> *

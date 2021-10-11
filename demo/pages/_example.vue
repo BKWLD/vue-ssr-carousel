@@ -15,7 +15,7 @@
 
 <script lang='coffee'>
 import pageMixin from '@bkwld/cloak/mixins/page'
-import SsrCarousel from '../../index'
+import SsrCarousel from '../../src/ssr-carousel'
 
 export default
 	name: 'Page'
