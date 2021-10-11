@@ -6,13 +6,13 @@
 	a.skip-content(href='#main') Skip to main content
 
 	//- Header stuff
-	layout-header-desktop
-	layout-header-mobile
+	//- layout-header-desktop
+	//- layout-header-mobile
 
 	//- Page content
 	main#main
 		nuxt.page
-		layout-footer
+		//- layout-footer
 
 </template>
 
