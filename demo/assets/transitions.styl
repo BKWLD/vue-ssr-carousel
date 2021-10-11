@@ -1,0 +1,45 @@
+// Simple fade transition
+.fade-enter-active, .fade-leave-active
+	transition opacity .3s
+.fade-enter, .fade-leave-to
+	opacity 0
+
+// Simple fade in from bottom
+.slide-up-enter-active, .slide-up-leave-active
+	transition opacity .3s, transform .3s ease-out-quint
+.slide-up-enter, .slide-up-leave-to
+	opacity 0
+	transform translateY(30px)
+
+// Full slide right
+.full-slide-right-enter-active, .full-slide-right-leave-active
+	transition opacity 0.6s, transform 0.6s ease-in-out-quint
+.full-slide-right-enter, .full-slide-right-leave-to
+	opacity 0
+.full-slide-right-enter
+	transform translateX(-100%)
+.full-slide-right-leave-to
+	transform translateX(100%)
+.full-slide-right-leave-active
+	position absolute
+	width 100%
+
+// Full slide left
+.full-slide-left-enter-active, .full-slide-left-leave-active
+	transition opacity 0.6s, transform 0.6s ease-in-out-quint
+.full-slide-left-enter, .full-slide-left-leave-to
+	opacity 0
+.full-slide-left-enter
+	transform translateX(100%)
+.full-slide-left-leave-to
+	transform translateX(-100%)
+.full-slide-left-leave-active
+	position absolute
+	width 100%
+
+// Make something spin
+@keyframes spin
+	from
+		transform rotate(0deg)
+	to
+		transform rotate(359deg)

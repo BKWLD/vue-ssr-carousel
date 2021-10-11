@@ -1,0 +1,50 @@
+// Wysiwyg styles
+.wysiwyg
+	line-height body-line-height
+
+	// Don't let images break out
+	img
+		max-width 100%
+
+	// Style links
+	a:not(.btn):not([href^='tel:'])
+		text-link-hover()
+
+	// Try not to break links between multiple lines. Also fixes some issues
+	// with balance text where it was adding <br>s within a link
+	a
+		white-space nowrap
+
+	// Scale the header margins
+	.style-h1
+		margin-v 0.5em
+	.style-h2
+		margin-v 0.6em
+	.style-h3
+		margin-v 0.7em
+	.style-h4
+		margin-v 0.8em
+	.style-h5
+		margin-v 0.9em
+	.body
+		margin-v 1em
+	.body-small
+		margin-v 1em
+
+// Clear default bolded headers
+h1, h2, h3, h4, h5, h6
+	font-weight normal
+
+// These classes are set by the WYSIWYG editor and possibly others
+.style-h1
+	style-h1()
+.style-h2
+	style-h2()
+.style-h3
+	style-h3()
+.style-h4
+	style-h4()
+.style-h5
+	style-h5()
+.body
+	style-body()

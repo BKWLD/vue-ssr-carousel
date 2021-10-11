@@ -1,0 +1,8 @@
+{
+	"desktop": "1440px",
+	"tablet-landscape": "1024px",
+	"tablet": "768px",
+	"mobile-landscape": "580px",
+	"mobile": "500px",
+	"nav-break": "1023px"
+}

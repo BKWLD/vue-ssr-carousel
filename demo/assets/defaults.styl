@@ -1,0 +1,28 @@
+body
+	background white
+
+	// Default font styling
+	fluid-font 'body', body-font-size, body-font-size-min, black
+
+	// Disable outline on touch
+	-webkit-tap-highlight-color rgba(0,0,0,0)
+
+// Clear list styling by default (let it be reset in .wysiwyg)
+ul, ol
+	list-style none
+	padding-left 0
+	margin 0
+
+// Give all buttons a cursor style
+button
+	button()
+
+	// Reset styles
+	letter-spacing inherit
+	border none
+	padding 0
+
+// Change the default outline style
+:focus
+	outline 2px solid primary-color
+	outline-offset 4px

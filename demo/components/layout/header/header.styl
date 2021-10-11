@@ -1,0 +1,43 @@
+// Header shared styles
+header
+
+	// Fill detached header
+	square 100%
+
+	// Expect to overlap a dark background
+	color white
+
+	// Show inverted state
+	transition-property background, color
+	transition-duration .6s // Feels better with longer delay
+	.show-background &
+		background offwhite
+		color black
+
+// Setup columns
+.columns
+	flex-v-center()
+	height 100%
+
+// Make left and right sides fill the space equally
+.left, .right
+	flex-grow 1
+	flex-basis 0
+
+// Align right contents to the right
+.right
+	display flex
+	justify-content flex-end
+
+// Seperate links
+.left
+	fluid font-size, body-font-size, body-font-size-min
+	> *
+		display inline-block
+		&:not(:first-child)
+			fluid margin-left, 24px
+
+// The right and center regions overlap the header-menu
+.center, .right
+	position relative
+	z-index 1

@@ -1,0 +1,9 @@
+# Give generated and hashed files long cache expirations (1 year)
+/_nuxt/*
+	Cache-Control: public, max-age=31536000, immutable
+
+# Allow Netlify form submits from other domains
+/
+	Access-Control-Allow-Origin: *
+	Access-Control-Allow-Methods: POST
+	Access-Control-Allow-Headers: content-type

@@ -1,0 +1,25 @@
+{
+	"name": "vue-ssr-carousel-demo",
+	"author": "Bukwild",
+	"version": "0.0.1",
+	"license": "UNLICENSED",
+	"private": true,
+	"scripts": {
+		"dev": "yarn transpile && nuxt",
+		"build": "yarn transpile && nuxt build",
+		"start": "nuxt start",
+		"generate": "yarn transpile && nuxt generate --fail-on-error --target=static",
+		"transpile": "yarn transpile:coffee",
+		"transpile:coffee": "coffee -c nuxt.config.coffee",
+		"transpile:watch": "coffee -cw nuxt.config.coffee"
+	},
+	"dependencies": {
+		"@bkwld/cloak": "^1.9.2",
+		"@bkwld/light-or-dark": "^1.0.1",
+		"@nuxt/content": "1.14.0",
+		"nuxt": "^2.15.7",
+		"vue-balance-text": "^1.2.3",
+		"vue-detachable-header": "^0.2.0",
+		"vue-unorphan": "^1.2.3"
+	}
+}

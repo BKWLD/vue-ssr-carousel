@@ -1,0 +1,25 @@
+// Common max-w* rules
+.max-w-small, .max-w-medium, .max-w
+	margin-h auto
+	fluid(padding-h, gutter, gutter-mobile, max-break: desktop, min-break: mobile)
+	width 100%
+
+// Apply varying max-widths
+.max-w-small
+	max-width max-w-small
+.max-w-medium
+	max-width max-w-medium
+.max-w
+	max-width max-w
+
+// No gutters since there typically wraps other max-w-* instances that have
+// their own gutters
+.max-w-full
+	max-width max-w-full
+	position relative
+	margin-h auto
+	width 100%
+
+// Fluid --gutter CSS variable
+body
+	fluid(--gutter, gutter, gutter-mobile, max-break: desktop, min-break: mobile)
