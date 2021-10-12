@@ -147,7 +147,7 @@ export default
 
 				# Ease to a stop
 				else
-					@targetX = Math.round @currentX + @dragVelocity * @flickGrease
+					@targetX = @currentX + @dragVelocity * @flickGrease
 					@targetX = @applyDragSnap @targetX
 					@startTweening()
 
@@ -159,9 +159,10 @@ export default
 
 	methods:
 
-		# Measure the component width for various calculations
+		# Measure the component width for various calculations. Using
+		# getBoundingClientRect so we can get fractional values
 		onResize: debounce ->
-			@pageWidth = @$el.clientWidth
+			@pageWidth = @$el.getBoundingClientRect().width
 		, 300
 
 		# Keep track of whether user is dragging
