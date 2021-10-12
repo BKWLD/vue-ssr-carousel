@@ -33,7 +33,13 @@ export default
 	props:
 
 		# How many slides are visible at once in the viewport
-		slidesPerViewport: Number
+		slidesPerPage: Number
+
+		# Snap to either page, slide, or none
+		dragSnap:
+			type: String
+			default: 'page'
+			validator: (val) -> val in ['page', 'slide', 'none']
 
 		# Boundary drag dampening modifier. Increase to allow greater travel outside
 		# the boundaries.
@@ -45,16 +51,16 @@ export default
 		# quicker.
 		tweenDampening:
 			type: Number
-			default: 0.15
+			default: 0.12
 
 		# A multiplier applied to the dragVelocity that a flick ease to a stop.
-		# Increase to make flicking travel less var.
+		# Increase to make flicking travel further.
 		flickGrease:
 			type: Number
-			default: 7
+			default: 9
 
 	data: ->
-		carouselWidth: null # The width of the carousel container
+		pageWidth: null # The width of a page (and the carousel container)
 
 		# General motion
 		currentX: 0 # The actual left offset of the slides container
@@ -91,15 +97,18 @@ export default
 		# Shorthand for the number of slides
 		slidesCount: -> @$slots.default.length
 
-		# Calculate the current slides shown per viewport
+		# Calculate the current slides shown per viewport page
 		# TODO: Support responsive props
-		currentSlidesPerViewport: -> @slidesPerViewport
+		currentSlidesPerPage: -> @slidesPerPage
+
+		# Calculate the width of a slide
+		slideWidth: -> @pageWidth / @currentSlidesPerPage
 
 		# The current number of pages
-		pages: -> Math.round @slidesCount / @currentSlidesPerViewport
+		pages: -> Math.round @slidesCount / @currentSlidesPerPage
 
 		# Calculate the width of the track
-		trackWidth: -> @carouselWidth * (@pages - 1)
+		trackWidth: -> @pageWidth * (@pages - 1)
 
 		# The ending x value
 		endX: -> @trackWidth * -1
@@ -138,8 +147,8 @@ export default
 
 				# Ease to a stop
 				else
-					@targetX = @applyBoundaries Math.round @currentX +
-						@dragVelocity * @flickGrease
+					@targetX = Math.round @currentX + @dragVelocity * @flickGrease
+					@targetX = @applyDragSnap @targetX
 					@startTweening()
 
 		# Start RAF based tweener
@@ -152,7 +161,7 @@ export default
 
 		# Measure the component width for various calculations
 		onResize: debounce ->
-			@carouselWidth = @$el.clientWidth
+			@pageWidth = @$el.clientWidth
 		, 300
 
 		# Keep track of whether user is dragging
@@ -187,6 +196,14 @@ export default
 			when x > 0 then Math.pow x, @boundaryDampening
 			when x < @endX then @endX - Math.pow @endX - x, @boundaryDampening
 			else @applyBoundaries x
+
+		# Apply snapping to the provided x value based on the snapping choice
+		applyDragSnap: (x) ->
+			x = @applyBoundaries x # First make sure the x is in bounds
+			switch @dragSnap
+				when 'page' then @pageWidth * Math.round x / @pageWidth
+				when 'slide' then @slideWidth * Math.round x / @slideWidth
+				else return x
 
 		# Constraint the x value to the min and max values
 		applyBoundaries: (x) -> Math.max @endX, Math.min 0, x
