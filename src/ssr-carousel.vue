@@ -65,7 +65,7 @@ export default
 		pressing: false # The user pressing pointer down
 		dragging: false # The user has translated while pointer was down
 		isTouchDrag: false # Is the browser firing touch events
-		lastPointerX: null # Where was the mouse with the drag started
+		lastPointerX: null # Where was the mouse when the drag started
 		dragVelocity: null # The px/tick while dragging
 
 	# Default listeners
@@ -121,6 +121,7 @@ export default
 			if @pressing
 				window.addEventListener moveEvent, @onPointerMove
 				window.addEventListener upEvent, @onPointerUp
+				@dragVelocity = 0 # Reset any previous velocity
 				@preventContentDrag()
 				@stopTweening()
 
