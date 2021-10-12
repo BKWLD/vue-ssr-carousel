@@ -39,17 +39,27 @@ export default
 			default: 0.5
 
 		# How quickly the carousel slides to a stop
-		tweenRate:
+		tweenDampening:
 			type: Number
-			default: 0.15
+			default: 0.1
+
+		# A multiplier applied to the dragVelocity that a flick ease to a stop
+		flickGrease:
+			type: Number
+			default: 8
 
 	data: ->
 		carouselWidth: null # The width of the carousel container
-		dragging: false # The user is currently dragging
+
+		# General motion
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
-		lastDragX: null # Where was the mouse with the drag started
 		tweening: false # If there is a current RAF based tween running
+
+		# Dragging related
+		dragging: false # The user is currently dragging
+		lastDragX: null # Where was the mouse with the drag started
+		dragVelocity: null # The px/tick while dragging
 
 	# Default listeners
 	mounted: ->
@@ -86,7 +96,7 @@ export default
 		endX: -> @trackWidth * -1
 
 		# Check if currently out bounds
-		isOutOfBounds: -> @currentX > 0 or @currentX < @endX * -1
+		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
 
 	watch:
 
@@ -95,13 +105,20 @@ export default
 			if @dragging # Start dragging
 				window.addEventListener 'mousemove', @onDrag
 				window.addEventListener 'mouseup', @onStopDrag
+				@stopTweening()
 			else # End dragging
 				window.removeEventListener 'mousemove', @onDrag
 				window.removeEventListener 'mouseup', @onStopDrag
 
-				# Tween in if out of bounds
+				# Tween so the track is in bounds if it was out
 				if @isOutOfBounds
 					@targetX = @applyBoundaries @currentX
+					@startTweening()
+
+				# Ease to a stop
+				else
+					@targetX = @applyBoundaries Math.round @currentX +
+						@dragVelocity * @flickGrease
 					@startTweening()
 
 		# Start RAF based tweener
@@ -125,7 +142,8 @@ export default
 
 		# Keep x values up to date while dragging
 		onDrag: (e) ->
-			@targetX += e.pageX - @lastDragX
+			@dragVelocity = e.pageX - @lastDragX
+			@targetX += @dragVelocity
 			@currentX = @applyBoundaryDampening @targetX
 			@lastDragX = e.pageX
 
@@ -145,9 +163,12 @@ export default
 			return if @currentX == @targetX
 			@tweening = true
 
+		# The watcher on this will kill active tweens
+		stopTweening: -> @tweening = false
+
 		# Tween the currentX to the targetX
 		tweenToTarget: ->
-			@currentX = @currentX + (@targetX - @currentX) * @tweenRate
+			@currentX = @currentX + (@targetX - @currentX) * @tweenDampening
 			if Math.abs(@targetX - @currentX) < 1 # Stops tweening
 				@currentX = @targetX
 				@tweening = false
