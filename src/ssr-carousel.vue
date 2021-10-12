@@ -192,5 +192,6 @@ export default
 	cursor grab
 	&.dragging
 		cursor grabbing
+		user-select none
 
 </style>
