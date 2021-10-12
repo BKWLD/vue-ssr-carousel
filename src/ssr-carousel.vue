@@ -35,20 +35,23 @@ export default
 		# How many slides are visible at once in the viewport
 		slidesPerViewport: Number
 
-		# Boundary drag dampening modifier, the _less_ resistance
+		# Boundary drag dampening modifier. Increase to allow greater travel outside
+		# the boundaries.
 		boundaryDampening:
 			type: Number
 			default: 0.6
 
-		# How quickly the carousel slides to a stop
+		# How quickly the carousel slides to a stop. Increase to tween to as stop
+		# quicker.
 		tweenDampening:
 			type: Number
-			default: 0.1
+			default: 0.15
 
-		# A multiplier applied to the dragVelocity that a flick ease to a stop
+		# A multiplier applied to the dragVelocity that a flick ease to a stop.
+		# Increase to make flicking travel less var.
 		flickGrease:
 			type: Number
-			default: 8
+			default: 7
 
 	data: ->
 		carouselWidth: null # The width of the carousel container
