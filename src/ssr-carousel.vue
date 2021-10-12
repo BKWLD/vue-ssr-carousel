@@ -9,7 +9,8 @@
 		ref='track'
 		:style='trackStyles'
 		:class='trackClasses'
-		@mousedown='onPointerDown')
+		@mousedown='onPointerDown'
+		@touchstart='onPointerDown')
 
 		//- Each slotted slide is wrapped by the ssr-carousel-slide functional
 		//- component.
@@ -60,6 +61,7 @@ export default
 		# Dragging related
 		pressing: false # The user pressing pointer down
 		dragging: false # The user has translated while pointer was down
+		isTouchDrag: false # Is the browser firing touch events
 		lastPointerX: null # Where was the mouse with the drag started
 		dragVelocity: null # The px/tick while dragging
 
@@ -73,6 +75,8 @@ export default
 		window.removeEventListener 'resize', @onResize
 		window.removeEventListener 'mousemove', @onPointerMove
 		window.removeEventListener 'mouseup', @onPointerUp
+		window.removeEventListener 'touchmove', @onPointerMove
+		window.removeEventListener 'touchend', @onPointerUp
 		window.cancelAnimationFrame @rafId
 
 	computed:
@@ -105,17 +109,22 @@ export default
 		# Watch for mouse move changes when the user starts dragging
 		pressing: ->
 
+			# Determine the type of event
+			[ moveEvent, upEvent ] = if @isTouchDrag
+			then [ 'touchmove', 'touchend' ]
+			else [ 'mousemove', 'mouseup' ]
+
 			# Pointer is down, start watching for drags
 			if @pressing
-				window.addEventListener 'mousemove', @onPointerMove
-				window.addEventListener 'mouseup', @onPointerUp
+				window.addEventListener moveEvent, @onPointerMove
+				window.addEventListener upEvent, @onPointerUp
 				@preventContentDrag()
 				@stopTweening()
 
 			# The pointer is up, clear drag listeners and cleanup
 			else
-				window.removeEventListener 'mousemove', @onPointerMove
-				window.removeEventListener 'mouseup', @onPointerUp
+				window.removeEventListener moveEvent, @onPointerMove
+				window.removeEventListener upEvent, @onPointerUp
 				@dragging = false
 
 				# Tween so the track is in bounds if it was out
@@ -143,24 +152,31 @@ export default
 		, 300
 
 		# Keep track of whether user is dragging
-		onPointerDown: (e) ->
-			@lastPointerX = e.pageX
+		onPointerDown: (pointerEvent) ->
+			@isTouchDrag = pointerEvent instanceof TouchEvent
+			@lastPointerX = @getPointerX pointerEvent
 			@pressing = true
+			pointerEvent.preventDefault() # IF browser fires touch and mouse events
 		onPointerUp: -> @pressing = false
 
 		# Keep x values up to date while dragging
-		onPointerMove: (e) ->
+		onPointerMove: (pointerEvent) ->
 
 			# Mark the carousel as dragging, which is used to disable clicks
 			@dragging = true unless @dragging
 
 			# Calculated how much drag has happened since the list move
-			@dragVelocity = e.pageX - @lastPointerX
+			pointerX = @getPointerX pointerEvent
+			@dragVelocity = pointerX - @lastPointerX
 			@targetX += @dragVelocity
-			@lastPointerX = e.pageX
+			@lastPointerX = pointerX
 
 			# Update the track position
 			@currentX = @applyBoundaryDampening @targetX
+
+		# Helper to get the x position of either a touch or mouse event
+		getPointerX: (pointerEvent) ->
+			pointerEvent.touches?[0]?.pageX || pointerEvent.pageX
 
 		# Prevent dragging from exceeding the min/max edges
 		applyBoundaryDampening: (x) -> switch
