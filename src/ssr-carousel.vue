@@ -33,12 +33,23 @@ export default
 		# How many slides are visible at once in the viewport
 		slidesPerViewport: Number
 
+		# Boundary drag dampening modifier, the greater the slower
+		boundaryDampening:
+			type: Number
+			default: 0.5
+
+		# How quickly the carousel slides to a stop
+		tweenRate:
+			type: Number
+			default: 0.15
+
 	data: ->
 		carouselWidth: null # The width of the carousel container
 		dragging: false # The user is currently dragging
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 		lastDragX: null # Where was the mouse with the drag started
+		tweening: false # If there is a current RAF based tween running
 
 	# Default listeners
 	mounted: ->
@@ -50,6 +61,7 @@ export default
 		window.removeEventListener 'resize', @onResize
 		window.removeEventListener 'mousemove', @onDrag
 		window.removeEventListener 'mouseup', @onStopDrag
+		window.cancelAnimationFrame @rafId
 
 	computed:
 
@@ -70,16 +82,33 @@ export default
 		# Calculate the width of the track
 		trackWidth: -> @carouselWidth * (@pages - 1)
 
+		# The ending x value
+		endX: -> @trackWidth * -1
+
+		# Check if currently out bounds
+		isOutOfBounds: -> @currentX > 0 or @currentX < @endX * -1
+
 	watch:
 
 		# Watch for mouse move changes when the user starts dragging
 		dragging: ->
-			if @dragging
+			if @dragging # Start dragging
 				window.addEventListener 'mousemove', @onDrag
 				window.addEventListener 'mouseup', @onStopDrag
-			else
+			else # End dragging
 				window.removeEventListener 'mousemove', @onDrag
 				window.removeEventListener 'mouseup', @onStopDrag
+
+				# Tween in if out of bounds
+				if @isOutOfBounds
+					@targetX = @applyBoundaries @currentX
+					@startTweening()
+
+		# Start RAF based tweener
+		tweening: ->
+			if @tweening
+			then @tweenToTarget()
+			else window.cancelAnimationFrame @rafId
 
 	methods:
 
@@ -97,19 +126,32 @@ export default
 		# Keep x values up to date while dragging
 		onDrag: (e) ->
 			@targetX += e.pageX - @lastDragX
-			@currentX = @applyDragBounds @targetX
+			@currentX = @applyBoundaryDampening @targetX
 			@lastDragX = e.pageX
 
 		# Prevent dragging from exceeding the min/max edges
-		# TODO Add elastic effect
-		applyDragBounds: (x) ->
-			start = 0
-			end = @trackWidth * -1
-			dampening = 0.5 # Increase for less
-			switch
-				when x > start then Math.pow x, dampening
-				when x < end then end - Math.pow end - x, dampening
-				else Math.max end, Math.min start, x
+		applyBoundaryDampening: (x) -> switch
+			when x > 0 then Math.pow x, @boundaryDampening
+			when x < @endX then @endX - Math.pow @endX - x, @boundaryDampening
+			else @applyBoundaries x
+
+		# Constraint the x value to the min and max values
+		applyBoundaries: (x) -> Math.max @endX, Math.min 0, x
+
+		# Start tweening to target location if necessary and if not already
+		# tweening
+		startTweening: ->
+			return if @tweening
+			return if @currentX == @targetX
+			@tweening = true
+
+		# Tween the currentX to the targetX
+		tweenToTarget: ->
+			@currentX = @currentX + (@targetX - @currentX) * @tweenRate
+			if Math.abs(@targetX - @currentX) < 1 # Stops tweening
+				@currentX = @targetX
+				@tweening = false
+			else @rafId = window.requestAnimationFrame @tweenToTarget
 
 </script>
 
