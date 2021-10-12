@@ -6,9 +6,10 @@
 
 	//- The overflow mask and the drag target of the slides
 	.ssr-carousel-mask: .ssr-carousel-track(
+		ref='track'
 		:style='trackStyles'
 		:class='trackClasses'
-		@mousedown='onStartDrag')
+		@mousedown='onPointerDown')
 
 		//- Each slotted slide is wrapped by the ssr-carousel-slide functional
 		//- component.
@@ -33,10 +34,10 @@ export default
 		# How many slides are visible at once in the viewport
 		slidesPerViewport: Number
 
-		# Boundary drag dampening modifier, the greater the slower
+		# Boundary drag dampening modifier, the _less_ resistance
 		boundaryDampening:
 			type: Number
-			default: 0.5
+			default: 0.6
 
 		# How quickly the carousel slides to a stop
 		tweenDampening:
@@ -57,8 +58,9 @@ export default
 		tweening: false # If there is a current RAF based tween running
 
 		# Dragging related
-		dragging: false # The user is currently dragging
-		lastDragX: null # Where was the mouse with the drag started
+		pressing: false # The user pressing pointer down
+		dragging: false # The user has translated while pointer was down
+		lastPointerX: null # Where was the mouse with the drag started
 		dragVelocity: null # The px/tick while dragging
 
 	# Default listeners
@@ -69,15 +71,15 @@ export default
 	# Cleanup listeners
 	beforeDestroy: ->
 		window.removeEventListener 'resize', @onResize
-		window.removeEventListener 'mousemove', @onDrag
-		window.removeEventListener 'mouseup', @onStopDrag
+		window.removeEventListener 'mousemove', @onPointerMove
+		window.removeEventListener 'mouseup', @onPointerUp
 		window.cancelAnimationFrame @rafId
 
 	computed:
 
 		# Styles that are used to position the track
 		trackStyles: -> transform: "translateX(#{@currentX}px)"
-		trackClasses: -> { @dragging }
+		trackClasses: -> { @pressing, @dragging }
 
 		# Shorthand for the number of slides
 		slidesCount: -> @$slots.default.length
@@ -101,14 +103,20 @@ export default
 	watch:
 
 		# Watch for mouse move changes when the user starts dragging
-		dragging: ->
-			if @dragging # Start dragging
-				window.addEventListener 'mousemove', @onDrag
-				window.addEventListener 'mouseup', @onStopDrag
+		pressing: ->
+
+			# Pointer is down, start watching for drags
+			if @pressing
+				window.addEventListener 'mousemove', @onPointerMove
+				window.addEventListener 'mouseup', @onPointerUp
+				@preventContentDrag()
 				@stopTweening()
-			else # End dragging
-				window.removeEventListener 'mousemove', @onDrag
-				window.removeEventListener 'mouseup', @onStopDrag
+
+			# The pointer is up, clear drag listeners and cleanup
+			else
+				window.removeEventListener 'mousemove', @onPointerMove
+				window.removeEventListener 'mouseup', @onPointerUp
+				@dragging = false
 
 				# Tween so the track is in bounds if it was out
 				if @isOutOfBounds
@@ -135,17 +143,24 @@ export default
 		, 300
 
 		# Keep track of whether user is dragging
-		onStartDrag: (e) ->
-			@lastDragX = e.pageX
-			@dragging = true
-		onStopDrag: -> @dragging = false
+		onPointerDown: (e) ->
+			@lastPointerX = e.pageX
+			@pressing = true
+		onPointerUp: -> @pressing = false
 
 		# Keep x values up to date while dragging
-		onDrag: (e) ->
-			@dragVelocity = e.pageX - @lastDragX
+		onPointerMove: (e) ->
+
+			# Mark the carousel as dragging, which is used to disable clicks
+			@dragging = true unless @dragging
+
+			# Calculated how much drag has happened since the list move
+			@dragVelocity = e.pageX - @lastPointerX
 			@targetX += @dragVelocity
+			@lastPointerX = e.pageX
+
+			# Update the track position
 			@currentX = @applyBoundaryDampening @targetX
-			@lastDragX = e.pageX
 
 		# Prevent dragging from exceeding the min/max edges
 		applyBoundaryDampening: (x) -> switch
@@ -155,6 +170,16 @@ export default
 
 		# Constraint the x value to the min and max values
 		applyBoundaries: (x) -> Math.max @endX, Math.min 0, x
+
+		# Prevent the anchors and images from being draggable (like via their
+		# ghost outlines). Using this approach because the draggable html attribute
+		# didn't work in FF.  This only needs to be run once.
+		preventContentDrag: ->
+			return if @contentDragPrevented
+			@$refs.track.querySelectorAll 'a, img'
+			.forEach (el) -> el.addEventListener 'dragstart', (e) ->
+				e.preventDefault()
+			@contentDragPrevented = true
 
 		# Start tweening to target location if necessary and if not already
 		# tweening
@@ -188,10 +213,17 @@ export default
 .ssr-carousel-track
 	display flex
 
-	// When dragging, show drag cursor
+	// Don't allow text selection
+	user-select none
+
+	// When pressing, show drag cursor
 	cursor grab
-	&.dragging
+	&.pressing
 		cursor grabbing
-		user-select none
+
+	// When dragging, disable pointer events. This clears a tick after the mouse
+	// is released so links aren't followed on mouse up.
+	&.dragging
+		pointer-events none
 
 </style>

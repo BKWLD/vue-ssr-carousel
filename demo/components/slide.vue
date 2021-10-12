@@ -4,6 +4,7 @@
 
 .slide: div
 	h2 Slide {{ index }}
+	img(src='/imgs/gradient.png')
 	p <a href="https://www.bukwild.com">Example link</a>
 
 </template>
@@ -38,6 +39,13 @@ export default
 h2
 	fluid font-size, 36, 20
 	font-weight 200
+
+img
+	circle 50px
+	fluid margin-v, 20px
+
+p
+	margin-v 0
 
 a
 	text-decoration underline
