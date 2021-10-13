@@ -20,6 +20,10 @@ export default
 	data: ->
 		viewportWidth: null # Width of the viewport, for media query calculation
 		pageWidth: null # Width of a page of slides (and the carousel container)
+		scopeId: null # CSS class uses to scope styles to the instance
+
+	# Generate the scoping class during SSR
+	fetch: -> @scopeId = @makeScopeId()
 
 	# Default listeners
 	mounted: ->
@@ -49,19 +53,22 @@ export default
 		# the default one
 		currentSlidesPerPage: -> @currentResponsiveRule.slidesPerPage
 
+		# Make the scoping selecotr
+		scopeSelector: -> "[data-ssrc-id='#{@scopeId}']"
+
 		# Make the responsive styles content
 		instanceStyles: -> """
-			.ssr-carousel-slide {
+			#{@scopeSelector} .ssr-carousel-slide {
 				flex-basis: #{100 / @slidesPerPage}%;
 			}
-			#{@responsiveStyles.join("\n")}
+			#{@responsiveStyles.join(' ')}
 		"""
 
 		# Make style rules from the responsive rules
 		responsiveStyles: -> @responsiveRules.map (breakpoint) =>
 			"""
 			@media #{breakpoint.mediaQuery} {
-				.ssr-carousel-slide {
+				#{@scopeSelector} .ssr-carousel-slide {
 					flex-basis: #{100 / breakpoint.slidesPerPage}%;
 				}
 			}
@@ -93,3 +100,7 @@ export default
 			when (val = breakpoint.maxWidth) and @viewportWidth > val then false
 			when (val = breakpoint.minWidth) and @viewportWidth < val then false
 			else true
+
+		# Make a short random string
+		# https://stackoverflow.com/a/8084248/59160
+		makeScopeId: -> (Math.random() + 1).toString(36).substring(7)

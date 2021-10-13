@@ -2,7 +2,7 @@
 
 <template lang='pug'>
 
-.ssr-carousel
+.ssr-carousel(:data-ssrc-id='scopeId')
 
 	//- Render generated styles
 	component(is='style' v-html='instanceStyles')
