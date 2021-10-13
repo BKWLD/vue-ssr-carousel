@@ -3,6 +3,7 @@ title: 'Responsive'
 ---
 
 <ssr-carousel
+  navigate-by-page
   :slides-per-page='4'
   :gutter='30'
   :responsive='[

@@ -31,10 +31,6 @@ export default
 	// Force the slides to not shrink below their basis
 	flex-shrink 0
 
-	// Clear left margins from gutters
-	&:first-child
-		margin-left 0 !important
-
 // Set the visibility to hidden so intersection observer isn't triggered
 .ssr-carousel-hidden
 	visibility hidden

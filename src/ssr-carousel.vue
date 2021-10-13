@@ -18,8 +18,7 @@
 		//- Each slotted slide is wrapped by the ssr-carousel-slide functional
 		//- component.
 		ssr-carousel-slide(
-			v-for='vnode, index in slides'
-			:key='index'
+			v-for='vnode, index in slides' :key='index'
 			:slide='vnode')
 
 </template>
@@ -42,13 +41,28 @@ export default
 
 	components: { SsrCarouselSlide }
 
-	data: ->
+	props:
 
-		# General posisition
+		# If true, advance whole pages when navigating
+		navigateByPage: Boolean
+
+	data: ->
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 
 	computed:
+
+		# The current slide or page index
+		index: ->
+			Math.abs Math.round if @navigateByPage
+			then @currentX / @pageWidth
+			else @currentX / @slideWidth
+
+		# The current number of pages
+		pages: ->
+			if @navigateByPage
+			then Math.ceil @slidesCount / @currentSlidesPerPage
+			else Math.max 1, @slidesCount - @currentSlidesPerPage
 
 		# Styles that are used to position the track
 		trackStyles: -> transform: "translateX(#{@currentX}px)"
@@ -59,9 +73,6 @@ export default
 
 		# Calculate the width of a slide
 		slideWidth: -> @pageWidth / @currentSlidesPerPage
-
-		# The current number of pages
-		pages: -> Math.round @slidesCount / @currentSlidesPerPage
 
 		# Calculate the width of the track
 		trackWidth: -> @slideWidth * @slidesCount
@@ -76,6 +87,20 @@ export default
 
 		# Add px unit to a value if numeric
 		autoUnit: (val) -> if String(val).match /^\d+$/ then "#{val}px" else val
+
+		# Pagination methods
+		next: -> @goto @index + 1
+		back: -> @goto @index - 1
+		resetPosition: -> @goto @index
+		goto: (index) ->
+			index = @applyIndexBoundaries index
+			@targetX = -1 * if @navigateByPage
+			then index * @pageWidth
+			else index * @slideWidth
+			@startTweening()
+
+		# Apply boundaries to the index
+		applyIndexBoundaries: (index) -> Math.max 0, Math.min @pages - 1, index
 
 </script>
 

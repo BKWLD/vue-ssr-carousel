@@ -25,6 +25,7 @@ export default
 	data: ->
 		viewportWidth: null # Width of the viewport, for media query calculation
 		pageWidth: null # Width of a page of slides (and the carousel container)
+		gutterWidth: 0 # Computed width of gutters, since they support css vars
 		scopeId: null # CSS class uses to scope styles to the instance
 
 	# Generate the scoping class during SSR
@@ -86,10 +87,13 @@ export default
 	methods:
 
 		# Measure the component width for various calculations. Using
-		# getBoundingClientRect so we can get fractional values
+		# getBoundingClientRect so we can get fractional values.  We also need
+		# the width of the gutter since that's effectively part of the page.
 		onResize: debounce ->
 			return unless @$el?.nodeType == Node.ELEMENT_NODE
-			@pageWidth = @$el.getBoundingClientRect().width
+			firstSlide = @$refs.track.firstChild
+			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
+			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
 		, 300
 
@@ -123,7 +127,7 @@ export default
 		# Apply gutters between slides via margins
 		makeBreakpointMarginStyle: (breakpoint) ->
 			return unless gutter = @getResponsiveValue 'gutter', breakpoint
-			"margin-left: #{@autoUnit(gutter)};"
+			"margin-right: #{@autoUnit(gutter)};"
 
 		# Check if a breakpoint would apply currently. Not using window.matchQuery
 		# so I can consume via a compued property
