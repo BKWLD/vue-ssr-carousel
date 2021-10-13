@@ -8,14 +8,18 @@ export default
 	props:
 		slide: Object # A Vue Vnode
 		hidden: Boolean # Whether the slide is currently in viewport or not
+		width: Number # The decimal % width to render the slide
 
-	render: (create, { props: { slide, hidden } }) ->
+	render: (create, { props: { slide, hidden, width } }) ->
 
 		# Add own class to slide
 		slide.data.class = [
 			'ssr-carousel-slide'
 			'ssr-carousel-hidden': hidden
 		]
+
+		# Set the width of the slide
+		slide.data.style = flexBasis: width * 100 + '%'
 
 		# Return the slotted slide
 		return slide

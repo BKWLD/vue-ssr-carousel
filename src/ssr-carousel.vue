@@ -4,6 +4,9 @@
 
 .ssr-carousel
 
+	//- Render generated styles
+
+
 	//- The overflow mask and the drag target of the slides
 	.ssr-carousel-mask: .ssr-carousel-track(
 		ref='track'
@@ -17,7 +20,8 @@
 		ssr-carousel-slide(
 			v-for='vnode, index in $slots.default'
 			:key='index'
-			:slide='vnode')
+			:slide='vnode'
+			:width='slidePercentageWidth')
 
 </template>
 
@@ -27,12 +31,14 @@
 import debounce from 'lodash/debounce'
 import SsrCarouselSlide from './ssr-carousel-slide'
 import dragging from './concerns/dragging'
+import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
 export default
 
 	# Load concerns
 	mixins: [
 		dragging
+		responsive
 		tweening
 	]
 
@@ -74,6 +80,7 @@ export default
 
 		# Calculate the width of a slide
 		slideWidth: -> @pageWidth / @currentSlidesPerPage
+		slidePercentageWidth: -> 1 / @currentSlidesPerPage
 
 		# The current number of pages
 		pages: -> Math.round @slidesCount / @currentSlidesPerPage

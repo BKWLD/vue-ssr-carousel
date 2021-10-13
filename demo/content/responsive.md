@@ -1,6 +1,6 @@
 ---
 title: 'Responsive'
-slides: 12
+slides: 10
 carousel:
   slidesPerPage: 4
   responsive:
