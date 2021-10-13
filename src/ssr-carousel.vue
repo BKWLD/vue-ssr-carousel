@@ -79,11 +79,10 @@ export default
 		pages: -> Math.round @slidesCount / @currentSlidesPerPage
 
 		# Calculate the width of the track
-		trackWidth: -> @pageWidth * (@pages - 1)
+		trackWidth: -> @slideWidth * @slidesCount
 
 		# The ending x value
-		endX: -> @trackWidth * -1
-
+		endX: -> @pageWidth - @trackWidth
 
 	methods:
 
