@@ -18,7 +18,7 @@
 		//- Each slotted slide is wrapped by the ssr-carousel-slide functional
 		//- component.
 		ssr-carousel-slide(
-			v-for='vnode, index in $slots.default'
+			v-for='vnode, index in slides'
 			:key='index'
 			:slide='vnode')
 
@@ -55,7 +55,7 @@ export default
 		trackClasses: -> { @pressing, @dragging }
 
 		# Shorthand for the number of slides
-		slidesCount: -> @$slots.default.length
+		slidesCount: -> @slides.length
 
 		# Calculate the width of a slide
 		slideWidth: -> @pageWidth / @currentSlidesPerPage
@@ -68,6 +68,9 @@ export default
 
 		# The ending x value
 		endX: -> @pageWidth - @trackWidth
+
+		# Filter out non-element nodes from the slides
+		slides: -> (@$slots.default || []).filter (vnode) -> vnode?.tag
 
 	methods:
 
