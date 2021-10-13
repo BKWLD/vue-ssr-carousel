@@ -5,7 +5,7 @@
 .ssr-carousel
 
 	//- Render generated styles
-
+	component(is='style' v-html='instanceStyles')
 
 	//- The overflow mask and the drag target of the slides
 	.ssr-carousel-mask: .ssr-carousel-track(
@@ -20,15 +20,13 @@
 		ssr-carousel-slide(
 			v-for='vnode, index in $slots.default'
 			:key='index'
-			:slide='vnode'
-			:width='slidePercentageWidth')
+			:slide='vnode')
 
 </template>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
-import debounce from 'lodash/debounce'
 import SsrCarouselSlide from './ssr-carousel-slide'
 import dragging from './concerns/dragging'
 import responsive from './concerns/responsive'
@@ -44,26 +42,11 @@ export default
 
 	components: { SsrCarouselSlide }
 
-	props:
-
-		# How many slides are visible at once in the viewport
-		slidesPerPage: Number
-
 	data: ->
-		pageWidth: null # The width of a page (and the carousel container)
 
 		# General posisition
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
-
-	# Default listeners
-	mounted: ->
-		@onResize()
-		window.addEventListener 'resize', @onResize
-
-	# Cleanup listeners
-	beforeDestroy: ->
-		window.removeEventListener 'resize', @onResize
 
 	computed:
 
@@ -74,13 +57,8 @@ export default
 		# Shorthand for the number of slides
 		slidesCount: -> @$slots.default.length
 
-		# Calculate the current slides shown per viewport page
-		# TODO: Support responsive props
-		currentSlidesPerPage: -> @slidesPerPage
-
 		# Calculate the width of a slide
 		slideWidth: -> @pageWidth / @currentSlidesPerPage
-		slidePercentageWidth: -> 1 / @currentSlidesPerPage
 
 		# The current number of pages
 		pages: -> Math.round @slidesCount / @currentSlidesPerPage
@@ -90,15 +68,6 @@ export default
 
 		# The ending x value
 		endX: -> @pageWidth - @trackWidth
-
-	methods:
-
-		# Measure the component width for various calculations. Using
-		# getBoundingClientRect so we can get fractional values
-		onResize: debounce ->
-			@pageWidth = @$el.getBoundingClientRect().width
-		, 300
-
 
 </script>
 

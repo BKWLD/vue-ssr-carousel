@@ -5,13 +5,13 @@ carousel:
   slidesPerPage: 4
   responsive:
     -
-      width: '< 1024px'
+      maxWidth: 1280
       slidesPerPage: 3
     -
-      width: '<= 768px'
+      maxWidth: 1024
       slidesPerPage: 2
     -
-      width: '<= 500px'
+      maxWidth: 767
       slidesPerPage: 1
 ---
 
