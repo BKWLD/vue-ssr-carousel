@@ -4,10 +4,7 @@
 
 .example.max-w
 	h1 {{ page.title }}
-
-	//- Make the carousel with a
-	ssr-carousel(v-bind='page.carousel')
-		slide(v-for='i in page.slides' :key='i' :index='i')
+	nuxt-content(:document='page')
 
 </template>
 
@@ -50,5 +47,15 @@ export default
 
 h1
 	fluid-space margin-bottom, 'm'
+
+// Syntax highlighting
+>>> pre
+	background darken(primary-background, 15%)
+	border 1px solid darken(primary-background, 30%)
+	basic-border-radius()
+	fluid-space margin-v, 's'
+>>> code
+	font-size 14px
+	line-height 1.2
 
 </style>

@@ -12,6 +12,7 @@ export default
 	render: (create, { props: { slide, hidden } }) ->
 
 		# Add own class to slide
+		slide.data = {} unless slide.data
 		slide.data.class = [
 			'ssr-carousel-slide'
 			'ssr-carousel-hidden': hidden

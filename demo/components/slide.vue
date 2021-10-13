@@ -4,8 +4,9 @@
 
 .slide: div
 	h2 Slide {{ index }}
-	img(src='/imgs/gradient.png')
-	p <a href="https://www.bukwild.com">Example link</a>
+	template(v-if='includeDraggableElements')
+		img(src='/imgs/gradient.png')
+		p <a href="https://www.bukwild.com">Example link</a>
 
 </template>
 
@@ -13,7 +14,9 @@
 
 <script lang='coffee'>
 export default
-	props: index: Number
+	props:
+		index: Number
+		includeDraggableElements: Boolean
 
 </script>
 
@@ -29,7 +32,7 @@ export default
 		lighten(primary-background, 10%),
 		secondary-background)
 	box-shadow inset 0 0 20px 4px secondary-color
-	border-radius 10px
+	basic-border-radius()
 
 	// Center contents
 	flex-center()

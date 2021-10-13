@@ -21,3 +21,7 @@ module.exports = mergeConfig boilerplate,
 		# /^https?:\/\/(www\.)?domain\.com/
 	]
 
+	# @nuxt/content
+	content:
+		liveEdit: false
+		markdown: prism: theme: 'prism-themes/themes/prism-atom-dark.css'
