@@ -84,6 +84,7 @@ export default
 		# The ending x value
 		endX: -> @trackWidth * -1
 
+
 	methods:
 
 		# Measure the component width for various calculations. Using
