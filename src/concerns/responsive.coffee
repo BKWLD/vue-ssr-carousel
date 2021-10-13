@@ -139,6 +139,9 @@ export default
 			# If this breakpoint has a value, use it
 			return val if val = breakpoint[property]
 
+			# If no responsive rules, use default
+			return @[property] unless @responsiveRules.length
+
 			# Otherwise, look up this breakpoint in the list...
 			breakpointIndex = @responsiveRules.findIndex ({ maxWidth }) ->
 				maxWidth == breakpoint.maxWidth
