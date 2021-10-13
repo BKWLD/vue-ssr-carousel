@@ -113,12 +113,10 @@ export default
 			else @applyBoundaries x
 
 		# Apply snapping to the provided x value based on the snapping choice
-		applyDragSnap: (x) ->
-			x = @applyBoundaries x # First make sure the x is in bounds
-			switch @dragSnap
-				when 'page' then @pageWidth * Math.round x / @pageWidth
-				when 'slide' then @slideWidth * Math.round x / @slideWidth
-				else return x
+		applyDragSnap: (x) -> @applyBoundaries switch @dragSnap
+			when 'page' then @pageWidth * Math.round x / @pageWidth
+			when 'slide' then @slideWidth * Math.round x / @slideWidth
+			else x
 
 		# Constraint the x value to the min and max values
 		applyBoundaries: (x) -> Math.max @endX, Math.min 0, x
