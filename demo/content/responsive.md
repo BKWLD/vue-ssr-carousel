@@ -4,18 +4,20 @@ title: 'Responsive'
 
 <ssr-carousel
   :slides-per-page='4'
+  :gutter='30'
   :responsive='[
     {
       maxWidth: 1280,
-      slidesPerPage: 3
+      slidesPerPage: 3,
+      gutter: 20,
     },
     {
       maxWidth: 1024,
-      slidesPerPage: 2
+      slidesPerPage: 2,
     },
     {
       maxWidth: 767,
-      slidesPerPage: 1
+      slidesPerPage: 1,
     }
   ]'>
   <slide :index='1'></slide>
