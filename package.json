@@ -1,5 +1,46 @@
 {
+	"name": "vue-ssr-carousel",
+	"version": "0.1.0",
+	"description": "A performance focused Vue carousel designed for SSR/SSG environments.",
+	"main": "index.js",
+	"scripts": {
+		"build": "webpack",
+		"version": "npm run build && git add -A",
+		"postversion": "git push --follow-tags"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BKWLD/vue-ssr-carousel.git"
+	},
+	"author": "Bukwild <info@bukwild.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/BKWLD/vue-ssr-carousel/issues"
+	},
+	"homepage": "https://github.com/BKWLD/vue-ssr-carousel#readme",
 	"dependencies": {
 		"lodash": "3 - 4"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.4.3",
+		"@babel/preset-env": "^7.4.3",
+		"babel-loader": "^8.0.5",
+		"babel-preset-vue": "^2.0.2",
+		"coffee-loader": "^0.9.0",
+		"coffeescript": "^2.4.0",
+		"css-loader": "^2.1.1",
+		"mini-css-extract-plugin": "^0.5.0",
+		"pug": "^3.0.1",
+		"pug-plain-loader": "^1.0.0",
+		"style-loader": "^0.13.1",
+		"stylus": "^0.54.5",
+		"stylus-loader": "^3.0.2",
+		"vue": "^2.6.10",
+		"vue-loader": "^15.7.0",
+		"vue-style-loader": "^4.1.2",
+		"vue-template-compiler": "^2.6.10",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0",
+		"webpack-node-externals": "^1.7.2"
 	}
 }
