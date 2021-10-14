@@ -2,7 +2,7 @@
 
 <template lang='pug'>
 
-.example
+article
 
 	//- Layout stuff
 	header
@@ -31,11 +31,8 @@ export default
 	# Get Tower data
 	asyncData: ({ app, params, $content }) ->
 
-		# Don't query for these paths
-		return app.$notFound() if params.example in [ '__webpack_hmr' ]
-
 		# Get data
-		page = await $content(params.example || 'intro').fetch()
+		page = await $content(params.article || 'intro').fetch()
 		return app.$notFound() unless page
 
 		# Set data
@@ -47,7 +44,7 @@ export default
 
 <style lang='stylus' scoped>
 
-.example
+article
 	+tablet-up()
 		padding-top header-h
 	+tablet-down()
