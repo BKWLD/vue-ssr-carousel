@@ -2,7 +2,7 @@
 
 A performance focused Vue carousel designed for SSR/SSG environments.
 
-Check out the demo: https://vue-ssr-carousel.netlify.app
+Check out the demo: https://vue-ssr-carousel.netlify.app.
 
 ## Install
 
