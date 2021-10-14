@@ -96,9 +96,9 @@ export default
 		# getBoundingClientRect so we can get fractional values.  We also need
 		# the width of the gutter since that's effectively part of the page.
 		onResize: ->
-			console.log 'onResize', @$el
 			return unless @$el?.nodeType == Node.ELEMENT_NODE
-			firstSlide = @$refs.track.firstChild
+			return unless (firstSlide = @$refs.track.firstChild) &&
+				firstSlide.nodeType == Node.ELEMENT_NODE
 			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
 			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
