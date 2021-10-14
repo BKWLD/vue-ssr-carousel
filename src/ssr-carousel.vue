@@ -79,11 +79,6 @@ export default
 		showArrows: Boolean
 		showDots: Boolean
 
-	methods:
-
-		# Add px unit to a value if numeric
-		autoUnit: (val) -> if String(val).match /^\d+$/ then "#{val}px" else val
-
 </script>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->

@@ -171,3 +171,6 @@ export default
 		# Make a short random string
 		# https://stackoverflow.com/a/8084248/59160
 		makeScopeId: -> (Math.random() + 1).toString(36).substring(7)
+
+		# Add px unit to a value if numeric
+		autoUnit: (val) -> if String(val).match /^\d+$/ then "#{val}px" else val
