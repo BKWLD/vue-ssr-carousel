@@ -26,7 +26,7 @@ export default
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<style lang='stylus' scoped>
+<style lang='stylus'>
 
 // Push dots below the track
 .ssr-carousel-dots

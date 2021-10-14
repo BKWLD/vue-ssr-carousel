@@ -41,7 +41,7 @@ export default
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<style lang='stylus' scoped>
+<style lang='stylus'>
 
 // Vertically center buttons
 .ssr-carousel-back-button
