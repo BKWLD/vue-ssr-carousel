@@ -95,7 +95,7 @@ export default
 			@isTouchDrag = pointerEvent instanceof TouchEvent
 			@lastPointerX = @getPointerX pointerEvent
 			@pressing = true
-			pointerEvent.preventDefault() # IF browser fires touch and mouse events
+			pointerEvent.preventDefault() # If browser fires touch and mouse events
 		onPointerUp: -> @pressing = false
 
 		# Keep x values up to date while dragging

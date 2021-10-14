@@ -20,7 +20,7 @@ title: 'Responsive'
     }
   ]'>
   <slide :index='1'></slide>
-  <slide :index='2' include-draggable-elements></slide>
+  <slide :index='2'></slide>
   <slide :index='3'></slide>
   <slide :index='4'></slide>
   <slide :index='5'></slide>
@@ -50,7 +50,7 @@ title: 'Responsive'
     }
   ]'>
   <slide :index='1'></slide>
-  <slide :index='2' include-draggable-elements></slide>
+  <slide :index='2'></slide>
   <slide :index='3'></slide>
   <slide :index='4'></slide>
   <slide :index='5'></slide>

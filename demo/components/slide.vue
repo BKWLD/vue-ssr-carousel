@@ -4,9 +4,7 @@
 
 .slide: div
 	h2 Slide {{ index }}
-	template(v-if='includeDraggableElements')
-		img(src='/imgs/gradient.png')
-		p <a href="https://www.bukwild.com">Example link</a>
+	slot
 
 </template>
 

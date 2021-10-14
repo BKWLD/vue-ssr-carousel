@@ -9,9 +9,11 @@
 
 	//- The overflow mask and drag target
 	.ssr-carousel-mask(
-		:class='{ pressing }'
-		@mousedown='onPointerDown'
-		@touchstart='onPointerDown')
+		:class='{ pressing, disabled }'
+		v-on=`disabled ? {} : {
+			mousedown: onPointerDown,
+			touchstart: onPointerDown,
+		}`)
 
 		//- The container of the slides that animates
 		.ssr-carousel-track(
@@ -85,6 +87,9 @@ export default
 		# Styles that are used to position the track
 		trackStyles: -> transform: "translateX(#{@currentX}px)"
 
+		# Disable carousel-ness when there aren't enough slides
+		disabled: -> @slidesCount <= @currentSlidesPerPage
+
 		# Shorthand for the number of slides
 		slidesCount: -> @slides.length
 
@@ -140,13 +145,18 @@ export default
 	overflow hidden
 
 	// When pressing, show drag cursor
-	cursor grab
-	&.pressing
-		cursor grabbing
+	&:not(.disabled)
+		cursor grab
+		&.pressing
+			cursor grabbing
 
 // Setup slides for horizontal layout
 .ssr-carousel-track
 	display flex
+
+	// Center cards when not enough to render
+	.ssr-carousel-mask.disabled &
+		justify-content center
 
 	// Don't allow text selection
 	user-select none
