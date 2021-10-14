@@ -4,13 +4,20 @@ title: 'Miscellaneous'
 
 ## Carousel is disabled when less slides than viewport
 
-<ssr-carousel :slides-per-page='3' gutter='3%'>
+<ssr-carousel
+  :slides-per-page='3'
+  :responsive='[
+    {
+      maxWidth: 767,
+      slidesPerPage: 1
+    }
+  ]'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
 </ssr-carousel>
 
 ```vue
-<ssr-carousel :slides-per-page='3' gutter='3%'>
+<ssr-carousel :slides-per-page='3'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
 </ssr-carousel>
@@ -18,7 +25,7 @@ title: 'Miscellaneous'
 
 ## Slide images and anchors can be dragged
 
-<ssr-carousel :slides-per-page='2' gutter='3%'>
+<ssr-carousel :slides-per-page='2'>
   <slide :index='1'>
     <img src='/imgs/gradient.png'>
     <p><a href="https://www.bukwild.com">Example link</a></p>
@@ -34,7 +41,7 @@ title: 'Miscellaneous'
 </ssr-carousel>
 
 ```vue
-<ssr-carousel :slides-per-page='3' gutter='3%'>
+<ssr-carousel :slides-per-page='3'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
 </ssr-carousel>
