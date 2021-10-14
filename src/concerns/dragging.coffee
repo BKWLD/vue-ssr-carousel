@@ -52,6 +52,15 @@ export default
 				# User was moving backward
 				else Math.floor fractionalIndex
 
+		# Calculate the width of a slide
+		slideWidth: -> @pageWidth / @currentSlidesPerPage
+
+		# Calculate the width of the track
+		trackWidth: -> @slideWidth * @slidesCount
+
+		# The ending x value
+		endX: -> @pageWidth - @trackWidth
+
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
 
@@ -122,6 +131,9 @@ export default
 			when x > 0 then Math.pow x, @boundaryDampening
 			when x < @endX then @endX - Math.pow @endX - x, @boundaryDampening
 			else @applyXBoundaries x
+
+		# Constraint the x value to the min and max values
+		applyXBoundaries: (x) -> Math.max @endX, Math.min 0, x
 
 		# Prevent the anchors and images from being draggable (like via their
 		# ghost outlines). Using this approach because the draggable html attribute

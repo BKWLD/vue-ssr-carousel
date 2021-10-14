@@ -12,10 +12,17 @@ export default
 			default: 0.12
 
 	data: ->
+		currentX: 0 # The actual left offset of the slides container
+		targetX: 0 # Where we may be tweening the slide to
 		tweening: false # If there is a current RAF based tween running
 
 	# Stop any animations that are in flight
 	beforeDestroy: -> window.cancelAnimationFrame @rafId
+
+	computed:
+
+		# Styles that are used to position the track
+		trackStyles: -> transform: "translateX(#{@currentX}px)"
 
 	watch:
 

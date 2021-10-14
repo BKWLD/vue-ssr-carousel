@@ -44,18 +44,25 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
+
+# Child components
 import SsrCarouselArrows from './ssr-carousel-arrows'
 import SsrCarouselDots from './ssr-carousel-dots'
 import SsrCarouselSlide from './ssr-carousel-slide'
 
+# Concerns
 import dragging from './concerns/dragging'
+import pagination from './concerns/pagination'
 import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
+
+# Component definition
 export default
 
 	# Load concerns
 	mixins: [
 		dragging
+		pagination
 		responsive
 		tweening
 	]
@@ -66,41 +73,7 @@ export default
 		SsrCarouselSlide
 	}
 
-	props:
-
-		# If true, advance whole pages when navigating
-		paginateBySlide: Boolean
-
-	data: ->
-		currentX: 0 # The actual left offset of the slides container
-		targetX: 0 # Where we may be tweening the slide to
-		index: 0 # The current page
-
 	computed:
-
-		# The current number of pages
-		pages: ->
-			if @paginateBySlide
-			then Math.max 1, @slidesCount - @currentSlidesPerPage
-			else Math.ceil @slidesCount / @currentSlidesPerPage
-
-		# Styles that are used to position the track
-		trackStyles: -> transform: "translateX(#{@currentX}px)"
-
-		# Disable carousel-ness when there aren't enough slides
-		disabled: -> @slidesCount <= @currentSlidesPerPage
-
-		# Shorthand for the number of slides
-		slidesCount: -> @slides.length
-
-		# Calculate the width of a slide
-		slideWidth: -> @pageWidth / @currentSlidesPerPage
-
-		# Calculate the width of the track
-		trackWidth: -> @slideWidth * @slidesCount
-
-		# The ending x value
-		endX: -> @pageWidth - @trackWidth
 
 		# Filter out non-element nodes from the slides
 		slides: -> (@$slots.default || []).filter (vnode) -> vnode?.tag
@@ -109,30 +82,6 @@ export default
 
 		# Add px unit to a value if numeric
 		autoUnit: (val) -> if String(val).match /^\d+$/ then "#{val}px" else val
-
-		# Advance methods
-		next: -> @goto @index + 1
-		back: -> @goto @index - 1
-
-		# Go to a specific index
-		goto: (index) ->
-			@index = @applyIndexBoundaries index
-			@tweenToIndex @index
-
-		# Tween to a specific index
-		tweenToIndex: (index) ->
-			x = if @paginateBySlide
-			then index * @slideWidth
-			else index * @pageWidth
-			@targetX = @applyXBoundaries -1 * x
-			@startTweening()
-
-		# Apply boundaries to the index
-		applyIndexBoundaries: (index) ->
-			Math.max 0, Math.min @pages - 1, index
-
-		# Constraint the x value to the min and max values
-		applyXBoundaries: (x) -> Math.max @endX, Math.min 0, x
 
 </script>
 
