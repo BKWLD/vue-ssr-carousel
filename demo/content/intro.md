@@ -2,7 +2,7 @@
 title: 'Introduction'
 ---
 
-## An SSR-friendly Vue Carousel
+## A performance focused Vue carousel designed for SSR/SSG environments.
 
 <ssr-carousel>
   <slide :index='1'></slide>
