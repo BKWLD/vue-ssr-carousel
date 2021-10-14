@@ -97,8 +97,7 @@ export default
 		# the width of the gutter since that's effectively part of the page.
 		onResize: ->
 			return unless @$el?.nodeType == Node.ELEMENT_NODE
-			return unless (firstSlide = @$refs.track.firstChild) &&
-				firstSlide.nodeType == Node.ELEMENT_NODE
+			return unless firstSlide = @$refs.track.firstElementChild
 			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
 			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
