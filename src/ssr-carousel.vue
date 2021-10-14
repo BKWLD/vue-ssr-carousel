@@ -63,7 +63,7 @@ export default
 	props:
 
 		# If true, advance whole pages when navigating
-		navigateByPage: Boolean
+		paginateBySlide: Boolean
 
 	data: ->
 		currentX: 0 # The actual left offset of the slides container
@@ -74,9 +74,9 @@ export default
 
 		# The current number of pages
 		pages: ->
-			if @navigateByPage
-			then Math.ceil @slidesCount / @currentSlidesPerPage
-			else Math.max 1, @slidesCount - @currentSlidesPerPage
+			if @paginateBySlide
+			then Math.max 1, @slidesCount - @currentSlidesPerPage
+			else Math.ceil @slidesCount / @currentSlidesPerPage
 
 		# Styles that are used to position the track
 		trackStyles: -> transform: "translateX(#{@currentX}px)"
@@ -113,9 +113,9 @@ export default
 
 		# Tween to a specific index
 		tweenToIndex: (index) ->
-			x = if @navigateByPage
-			then index * @pageWidth
-			else index * @slideWidth
+			x = if @paginateBySlide
+			then index * @slideWidth
+			else index * @pageWidth
 			@targetX = @applyXBoundaries -1 * x
 			@startTweening()
 
