@@ -27,21 +27,23 @@
 				v-for='vnode, index in slides' :key='index'
 				:slide='vnode')
 
-	//- Back / Next navigation
-	ssr-carousel-arrows(
-		v-if='showArrows'
-		:index='index'
-		:pages='pages'
-		@back='back'
-		@next='next')
-		template(#back): slot(name='back-arrow')
-		template(#next): slot(name='next-arrow')
+		//- Back / Next navigation
+		ssr-carousel-arrows(
+			v-if='showArrows'
+			:index='index'
+			:pages='pages'
+			@back='back'
+			@next='next')
+			template(#back): slot(name='back-arrow')
+			template(#next): slot(name='next-arrow')
 
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
 		:index='index'
-		:pages='pages')
+		:pages='pages'
+		@goto='goto')
+		template(#dot): slot(name='dot')
 
 </template>
 
@@ -99,15 +101,12 @@ export default
 
 <style lang='stylus'>
 
-// The container element
-.ssr-carousel
+// Mask around slides
+.ssr-carousel-mask
+	overflow hidden
 
 	// Support absolute positioning of arrows
 	position relative
-
-// Mask overflow
-.ssr-carousel-mask
-	overflow hidden
 
 	// When pressing, show drag cursor
 	&:not(.disabled)
