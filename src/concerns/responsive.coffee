@@ -1,7 +1,7 @@
 ###
 Code related to changing the slides per page at different viewport widths
 ###
-import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
 export default
 
 	props:
@@ -84,18 +84,23 @@ export default
 			}
 			"""
 
+	watch:
+
+		# Fix alignment of slides while resizing
+		pageWidth: -> @tweenToIndex @index
+
 	methods:
 
 		# Measure the component width for various calculations. Using
 		# getBoundingClientRect so we can get fractional values.  We also need
 		# the width of the gutter since that's effectively part of the page.
-		onResize: debounce ->
+		onResize: throttle ->
 			return unless @$el?.nodeType == Node.ELEMENT_NODE
 			firstSlide = @$refs.track.firstChild
 			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
 			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
-		, 300
+		, 200
 
 		# Take an item form the responsive array and make a media query from it
 		makeMediaQuery: (breakpoint) ->
