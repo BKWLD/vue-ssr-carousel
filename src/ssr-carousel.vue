@@ -21,12 +21,27 @@
 			v-for='vnode, index in slides' :key='index'
 			:slide='vnode')
 
+	//- Back / Next navigation
+		ssr-carousel-arrows(
+			:index='index'
+			:pages='pages'
+			@back='back'
+			@next='next')
+
+	//- Dots navigation
+		ssr-carousel-dots(
+			:index='index'
+			:pages='pages')
+
 </template>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
+import SsrCarouselArrows from './ssr-carousel-arrows'
+import SsrCarouselDots from './ssr-carousel-dots'
 import SsrCarouselSlide from './ssr-carousel-slide'
+
 import dragging from './concerns/dragging'
 import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
@@ -39,7 +54,11 @@ export default
 		tweening
 	]
 
-	components: { SsrCarouselSlide }
+	components: {
+		SsrCarouselArrows
+		SsrCarouselDots
+		SsrCarouselSlide
+	}
 
 	props:
 
@@ -49,14 +68,9 @@ export default
 	data: ->
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
+		index: 0 # The current page
 
 	computed:
-
-		# The current slide or page index
-		index: ->
-			Math.abs Math.round if @navigateByPage
-			then @currentX / @pageWidth
-			else @currentX / @slideWidth
 
 		# The current number of pages
 		pages: ->
@@ -88,19 +102,29 @@ export default
 		# Add px unit to a value if numeric
 		autoUnit: (val) -> if String(val).match /^\d+$/ then "#{val}px" else val
 
-		# Pagination methods
+		# Advance methods
 		next: -> @goto @index + 1
 		back: -> @goto @index - 1
-		resetPosition: -> @goto @index
+
+		# Go to a specific index
 		goto: (index) ->
-			index = @applyIndexBoundaries index
-			@targetX = -1 * if @navigateByPage
+			@index = @applyIndexBoundaries index
+			@tweenToIndex @index
+
+		# Tween to a specific index
+		tweenToIndex: (index) ->
+			x = if @navigateByPage
 			then index * @pageWidth
 			else index * @slideWidth
+			@targetX = @applyXBoundaries -1 * x
 			@startTweening()
 
 		# Apply boundaries to the index
-		applyIndexBoundaries: (index) -> Math.max 0, Math.min @pages - 1, index
+		applyIndexBoundaries: (index) ->
+			Math.max 0, Math.min @pages - 1, index
+
+		# Constraint the x value to the min and max values
+		applyXBoundaries: (x) -> Math.max @endX, Math.min 0, x
 
 </script>
 
