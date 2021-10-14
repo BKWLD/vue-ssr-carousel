@@ -39,10 +39,6 @@ export default
 .ssr-carousel-track
 	display flex
 
-	// Center cards when not enough to render
-	.ssr-carousel-mask.disabled &
-		justify-content center
-
 	// Don't allow text selection
 	user-select none
 
