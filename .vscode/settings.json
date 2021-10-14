@@ -1,0 +1,6 @@
+{
+	"search.exclude": {
+		"index.js": true,
+		"index.css": true
+	}
+}
