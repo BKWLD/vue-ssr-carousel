@@ -27,6 +27,7 @@ export default
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <style lang='stylus'>
+@import '~bukwild-stylus-library'
 
 // Push dots below the track
 .ssr-carousel-dots

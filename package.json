@@ -19,6 +19,7 @@
 	},
 	"homepage": "https://github.com/BKWLD/vue-ssr-carousel#readme",
 	"dependencies": {
+		"bukwild-stylus-library": "^3.1.0",
 		"lodash": "3 - 4"
 	},
 	"devDependencies": {

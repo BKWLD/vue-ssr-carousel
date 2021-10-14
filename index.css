@@ -1,0 +1,126 @@
+.ssr-carousel-back-button,
+.ssr-carousel-next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.ssr-carousel-back-button {
+  left: 2%;
+}
+.ssr-carousel-next-button {
+  right: 2%;
+}
+.ssr-carousel-back-icon,
+.ssr-carousel-next-icon {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 21px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+}
+[disabled] > .ssr-carousel-back-icon,
+[disabled] > .ssr-carousel-next-icon {
+  opacity: 0.1;
+  cursor: default;
+}
+:not([disabled]) > .ssr-carousel-back-icon,
+:not([disabled]) > .ssr-carousel-next-icon {
+  opacity: 0.5;
+}
+@media (hover: hover) {
+:not([disabled]) > .ssr-carousel-back-icon:hover,
+  :not([disabled]) > .ssr-carousel-next-icon:hover {
+    opacity: 0.85;
+}
+}
+:not([disabled]) > .ssr-carousel-back-icon:active,
+:not([disabled]) > .ssr-carousel-next-icon:active {
+  opacity: 1;
+}
+:not([disabled]) > .ssr-carousel-back-icon.active,
+:not([disabled]) > .ssr-carousel-next-icon.active {
+  opacity: 1;
+}
+.ssr-carousel-back-icon:before,
+.ssr-carousel-next-icon:before {
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}
+.ssr-carousel-back-icon:before {
+  content: '◀';
+  left: -2px;
+}
+.ssr-carousel-next-icon:before {
+  content: '▶';
+  left: 2px;
+}
+
+.ssr-carousel-dots {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.ssr-carousel-dot-icon {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  border: 2px solid rgba(0,0,0,0.7);
+  margin-left: 4px;
+  margin-right: 4px;
+  transition: opacity 0.2s;
+}
+[disabled] > .ssr-carousel-dot-icon {
+  opacity: 1;
+  background: rgba(0,0,0,0.7);
+  cursor: default;
+}
+:not([disabled]) > .ssr-carousel-dot-icon {
+  opacity: 0.5;
+}
+@media (hover: hover) {
+:not([disabled]) > .ssr-carousel-dot-icon:hover {
+    opacity: 0.85;
+}
+}
+:not([disabled]) > .ssr-carousel-dot-icon:active {
+  opacity: 1;
+}
+:not([disabled]) > .ssr-carousel-dot-icon.active {
+  opacity: 1;
+}
+
+.ssr-carousel-slide {
+  flex-shrink: 0;
+}
+.ssr-carousel-hidden {
+  visibility: hidden;
+}
+
+.ssr-carousel-mask {
+  overflow: hidden;
+  position: relative;
+}
+.ssr-carousel-mask:not(.disabled) {
+  cursor: grab;
+}
+.ssr-carousel-mask:not(.disabled).pressing {
+  cursor: grabbing;
+}
+.ssr-carousel-track {
+  display: flex;
+  user-select: none;
+}
+.ssr-carousel-mask.disabled .ssr-carousel-track {
+  justify-content: center;
+}
+.ssr-carousel-track.dragging {
+  pointer-events: none;
+}
+

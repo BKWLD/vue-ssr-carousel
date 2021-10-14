@@ -42,6 +42,7 @@ export default
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <style lang='stylus'>
+@import '~bukwild-stylus-library'
 
 // Vertically center buttons
 .ssr-carousel-back-button
