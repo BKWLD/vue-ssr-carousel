@@ -13,8 +13,8 @@ module.exports = mergeConfig boilerplate,
 		'vue-balance-text/nuxt/module'
 	]
 
-	# Expect specially slug-ed towers to exist that will be loaded by error.vue
-	generate: fallback: true
+	# Enable crawler to find dynamic pages
+	generate: crawler: true
 
 	# Add production internal URL
 	anchorParser: internalUrls: [
