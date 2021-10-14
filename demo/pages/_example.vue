@@ -45,8 +45,20 @@ export default
 	+tablet-down()
 		padding-top header-h-min
 
+	// Used in the gutters example
+	fluid --fluid-gutter, 40, 20
+
+// Page title
 h1
 	fluid-space margin-bottom, 'm'
+	style-h1()
+	color secondary-color
+
+// Seperate regions on a page
+h2
+	fluid-space margin-top, 'm'
+	fluid-space margin-bottom, 's'
+	style-h2()
 
 // Syntax highlighting
 >>> pre

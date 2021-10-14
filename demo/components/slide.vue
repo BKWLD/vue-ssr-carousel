@@ -37,6 +37,7 @@ export default
 	// Center contents
 	flex-center()
 	text-align center
+	fluid-space padding 's'
 
 // Increase slide text size
 h2

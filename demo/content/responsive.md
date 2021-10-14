@@ -3,14 +3,12 @@ title: 'Responsive'
 ---
 
 <ssr-carousel
-  navigate-by-page
   :slides-per-page='4'
   :gutter='30'
   :responsive='[
     {
       maxWidth: 1280,
       slidesPerPage: 3,
-      gutter: 20,
     },
     {
       maxWidth: 1024,
@@ -18,11 +16,11 @@ title: 'Responsive'
     },
     {
       maxWidth: 767,
-      slidesPerPage: 1,
+      slidesPerPage: 1
     }
   ]'>
   <slide :index='1'></slide>
-  <slide :index='2'></slide>
+  <slide :index='2' include-draggable-elements></slide>
   <slide :index='3'></slide>
   <slide :index='4'></slide>
   <slide :index='5'></slide>
@@ -36,14 +34,15 @@ title: 'Responsive'
 ```vue
 <ssr-carousel
   :slides-per-page='4'
+  :gutter='30'
   :responsive='[
     {
       maxWidth: 1280,
-      slidesPerPage: 3
+      slidesPerPage: 3,
     },
     {
       maxWidth: 1024,
-      slidesPerPage: 2
+      slidesPerPage: 2,
     },
     {
       maxWidth: 767,
@@ -51,7 +50,7 @@ title: 'Responsive'
     }
   ]'>
   <slide :index='1'></slide>
-  <slide :index='2'></slide>
+  <slide :index='2' include-draggable-elements></slide>
   <slide :index='3'></slide>
   <slide :index='4'></slide>
   <slide :index='5'></slide>
