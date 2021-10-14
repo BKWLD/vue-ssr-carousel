@@ -35,7 +35,7 @@ export default
 		return app.$notFound() if params.example in [ '__webpack_hmr' ]
 
 		# Get data
-		page = await $content(params.example || 'basic').fetch()
+		page = await $content(params.example || 'intro').fetch()
 		return app.$notFound() unless page
 
 		# Set data

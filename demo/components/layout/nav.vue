@@ -14,7 +14,7 @@ ul.layout-nav
 export default
 
 	data: -> links: [
-		{ title: 'Introduction', path: '/intro' }
+		{ title: 'Introduction', path: '/' }
 		{ title: 'Responsive', path: '/responsive' }
 		{ title: 'Gutters', path: '/gutters' }
 		{ title: 'Miscellaneous', path: '/misc' }

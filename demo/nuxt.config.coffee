@@ -14,7 +14,9 @@ module.exports = mergeConfig boilerplate,
 	]
 
 	# Enable crawler to find dynamic pages
-	generate: crawler: true
+	generate:
+		crawler: true
+		routes: ['/']
 
 	# Add production internal URL
 	anchorParser: internalUrls: [
