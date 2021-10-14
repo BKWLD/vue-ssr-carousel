@@ -9,3 +9,9 @@ Check out the demo: https://vue-ssr-carousel.netlify.app
 ```sh
 yarn add vue-ssr-carousel
 ```
+
+```js
+import SsrCarousel from 'vue-ssr-carousel'
+import ssrCarouselCss from 'vue-ssr-carousel/index.css'
+Vue.component 'ssr-carousel', SsrCarousel
+```
