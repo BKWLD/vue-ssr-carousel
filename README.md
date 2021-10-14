@@ -45,3 +45,9 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 - `back-arrow` - Replace the default back icon.
 - `next-arrow` - Replace the default next icon.
 - `dot` - Replace the default pagination dots.
+
+### Methods
+
+- `next()` - Go forward a page or slide, depending on the `paginate-by-slide` prop
+- `back()` - Go back a page or slide, depending on the `paginate-by-slide` prop
+- `goto(index)` - Go to an index.  If `paginate-by-slide` is `false`, this equates to a page offset.  If `true`, this equates to a slide offset.
