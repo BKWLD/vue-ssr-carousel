@@ -7,19 +7,23 @@
 	//- Render generated styles
 	component(is='style' v-html='instanceStyles')
 
-	//- The overflow mask and the drag target of the slides
-	.ssr-carousel-mask: .ssr-carousel-track(
-		ref='track'
-		:style='trackStyles'
-		:class='trackClasses'
+	//- The overflow mask and drag target
+	.ssr-carousel-mask(
+		:class='{ pressing }'
 		@mousedown='onPointerDown'
 		@touchstart='onPointerDown')
 
-		//- Each slotted slide is wrapped by the ssr-carousel-slide functional
-		//- component.
-		ssr-carousel-slide(
-			v-for='vnode, index in slides' :key='index'
-			:slide='vnode')
+		//- The container of the slides that animates
+		.ssr-carousel-track(
+			ref='track'
+			:style='trackStyles'
+			:class='{ dragging }')
+
+			//- Each slotted slide is wrapped by the ssr-carousel-slide functional
+			//- component.
+			ssr-carousel-slide(
+				v-for='vnode, index in slides' :key='index'
+				:slide='vnode')
 
 	//- Back / Next navigation
 		ssr-carousel-arrows(
@@ -80,7 +84,6 @@ export default
 
 		# Styles that are used to position the track
 		trackStyles: -> transform: "translateX(#{@currentX}px)"
-		trackClasses: -> { @pressing, @dragging }
 
 		# Shorthand for the number of slides
 		slidesCount: -> @slides.length
@@ -136,17 +139,17 @@ export default
 .ssr-carousel-mask
 	overflow hidden
 
+	// When pressing, show drag cursor
+	cursor grab
+	&.pressing
+		cursor grabbing
+
 // Setup slides for horizontal layout
 .ssr-carousel-track
 	display flex
 
 	// Don't allow text selection
 	user-select none
-
-	// When pressing, show drag cursor
-	cursor grab
-	&.pressing
-		cursor grabbing
 
 	// When dragging, disable pointer events. This clears a tick after the mouse
 	// is released so links aren't followed on mouse up.
