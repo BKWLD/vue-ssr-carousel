@@ -23,7 +23,6 @@ export default
 		isTouchDrag: false # Is the browser firing touch events
 		lastPointerX: null # Where was the mouse when the drag started
 		dragVelocity: null # The px/tick while dragging, negative is rightward
-		dragStartX: null # The page index when the drag was started
 
 	# Cleanup listeners
 	beforeDestroy: ->
@@ -79,7 +78,6 @@ export default
 				window.addEventListener moveEvent, @onPointerMove
 				window.addEventListener upEvent, @onPointerUp
 				@dragVelocity = 0 # Reset any previous velocity
-				@dragStartX = @lastPointerX # Capture starting x
 				@preventContentDrag()
 				@stopTweening()
 
