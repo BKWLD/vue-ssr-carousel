@@ -15,7 +15,7 @@ export default
 		# The gutters between slides
 		gutter:
 			type: Number | String
-			default: 0
+			default: 20
 
 		# Provide different slides per page at different viewport widths
 		responsive:

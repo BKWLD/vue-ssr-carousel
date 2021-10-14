@@ -17,6 +17,7 @@ export default
 		{ title: 'Introduction', path: '/' }
 		{ title: 'Responsive', path: '/responsive' }
 		{ title: 'Gutters', path: '/gutters' }
+		{ title: 'UI', path: '/ui' }
 		{ title: 'Miscellaneous', path: '/misc' }
 	]
 

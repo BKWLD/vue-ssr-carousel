@@ -1,5 +1,5 @@
 ---
-title: 'Gutters'
+title: 'Gutter Options'
 ---
 
 ## Numbers values are treated as pixels

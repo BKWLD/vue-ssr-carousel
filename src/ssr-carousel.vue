@@ -28,16 +28,20 @@
 				:slide='vnode')
 
 	//- Back / Next navigation
-		ssr-carousel-arrows(
-			:index='index'
-			:pages='pages'
-			@back='back'
-			@next='next')
+	ssr-carousel-arrows(
+		v-if='showArrows'
+		:index='index'
+		:pages='pages'
+		@back='back'
+		@next='next')
+		template(#back): slot(name='back-arrow')
+		template(#next): slot(name='next-arrow')
 
 	//- Dots navigation
-		ssr-carousel-dots(
-			:index='index'
-			:pages='pages')
+	ssr-carousel-dots(
+		v-if='showDots'
+		:index='index'
+		:pages='pages')
 
 </template>
 
@@ -73,6 +77,12 @@ export default
 		SsrCarouselSlide
 	}
 
+	props:
+
+		# UI enabling controls
+		showArrows: Boolean
+		showDots: Boolean
+
 	computed:
 
 		# Filter out non-element nodes from the slides
@@ -88,6 +98,12 @@ export default
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <style lang='stylus'>
+
+// The container element
+.ssr-carousel
+
+	// Support absolute positioning of arrows
+	position relative
 
 // Mask overflow
 .ssr-carousel-mask
