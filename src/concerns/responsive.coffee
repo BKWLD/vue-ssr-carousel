@@ -34,10 +34,11 @@ export default
 	# Default listeners
 	mounted: ->
 		@onResize()
-		window.addEventListener 'resize', @onResize
+		@onResizeThrottled = throttle @onResize, 200
+		window.addEventListener 'resize', @onResizeThrottled
 
 	# Cleanup listeners
-	beforeDestroy: -> window.removeEventListener 'resize', @onResize
+	beforeDestroy: -> window.removeEventListener 'resize', @onResizeThrottled
 
 	computed:
 
@@ -94,13 +95,13 @@ export default
 		# Measure the component width for various calculations. Using
 		# getBoundingClientRect so we can get fractional values.  We also need
 		# the width of the gutter since that's effectively part of the page.
-		onResize: throttle ->
+		onResize: ->
+			console.log 'onResize', @$el
 			return unless @$el?.nodeType == Node.ELEMENT_NODE
 			firstSlide = @$refs.track.firstChild
 			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
 			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
-		, 200
 
 		# Take an item form the responsive array and make a media query from it
 		makeMediaQuery: (breakpoint) ->
