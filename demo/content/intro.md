@@ -1,5 +1,5 @@
 ---
-title: 'Basic'
+title: 'Introduction'
 ---
 
 <ssr-carousel>

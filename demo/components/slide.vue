@@ -3,7 +3,7 @@
 <template lang='pug'>
 
 .slide: div
-	h2 Slide {{ index }}
+	.title Slide {{ index }}
 	slot
 
 </template>
@@ -29,7 +29,8 @@ export default
 	background linear-gradient(
 		lighten(primary-background, 10%),
 		secondary-background)
-	box-shadow inset 0 0 20px 4px secondary-color
+	box-shadow inset 0 0 3px 3px secondary-color,
+		inset 0 0 30px 5px secondary-color
 	basic-border-radius()
 
 	// Center contents
@@ -38,9 +39,11 @@ export default
 	fluid-space padding 's'
 
 // Increase slide text size
-h2
+.title
 	fluid font-size, 36, 20
 	font-weight 200
+	text-shadow 0 0 5px rgba(primary-color, .2),
+		0 0 20px primary-color
 
 img
 	circle 50px

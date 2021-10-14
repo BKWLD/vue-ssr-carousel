@@ -1,8 +1,8 @@
 ---
-title: 'Stablility'
+title: 'Miscellaneous'
 ---
 
-## Disabled when insufficient slides
+## Carousel is disabled when less slides than viewport
 
 <ssr-carousel :slides-per-page='3' gutter='3%'>
   <slide :index='1'></slide>

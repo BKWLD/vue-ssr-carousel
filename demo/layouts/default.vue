@@ -2,17 +2,11 @@
 
 <template lang='pug'>
 
-.default-layout
-	a.skip-content(href='#main') Skip to main content
+.default-layout: .columns
 
-	//- Header stuff
-	//- layout-header-desktop
-	//- layout-header-mobile
+	layout-sidebar
+	main: nuxt
 
-	//- Page content
-	main#main
-		nuxt.page
-		//- layout-footer
 
 </template>
 
@@ -28,32 +22,16 @@ export default
 
 <style lang='stylus' scoped>
 
-// On short pages, pin the footer to the bottom of the page
-main
-	min-height 100vh
+// Create columns
+.columns
 	display flex
-	flex-direction column
-.page
-	flex-grow 1
-
-// Prevent mega-wide pages
-.default-layout
-	max-width max-w-full
+	align-items flex-start
+	max-width 1440px
 	margin-h auto
-	width 100%
-	overflow hidden
-
-.skip-content
-	position absolute
-	left -1000px
-	+tablet-up()
-		top (header-h + spacing-s)
-	+tablet-down()
-		top (header-h-mobile + spacing-s-min)
-	z-index header-z // stacked below nav but above page content
-
-	&:focus
-		fluid left, gutter, gutter-mobile
-		outline none
+.layout-sidebar
+	flex-shrink 0
+main
+	flex-grow 1
+	fluid padding-h, gutter, gutter-mobile
 
 </style>

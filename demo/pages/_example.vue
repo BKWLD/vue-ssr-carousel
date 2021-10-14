@@ -2,7 +2,7 @@
 
 <template lang='pug'>
 
-.example.max-w
+.example
 	h1 {{ page.title }}
 	nuxt-content(:document='page')
 
@@ -43,7 +43,7 @@ export default
 	+tablet-up()
 		padding-top header-h
 	+tablet-down()
-		padding-top header-h-min
+		padding-top header-h-mobile
 
 	// Used in the gutters example
 	fluid --fluid-gutter, 40, 20
