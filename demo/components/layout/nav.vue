@@ -36,11 +36,11 @@ a
 	opacity 0.4
 
 	font-size 14px
-	&.nuxt-link-active
+	&.nuxt-link-exact-active
 		opacity 1
 		font-weight 600
 	+hover()
-		&:not(.nuxt-link-active)
+		&:not(.nuxt-link-exact-active)
 			opacity 0.8
 
 </style>
