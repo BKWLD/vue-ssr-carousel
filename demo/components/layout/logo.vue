@@ -1,8 +1,10 @@
-<!-- Layout footer -->
+<!-- A little logo for the demo -->
 
 <template lang='pug'>
 
-footer.layout-footer: .max-w Footer content
+.layout-logo
+	a(href='https://github.com/BKWLD/vue-ssr-carousel')
+		| vue-ssr-carousel
 
 </template>
 
@@ -22,8 +24,10 @@ footer.layout-footer: .max-w Footer content
 
 <style lang='stylus' scoped>
 
-.layout-footer
-	border-top 1px solid black
-	fluid-space padding-v, 'm'
+.layout-logo
+	font-weight 600
+	text-shadow 0 0 7px primary-color,
+		0 0 10px primary-color,
+		0 0 20px rgba(primary-color, 0.5)
 
 </style>

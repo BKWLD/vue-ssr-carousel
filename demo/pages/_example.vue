@@ -3,7 +3,15 @@
 <template lang='pug'>
 
 .example
-	h1 {{ page.title }}
+
+	//- Layout stuff
+	header
+		h1 {{ page.title }}
+		nav
+			layout-logo
+			layout-nav
+
+	//- The article
 	nuxt-content(:document='page')
 
 </template>
@@ -48,11 +56,28 @@ export default
 	// Used in the gutters example
 	fluid --fluid-gutter, 40, 20
 
+header
+	fluid-space margin-bottom, 'm'
+
+	// On desktop, put nav on right side
+	+tablet-up()
+		display flex
+		align-items center
+		> :last-child
+			flex-grow 1
+			text-align right
+
 // Page title
 h1
-	fluid-space margin-bottom, 'm'
 	style-h1()
 	color secondary-color
+
+.layout-logo
+	+tablet-down()
+		display none
+
+.layout-nav
+	margin-top 5px
 
 // Seperate regions on a page
 h2

@@ -2,11 +2,7 @@
 
 <template lang='pug'>
 
-.default-layout: .columns
-
-	layout-sidebar
-	main: nuxt
-
+main.default-layout.max-w: nuxt
 
 </template>
 
@@ -22,16 +18,5 @@ export default
 
 <style lang='stylus' scoped>
 
-// Create columns
-.columns
-	display flex
-	align-items flex-start
-	max-width 1440px
-	margin-h auto
-.layout-sidebar
-	flex-shrink 0
-main
-	flex-grow 1
-	fluid padding-h, gutter, gutter-mobile
 
 </style>

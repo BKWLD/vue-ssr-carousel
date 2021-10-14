@@ -1,40 +1,46 @@
-<!-- Mobile header -->
+<!-- The navigation menu -->
 
 <template lang='pug'>
 
-detachable-header.layout-header-mobile(:height='height')
-	header.max-w-full: .columns.max-w-medium
-
-		.left
-			nuxt-link(to='/') demo
-
-		.right
-			//- Probably a hamburger
+ul.layout-nav
+	li(v-for='link in links' :key='link.path')
+		nuxt-link(:to='link.path') {{ link.title }}
 
 </template>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
-import DetachableHeader from 'vue-detachable-header'
-import 'vue-detachable-header/index.css'
-import dimensions from '~/assets/vars/dimensions'
 export default
 
-	components: { DetachableHeader }
-
-	data: -> height: parseInt dimensions['header-h-mobile']
+	data: -> links: [
+		{ title: 'Introduction', path: '/intro' }
+		{ title: 'Responsive', path: '/responsive' }
+		{ title: 'Gutters', path: '/gutters' }
+		{ title: 'Miscellaneous', path: '/misc' }
+	]
 
 </script>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<style src='./header.styl' lang='stylus' scoped></style>
 <style lang='stylus' scoped>
 
-.layout-header-mobile
-	+tablet-up()
-		display none
+li
+	display inline-block
+	margin-v 2px
+	&:not(:last-child)
+		margin-right 1em
 
+a
+	opacity 0.4
+
+	font-size 14px
+	&.nuxt-link-active
+		opacity 1
+		font-weight 600
+	+hover()
+		&:not(.nuxt-link-active)
+			opacity 0.8
 
 </style>
