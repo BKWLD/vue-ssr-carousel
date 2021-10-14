@@ -5,20 +5,27 @@ export default
 	name: 'SsrCarouselSlide'
 	functional: true
 
-	props:
-		slide: Object # A Vue Vnode
-		hidden: Boolean # Whether the slide is currently in viewport or not
+	render: (create, { children }) ->
 
-	render: (create, { props: { slide, hidden } }) ->
+		# Get at the slide vnode
+		slide = children[0]
 
-		# Add own class to slide
-		slide.data.class = [
-			'ssr-carousel-slide'
-			'ssr-carousel-hidden': hidden
-		]
+		# If the slide is a component, the data may need to be set in asyncMeta.
+		# Otherwise, it's set on the slide itself
+		if slide.asyncMeta
+		then addStaticClass slide.asyncMeta, 'ssr-carousel-slide'
+		else addStaticClass slide, 'ssr-carousel-slide'
 
 		# Return the slotted slide
 		return slide
+
+# Add a static class to an object, mutating it
+addStaticClass = (obj, klass) ->
+	obj.data = {} unless obj.data
+	obj.data.staticClass = '' unless obj.data.staticClass
+	if obj.data.staticClass.indexOf(klass) == -1
+		obj.data.staticClass += klass
+		obj.data.staticClass = obj.data.staticClass.trim()
 
 </script>
 
@@ -30,9 +37,5 @@ export default
 
 	// Force the slides to not shrink below their basis
 	flex-shrink 0
-
-// Set the visibility to hidden so intersection observer isn't triggered
-.ssr-carousel-hidden
-	visibility hidden
 
 </style>

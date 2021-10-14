@@ -19,11 +19,6 @@ export default
 	# Stop any animations that are in flight
 	beforeDestroy: -> window.cancelAnimationFrame @rafId
 
-	computed:
-
-		# Styles that are used to position the track
-		trackStyles: -> transform: "translateX(#{@currentX}px)"
-
 	watch:
 
 		# Start RAF based tweener

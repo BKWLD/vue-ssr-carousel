@@ -16,22 +16,17 @@
 		}`)
 
 		//- The container of the slides that animates
-		.ssr-carousel-track(
+		ssr-carousel-track(
 			ref='track'
-			:style='trackStyles'
-			:class='{ dragging }')
+			v-bind='{ dragging, currentX }')
 
-			//- Each slotted slide is wrapped by the ssr-carousel-slide functional
-			//- component.
-			ssr-carousel-slide(
-				v-for='vnode, index in slides' :key='index'
-				:slide='vnode')
+			//- Slides are injected here
+			slot
 
 		//- Back / Next navigation
 		ssr-carousel-arrows(
 			v-if='showArrows'
-			:index='index'
-			:pages='pages'
+			v-bind='{ index, pages }'
 			@back='back'
 			@next='next')
 			template(#back): slot(name='back-arrow')
@@ -40,8 +35,7 @@
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
-		:index='index'
-		:pages='pages'
+		v-bind='{ index, pages }'
 		@goto='goto')
 		template(#dot): slot(name='dot')
 
@@ -54,7 +48,7 @@
 # Child components
 import SsrCarouselArrows from './ssr-carousel-arrows'
 import SsrCarouselDots from './ssr-carousel-dots'
-import SsrCarouselSlide from './ssr-carousel-slide'
+import SsrCarouselTrack from './ssr-carousel-track'
 
 # Concerns
 import dragging from './concerns/dragging'
@@ -76,7 +70,7 @@ export default
 	components: {
 		SsrCarouselArrows
 		SsrCarouselDots
-		SsrCarouselSlide
+		SsrCarouselTrack
 	}
 
 	props:
@@ -84,11 +78,6 @@ export default
 		# UI enabling controls
 		showArrows: Boolean
 		showDots: Boolean
-
-	computed:
-
-		# Filter out non-element nodes from the slides
-		slides: -> (@$slots.default || []).filter (vnode) -> vnode?.tag
 
 	methods:
 
@@ -113,21 +102,5 @@ export default
 		cursor grab
 		&.pressing
 			cursor grabbing
-
-// Setup slides for horizontal layout
-.ssr-carousel-track
-	display flex
-
-	// Center cards when not enough to render
-	.ssr-carousel-mask.disabled &
-		justify-content center
-
-	// Don't allow text selection
-	user-select none
-
-	// When dragging, disable pointer events. This clears a tick after the mouse
-	// is released so links aren't followed on mouse up.
-	&.dragging
-		pointer-events none
 
 </style>

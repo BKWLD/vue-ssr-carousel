@@ -140,7 +140,7 @@ export default
 		# didn't work in FF.  This only needs to be run once.
 		preventContentDrag: ->
 			return if @contentDragPrevented
-			@$refs.track.querySelectorAll 'a, img'
+			@$refs.track.$el.querySelectorAll 'a, img'
 			.forEach (el) -> el.addEventListener 'dragstart', (e) ->
 				e.preventDefault()
 			@contentDragPrevented = true

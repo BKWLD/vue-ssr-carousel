@@ -24,8 +24,12 @@ export default
 		# Disable carousel-ness when there aren't enough slides
 		disabled: -> @slidesCount <= @currentSlidesPerPage
 
-		# Shorthand for the number of slides
-		slidesCount: -> @slides.length
+		# Filter out slides that have a "text" property, these aren't actual
+		# elements. They are whitespace, like newlines.
+		slidesCount: ->
+			(@$slots.default || [])
+			.filter (vnode) -> !vnode?.text
+			.length
 
 	methods:
 
