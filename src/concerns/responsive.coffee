@@ -63,27 +63,14 @@ export default
 		# Make the scoping selecotr
 		scopeSelector: -> "[data-ssrc-id='#{@scopeId}']"
 
-		# Assemble the dynamic styles from:
-		# - Default styles for when a media query doesn't apply
-		# - Responsive styles, if specified
-		instanceStyles: -> """
-			#{@scopeSelector} .ssr-carousel-slide {
-				#{@makeBreakpointWidthStyle(@$props) || ''}
-				#{@makeBreakpointMarginStyle(@$props) || ''}
-			}
-			#{@responsiveStyles.join(' ')}
-		"""
-
-		# Make style rules from the responsive rules
-		responsiveStyles: -> @responsiveRules.map (breakpoint) =>
-			"""
-			@media #{breakpoint.mediaQuery} {
-				#{@scopeSelector} .ssr-carousel-slide {
-					#{@makeBreakpointWidthStyle(breakpoint) || ''}
-					#{@makeBreakpointMarginStyle(breakpoint) || ''}
-				}
-			}
-			"""
+		# Assemble all the dynamic instance styles
+		instanceStyles: ->
+			@makeBreakpointStyles(@$props) +
+			@responsiveRules.map (breakpoint) =>
+				"@media #{breakpoint.mediaQuery} {
+					#{@makeBreakpointStyles(breakpoint)}
+				}"
+			.join(' ')
 
 	watch:
 
@@ -111,13 +98,32 @@ export default
 			then rules.push "(min-width: #{breakpoint.minWidth}px)"
 			return rules.join ' and '
 
+		# Make the block of styles for a breakpoint
+		makeBreakpointStyles: (breakpoint) -> """
+			#{@scopeSelector} .ssr-carousel-track {
+				#{@makeBreakpointTrackCenteringStyle(breakpoint) || ''}
+			}
+			#{@scopeSelector} .ssr-carousel-slide {
+				#{@makeBreakpointWidthStyle(breakpoint) || ''}
+				#{@makeBreakpointMarginStyle(breakpoint) || ''}
+			}
+		"""
+
+		# Center the track contents when there aren't enough slides to fill a
+		# page at the breakpoint
+		makeBreakpointTrackCenteringStyle: (breakpoint) ->
+			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
+			console.log @slidesCount, slidesPerPage
+			if @slidesCount <= slidesPerPage
+			then "justify-content: center;"
+			else "justify-content: start;"
+
 		# Make the flex-basis style that gives a slide it's width given
 		# slidesPerPage. Reduce this width by the gutter if present
 		makeBreakpointWidthStyle: (breakpoint) ->
 
 			# Collect responsive values
 			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
-			return unless slidesPerPage
 			gutter = @getResponsiveValue 'gutter', breakpoint
 
 			# If there is no gutter, then width is simply a percentage
@@ -131,7 +137,7 @@ export default
 
 		# Apply gutters between slides via margins
 		makeBreakpointMarginStyle: (breakpoint) ->
-			return unless gutter = @getResponsiveValue 'gutter', breakpoint
+			gutter = @getResponsiveValue 'gutter', breakpoint
 			"margin-right: #{@autoUnit(gutter)};"
 
 		# Check if a breakpoint would apply currently. Not using window.matchQuery
