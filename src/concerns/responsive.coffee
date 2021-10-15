@@ -77,6 +77,11 @@ export default
 		# Fix alignment of slides while resizing
 		pageWidth: -> @tweenToIndex @index
 
+		# If resizing the browser leads to disabling, reset the slide to the first
+		# page.  Like if a user had switched to the 2nd page on mobile and then
+		# resized to desktop
+		disabled: -> @goto(0) if @disabled
+
 	methods:
 
 		# Measure the component width for various calculations. Using
@@ -100,23 +105,33 @@ export default
 
 		# Make the block of styles for a breakpoint
 		makeBreakpointStyles: (breakpoint) -> """
-			#{@scopeSelector} .ssr-carousel-track {
-				#{@makeBreakpointTrackCenteringStyle(breakpoint) || ''}
-			}
+			#{@makeBreakpointDisablingRules(breakpoint)}
 			#{@scopeSelector} .ssr-carousel-slide {
-				#{@makeBreakpointWidthStyle(breakpoint) || ''}
-				#{@makeBreakpointMarginStyle(breakpoint) || ''}
+				#{@makeBreakpointWidthStyle(breakpoint)}
+				#{@makeBreakpointMarginStyle(breakpoint)}
 			}
 		"""
 
-		# Center the track contents when there aren't enough slides to fill a
-		# page at the breakpoint
-		makeBreakpointTrackCenteringStyle: (breakpoint) ->
+		# Apply disabling styles via breakpoint when there are not enough slides
+		# for the slidesPerPage
+		makeBreakpointDisablingRules: (breakpoint) ->
 			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
-			console.log @slidesCount, slidesPerPage
+
+			# Disabled, center slides and hide carousel UI
 			if @slidesCount <= slidesPerPage
-			then "justify-content: center;"
-			else "justify-content: start;"
+				"""
+				#{@scopeSelector} .ssr-carousel-track { justify-content: center; }
+				#{@scopeSelector} .ssr-carousel-arrows,
+				#{@scopeSelector} .ssr-carousel-dots { display: none; }
+				"""
+
+			# Enabled, restore default styles
+			else
+				"""
+				#{@scopeSelector} .ssr-carousel-track { justify-content: start; }
+				#{@scopeSelector} .ssr-carousel-arrows { display: block; }
+				#{@scopeSelector} .ssr-carousel-dots { display: flex; }
+				"""
 
 		# Make the flex-basis style that gives a slide it's width given
 		# slidesPerPage. Reduce this width by the gutter if present

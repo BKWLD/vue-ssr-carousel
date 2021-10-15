@@ -5,6 +5,8 @@ title: 'Miscellaneous'
 ## Carousel is disabled when less slides than viewport
 
 <ssr-carousel
+  show-arrows
+  show-dots
   :slides-per-page='3'
   :responsive='[
     {

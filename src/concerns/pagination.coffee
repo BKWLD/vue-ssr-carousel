@@ -44,7 +44,6 @@ export default
 
 		# Tween to a specific index
 		tweenToIndex: (index) ->
-			return if @disabled # Needed if called from pageWidth watcher
 			x = if @paginateBySlide
 			then index * @slideWidth
 			else index * @pageWidth

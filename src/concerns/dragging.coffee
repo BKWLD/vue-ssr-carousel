@@ -58,7 +58,7 @@ export default
 		trackWidth: -> @slideWidth * @slidesCount
 
 		# The ending x value
-		endX: -> @pageWidth - @trackWidth
+		endX: -> if @disabled then 0 else @pageWidth - @trackWidth
 
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
