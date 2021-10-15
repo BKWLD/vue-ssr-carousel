@@ -724,9 +724,7 @@ Code related to handling dragging of the track
       // Is the browser firing touch events
       lastPointerX: null,
       // Where was the mouse when the drag started
-      dragVelocity: null,
-      // The px/tick while dragging, negative is rightward
-      dragStartX: null // The page index when the drag was started
+      dragVelocity: null // The px/tick while dragging, negative is rightward
 
     };
   },
@@ -769,7 +767,11 @@ Code related to handling dragging of the track
     },
     // The ending x value
     endX: function () {
-      return this.pageWidth - this.trackWidth;
+      if (this.disabled) {
+        return 0;
+      } else {
+        return this.pageWidth - this.trackWidth;
+      }
     },
     // Check if the drag is currently out bounds
     isOutOfBounds: function () {
@@ -787,8 +789,6 @@ Code related to handling dragging of the track
         window.addEventListener(moveEvent, this.onPointerMove);
         window.addEventListener(upEvent, this.onPointerUp);
         this.dragVelocity = 0; // Reset any previous velocity
-
-        this.dragStartX = this.lastPointerX; // Capture starting x
 
         this.preventContentDrag();
         return this.stopTweening();
@@ -931,12 +931,6 @@ Code related to dealing with advancing between pages
     // Tween to a specific index
     tweenToIndex: function (index) {
       var x;
-
-      if (this.disabled) {
-        // Needed if called from pageWidth watcher
-        return;
-      }
-
       x = this.paginateBySlide ? index * this.slideWidth : index * this.pageWidth;
       this.targetX = this.applyXBoundaries(-1 * x);
       return this.startTweening();
@@ -1039,32 +1033,25 @@ Code related to changing the slides per page at different viewport widths
     scopeSelector: function () {
       return `[data-ssrc-id='${this.scopeId}']`;
     },
-    // Assemble the dynamic styles from:
-    // - Default styles for when a media query doesn't apply
-    // - Responsive styles, if specified
+    // Assemble all the dynamic instance styles
     instanceStyles: function () {
-      return `${this.scopeSelector} .ssr-carousel-slide {
-	${this.makeBreakpointWidthStyle(this.$props) || ''}
-	${this.makeBreakpointMarginStyle(this.$props) || ''}
-}
-${this.responsiveStyles.join(' ')}`;
-    },
-    // Make style rules from the responsive rules
-    responsiveStyles: function () {
-      return this.responsiveRules.map(breakpoint => {
-        return `@media ${breakpoint.mediaQuery} {
-	${this.scopeSelector} .ssr-carousel-slide {
-		${this.makeBreakpointWidthStyle(breakpoint) || ''}
-		${this.makeBreakpointMarginStyle(breakpoint) || ''}
-	}
-}`;
-      });
+      return this.makeBreakpointStyles(this.$props) + this.responsiveRules.map(breakpoint => {
+        return `@media ${breakpoint.mediaQuery} { ${this.makeBreakpointStyles(breakpoint)} }`;
+      }).join(' ');
     }
   },
   watch: {
     // Fix alignment of slides while resizing
     pageWidth: function () {
       return this.tweenToIndex(this.index);
+    },
+    // If resizing the browser leads to disabling, reset the slide to the first
+    // page.  Like if a user had switched to the 2nd page on mobile and then
+    // resized to desktop
+    disabled: function () {
+      if (this.disabled) {
+        return this.goto(0);
+      }
     }
   },
   methods: {
@@ -1101,17 +1088,37 @@ ${this.responsiveStyles.join(' ')}`;
 
       return rules.join(' and ');
     },
+    // Make the block of styles for a breakpoint
+    makeBreakpointStyles: function (breakpoint) {
+      return `${this.makeBreakpointDisablingRules(breakpoint)}
+${this.scopeSelector} .ssr-carousel-slide {
+	${this.makeBreakpointWidthStyle(breakpoint)}
+	${this.makeBreakpointMarginStyle(breakpoint)}
+}`;
+    },
+    // Apply disabling styles via breakpoint when there are not enough slides
+    // for the slidesPerPage
+    makeBreakpointDisablingRules: function (breakpoint) {
+      var slidesPerPage;
+      slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint); // Disabled, center slides and hide carousel UI
+
+      if (this.slidesCount <= slidesPerPage) {
+        return `${this.scopeSelector} .ssr-carousel-track { justify-content: center; }
+${this.scopeSelector} .ssr-carousel-arrows,
+${this.scopeSelector} .ssr-carousel-dots { display: none; }`;
+      } else {
+        // Enabled, restore default styles
+        return `${this.scopeSelector} .ssr-carousel-track { justify-content: start; }
+${this.scopeSelector} .ssr-carousel-arrows { display: block; }
+${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
+      }
+    },
     // Make the flex-basis style that gives a slide it's width given
     // slidesPerPage. Reduce this width by the gutter if present
     makeBreakpointWidthStyle: function (breakpoint) {
       var gutter, slidesPerPage, widthPercentage; // Collect responsive values
 
       slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint);
-
-      if (!slidesPerPage) {
-        return;
-      }
-
       gutter = this.getResponsiveValue('gutter', breakpoint); // If there is no gutter, then width is simply a percentage
 
       widthPercentage = 100 / slidesPerPage;
@@ -1126,11 +1133,7 @@ ${this.responsiveStyles.join(' ')}`;
     // Apply gutters between slides via margins
     makeBreakpointMarginStyle: function (breakpoint) {
       var gutter;
-
-      if (!(gutter = this.getResponsiveValue('gutter', breakpoint))) {
-        return;
-      }
-
+      gutter = this.getResponsiveValue('gutter', breakpoint);
       return `margin-right: ${this.autoUnit(gutter)};`;
     },
     // Check if a breakpoint would apply currently. Not using window.matchQuery
@@ -1194,6 +1197,14 @@ ${this.responsiveStyles.join(' ')}`;
     // https://stackoverflow.com/a/8084248/59160
     makeScopeId: function () {
       return (Math.random() + 1).toString(36).substring(7);
+    },
+    // Add px unit to a value if numeric
+    autoUnit: function (val) {
+      if (String(val).match(/^\d+$/)) {
+        return `${val}px`;
+      } else {
+        return val;
+      }
     }
   }
 });
@@ -1288,16 +1299,6 @@ Code related to tweening the position of the track
     // UI enabling controls
     showArrows: Boolean,
     showDots: Boolean
-  },
-  methods: {
-    // Add px unit to a value if numeric
-    autoUnit: function (val) {
-      if (String(val).match(/^\d+$/)) {
-        return `${val}px`;
-      } else {
-        return val;
-      }
-    }
   }
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&

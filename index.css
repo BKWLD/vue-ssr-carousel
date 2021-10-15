@@ -3,6 +3,15 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  display: inline-block;
+  appearance: none;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .ssr-carousel-back-button {
   left: 2%;
@@ -61,6 +70,17 @@
   left: 2px;
 }
 
+.ssr-carousel-dot-button {
+  display: inline-block;
+  appearance: none;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
 .ssr-carousel-dots {
   margin-top: 10px;
   display: flex;
