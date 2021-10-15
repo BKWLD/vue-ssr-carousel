@@ -28,6 +28,11 @@ export default
 
 <style lang='stylus'>
 @import '~bukwild-stylus-library'
+@import './utils'
+
+// Clear butotn styles
+.ssr-carousel-dot-button
+	resetButton()
 
 // Push dots below the track
 .ssr-carousel-dots

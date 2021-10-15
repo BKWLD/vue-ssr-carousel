@@ -43,11 +43,13 @@ export default
 
 <style lang='stylus'>
 @import '~bukwild-stylus-library'
+@import './utils'
 
 // Vertically center buttons
 .ssr-carousel-back-button
 .ssr-carousel-next-button
 	v-center()
+	resetButton()
 
 // Align buttons near the edges
 .ssr-carousel-back-button
