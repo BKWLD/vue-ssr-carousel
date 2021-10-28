@@ -180,7 +180,7 @@ module.exports = require("lodash/throttle");
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=b31a94d8&lang=pug&
-var render = function() {
+var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -190,20 +190,20 @@ var render = function() {
     [
       _c("style", {
         tag: "component",
-        domProps: { innerHTML: _vm._s(_vm.instanceStyles) }
+        domProps: { innerHTML: _vm._s(_vm.instanceStyles) },
       }),
       _c(
         "div",
         _vm._g(
           {
             staticClass: "ssr-carousel-mask",
-            class: { pressing: _vm.pressing, disabled: _vm.disabled }
+            class: { pressing: _vm.pressing, disabled: _vm.disabled },
           },
           _vm.disabled
             ? {}
             : {
                 mousedown: _vm.onPointerDown,
-                touchstart: _vm.onPointerDown
+                touchstart: _vm.onPointerDown,
               }
         ),
         [
@@ -228,29 +228,29 @@ var render = function() {
                       [
                         {
                           key: "back",
-                          fn: function() {
+                          fn: function () {
                             return [_vm._t("back-arrow")]
                           },
-                          proxy: true
+                          proxy: true,
                         },
                         {
                           key: "next",
-                          fn: function() {
+                          fn: function () {
                             return [_vm._t("next-arrow")]
                           },
-                          proxy: true
-                        }
+                          proxy: true,
+                        },
                       ],
                       null,
                       true
-                    )
+                    ),
                   },
                   "ssr-carousel-arrows",
                   { index: _vm.index, pages: _vm.pages },
                   false
                 )
               )
-            : _vm._e()
+            : _vm._e(),
         ],
         1
       ),
@@ -264,22 +264,22 @@ var render = function() {
                   [
                     {
                       key: "dot",
-                      fn: function() {
+                      fn: function () {
                         return [_vm._t("dot")]
                       },
-                      proxy: true
-                    }
+                      proxy: true,
+                    },
                   ],
                   null,
                   true
-                )
+                ),
               },
               "ssr-carousel-dots",
               { index: _vm.index, pages: _vm.pages },
               false
             )
           )
-        : _vm._e()
+        : _vm._e(),
     ],
     1
   )
@@ -291,7 +291,7 @@ render._withStripped = true
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=b31a94d8&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=f7877eda&lang=pug&
-var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function() {
+var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -302,15 +302,15 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function(
         staticClass: "ssr-carousel-back-button",
         attrs: { "aria-label": "Back", disabled: _vm.backDisabled },
         on: {
-          click: function($event) {
+          click: function ($event) {
             return _vm.$emit("back")
-          }
-        }
+          },
+        },
       },
       [
         _vm.$slots.back
           ? _vm._t("back")
-          : _c("span", { staticClass: "ssr-carousel-back-icon" })
+          : _c("span", { staticClass: "ssr-carousel-back-icon" }),
       ],
       2
     ),
@@ -320,18 +320,18 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function(
         staticClass: "ssr-carousel-next-button",
         attrs: { "aria-label": "Next", disabled: _vm.nextDisabled },
         on: {
-          click: function($event) {
+          click: function ($event) {
             return _vm.$emit("next")
-          }
-        }
+          },
+        },
       },
       [
         _vm.$slots.next
           ? _vm._t("next")
-          : _c("span", { staticClass: "ssr-carousel-next-icon" })
+          : _c("span", { staticClass: "ssr-carousel-next-icon" }),
       ],
       2
-    )
+    ),
   ])
 }
 var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_staticRenderFns = []
@@ -486,14 +486,14 @@ if (false) { var api; }
 component.options.__file = "src/ssr-carousel-arrows.vue"
 /* harmony default export */ var ssr_carousel_arrows = (component.exports);
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=template&id=6b089f93&lang=pug&
-var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function() {
+var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
     "div",
     { staticClass: "ssr-carousel-dots" },
-    _vm._l(_vm.pages, function(i) {
+    _vm._l(_vm.pages, function (i) {
       return _c(
         "button",
         {
@@ -501,15 +501,15 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function() 
           staticClass: "ssr-carousel-dot-button",
           attrs: { "aria-label": "Page " + i, disabled: _vm.index == i - 1 },
           on: {
-            click: function($event) {
+            click: function ($event) {
               return _vm.$emit("goto", i - 1)
-            }
-          }
+            },
+          },
         },
         [
           _vm.$slots.dot
             ? _vm._t("dot")
-            : _c("span", { staticClass: "ssr-carousel-dot-icon" })
+            : _c("span", { staticClass: "ssr-carousel-dot-icon" }),
         ],
         2
       )
@@ -593,7 +593,7 @@ addStaticClass = function (obj, klass) {
   }
 
   if (obj.data.staticClass.indexOf(klass) === -1) {
-    obj.data.staticClass += klass;
+    obj.data.staticClass += ' ' + klass;
     return obj.data.staticClass = obj.data.staticClass.trim();
   }
 };
@@ -1093,7 +1093,9 @@ Code related to changing the slides per page at different viewport widths
       return `${this.makeBreakpointDisablingRules(breakpoint)}
 ${this.scopeSelector} .ssr-carousel-slide {
 	${this.makeBreakpointWidthStyle(breakpoint)}
-	${this.makeBreakpointMarginStyle(breakpoint)}
+}
+${this.scopeSelector} .ssr-carousel-slide:not(:last-child) {
+	${this.makeBreakpointMarginStyle(breakpoint) || ''}
 }`;
     },
     // Apply disabling styles via breakpoint when there are not enough slides
