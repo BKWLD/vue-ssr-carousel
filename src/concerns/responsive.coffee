@@ -108,7 +108,9 @@ export default
 			#{@makeBreakpointDisablingRules(breakpoint)}
 			#{@scopeSelector} .ssr-carousel-slide {
 				#{@makeBreakpointWidthStyle(breakpoint)}
-				#{@makeBreakpointMarginStyle(breakpoint)}
+			}
+			#{@scopeSelector} .ssr-carousel-slide:not(:last-child) {
+				#{@makeBreakpointMarginStyle(breakpoint) || ''}
 			}
 		"""
 
