@@ -24,7 +24,7 @@ addStaticClass = (obj, klass) ->
 	obj.data = {} unless obj.data
 	obj.data.staticClass = '' unless obj.data.staticClass
 	if obj.data.staticClass.indexOf(klass) == -1
-		obj.data.staticClass += klass
+		obj.data.staticClass += ' ' + klass
 		obj.data.staticClass = obj.data.staticClass.trim()
 
 </script>
