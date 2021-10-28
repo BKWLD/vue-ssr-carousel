@@ -14,7 +14,6 @@
 export default
 	props:
 		index: Number
-		includeDraggableElements: Boolean
 
 </script>
 
