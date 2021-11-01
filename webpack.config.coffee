@@ -21,6 +21,7 @@ module.exports = (env, argv) ->
 		{ test: /\.styl(us)?$/, use: [
 			MiniCssExtractPlugin.loader,
 			'css-loader',
+			'postcss-loader'
 			'stylus-loader'
 		]}
 	]
