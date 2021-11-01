@@ -31,8 +31,13 @@ export default
 	# Generate the scoping class during SSR
 	fetch: -> @scopeId = @makeScopeId()
 
-	# Default listeners
 	mounted: ->
+
+		# If no scopeId found (like because not running in Nuxt environment),
+		# generate the scopeId
+		@scopeId = @makeScopeId() unless @scopeId
+
+		# Add resize listening
 		@onResize()
 		@onResizeThrottled = throttle @onResize, 200
 		window.addEventListener 'resize', @onResizeThrottled
