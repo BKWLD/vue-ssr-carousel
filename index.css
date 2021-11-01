@@ -4,13 +4,18 @@
   top: 50%;
   transform: translateY(-50%);
   display: inline-block;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   background: none;
   color: inherit;
   border: none;
   padding: 0;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .ssr-carousel-back-button {
@@ -72,13 +77,18 @@
 
 .ssr-carousel-dot-button {
   display: inline-block;
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   background: none;
   color: inherit;
   border: none;
   padding: 0;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .ssr-carousel-dots {
@@ -122,7 +132,10 @@
 
 .ssr-carousel-track[data-v-6cccbed2] {
   display: flex;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 .ssr-carousel-track.dragging[data-v-6cccbed2] {
   pointer-events: none;
@@ -133,9 +146,11 @@
   position: relative;
 }
 .ssr-carousel-mask:not(.disabled) {
+  cursor: -webkit-grab;
   cursor: grab;
 }
 .ssr-carousel-mask:not(.disabled).pressing {
+  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 
