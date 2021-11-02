@@ -31,6 +31,11 @@ export default
 			.filter (vnode) -> !vnode?.text
 			.length
 
+	watch:
+
+		# Emit events on index change
+		index: -> @$emit 'change', { @index }
+
 	methods:
 
 		# Advance methods

@@ -95,6 +95,17 @@ export default
 				# Handle normal swiping
 				else @goto @dragIndex
 
+			# Fire events
+			if @pressing
+			then @$emit 'press'
+			else @$emit 'release'
+
+		# Fire events related to dragging
+		dragging: ->
+			if @dragging
+			then @$emit 'drag:start'
+			else @$emit 'drag:end'
+
 	methods:
 
 		# Keep track of whether user is dragging

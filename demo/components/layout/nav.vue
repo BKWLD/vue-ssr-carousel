@@ -15,6 +15,7 @@ export default
 
 	data: -> links: [
 		{ title: 'Introduction', path: '/' }
+		{ title: 'Events', path: '/events' }
 		{ title: 'Responsive', path: '/responsive' }
 		{ title: 'Gutters', path: '/gutters' }
 		{ title: 'UI', path: '/ui' }

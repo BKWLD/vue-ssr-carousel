@@ -24,8 +24,11 @@ export default
 		# Start RAF based tweener
 		tweening: ->
 			if @tweening
-			then @tweenToTarget()
-			else window.cancelAnimationFrame @rafId
+				@$emit 'tween:start', { @index }
+				@tweenToTarget()
+			else
+				window.cancelAnimationFrame @rafId
+				@$emit 'tween:end', { @index }
 
 	methods:
 
