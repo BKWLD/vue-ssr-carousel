@@ -51,3 +51,15 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 - `next()` - Go forward a page or slide, depending on the `paginate-by-slide` prop
 - `back()` - Go back a page or slide, depending on the `paginate-by-slide` prop
 - `goto(index)` - Go to an index.  If `paginate-by-slide` is `false`, this equates to a page offset.  If `true`, this equates to a slide offset.
+
+### Events
+
+See https://vue-ssr-carousel.netlify.app/events
+
+- `change({ index })` - Fired when the internal index counter changes
+- `press` - Fired on mouse or touch down
+- `release` - Fired on mouse or touch up
+- `drag:start` - Fired on start of dragging
+- `drag:end` - Fired on end of dragging
+- `tween:start({ index })` - Fired when the carousel starts tweening to it's final position
+- `tween:end({ index })` - Fired when the carousel has finished tweening to it's destination.
