@@ -18,5 +18,7 @@ export default
 
 <style lang='stylus' scoped>
 
+.default-layout
+	fluid-space padding-bottom, 'l'
 
 </style>

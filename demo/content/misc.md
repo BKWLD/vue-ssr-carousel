@@ -67,3 +67,7 @@ title: 'Miscellaneous'
   </slide>
 </ssr-carousel>
 ```
+
+## Demo of emitted events
+
+<events-demo></events-demo>

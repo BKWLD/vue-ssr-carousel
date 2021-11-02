@@ -101,8 +101,10 @@ export default
 			else @$emit 'release'
 
 		# Fire events related to dragging
-		dragging: -> if @dragging then @$emit 'drag:start' else @$emit 'drag:end'
-		dragIndex: -> @$emit 'drag:input', { @index }
+		dragging: ->
+			if @dragging
+			then @$emit 'drag:start'
+			else @$emit 'drag:end'
 
 	methods:
 
