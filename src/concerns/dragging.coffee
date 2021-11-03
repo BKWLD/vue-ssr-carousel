@@ -110,7 +110,7 @@ export default
 
 		# Keep track of whether user is dragging
 		onPointerDown: (pointerEvent) ->
-			@isTouchDrag = pointerEvent instanceof TouchEvent
+			@isTouchDrag = TouchEvent? and pointerEvent instanceof TouchEvent
 			@lastPointerX = @getPointerX pointerEvent
 			@pressing = true
 			pointerEvent.preventDefault() # If browser fires touch and mouse events
