@@ -86,6 +86,10 @@ export default
 
 <style lang='stylus'>
 
+// Prevent webkit from doing elastic dragging horizontally on drag
+.ssr-carousel
+	touch-action pan-y
+
 // Mask around slides
 .ssr-carousel-mask
 	overflow hidden
