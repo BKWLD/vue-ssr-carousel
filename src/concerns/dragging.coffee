@@ -136,7 +136,7 @@ export default
 
 		# Keep track of whether user is dragging
 		onPointerDown: (pointerEvent) ->
-			@isTouchDrag = pointerEvent instanceof TouchEvent
+			@isTouchDrag = TouchEvent? and pointerEvent instanceof TouchEvent
 			@startPointer = @lastPointer = @getPointerCoords pointerEvent
 			@pressing = true
 
