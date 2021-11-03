@@ -1,0 +1,4 @@
+[build]
+
+	# Trigger redeploys on src changes
+	ignore = "git diff --quiet HEAD^ HEAD ../src ./"
