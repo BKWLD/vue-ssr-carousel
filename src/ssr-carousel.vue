@@ -58,6 +58,7 @@ import tweening from './concerns/tweening'
 
 # Component definition
 export default
+	name: 'SsrCarousel'
 
 	# Load concerns
 	mixins: [
