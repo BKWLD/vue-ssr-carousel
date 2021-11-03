@@ -141,6 +141,9 @@
   pointer-events: none;
 }
 
+.ssr-carousel {
+  touch-action: pan-y;
+}
 .ssr-carousel-mask {
   overflow: hidden;
   position: relative;
