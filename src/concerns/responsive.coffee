@@ -26,18 +26,9 @@ export default
 		viewportWidth: null # Width of the viewport, for media query calculation
 		pageWidth: null # Width of a page of slides (and the carousel container)
 		gutterWidth: 0 # Computed width of gutters, since they support css vars
-		scopeId: null # CSS class uses to scope styles to the instance
 
-	# Generate the scoping class during SSR
-	fetch: -> @scopeId = @makeScopeId()
-
+	# Add resize listening
 	mounted: ->
-
-		# If no scopeId found (like because not running in Nuxt environment),
-		# generate the scopeId
-		@scopeId = @makeScopeId() unless @scopeId
-
-		# Add resize listening
 		@onResize()
 		@onResizeThrottled = throttle @onResize, 200
 		window.addEventListener 'resize', @onResizeThrottled
@@ -46,6 +37,10 @@ export default
 	beforeDestroy: -> window.removeEventListener 'resize', @onResizeThrottled
 
 	computed:
+
+		# Make the scopeId from the based on hashing the props. If the props are
+		# the same for two instances, it's fine for them to have the same scopeId.
+		scopeId: -> @hashString JSON.stringify @$props
 
 		# Massage media queries into the responsive prop
 		responsiveRules: -> @responsive.map (breakpoint) => {
@@ -196,9 +191,15 @@ export default
 			# ... else, return the defaults
 			return @[property]
 
-		# Make a short random string
-		# https://stackoverflow.com/a/8084248/59160
-		makeScopeId: -> (Math.random() + 1).toString(36).substring(7)
+		# Make a hash from a string, adapted from:
+		# https://stackoverflow.com/a/33647870/59160
+		hashString: (str) ->
+			hash = 0
+			i = 0
+			len = str.length
+			while i < len
+			then hash = ((hash << 5) - hash + str.charCodeAt(i++)) << 0
+			return hash.toString 36
 
 		# Add px unit to a value if numeric
 		autoUnit: (val) -> if String(val).match /^\d+$/ then "#{val}px" else val
