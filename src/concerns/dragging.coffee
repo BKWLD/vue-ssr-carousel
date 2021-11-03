@@ -17,19 +17,27 @@ export default
 			type: Number
 			default: .33
 
+		# The ratio of X:Y mouse travel. Decrease this number to allow for greater
+		# y dragging before the drag is cancelled.
+		verticalDragTreshold:
+			type: Number
+			default: 1
+
 	data: ->
 		pressing: false # The user pressing pointer down
 		dragging: false # The user has translated while pointer was down
 		isTouchDrag: false # Is the browser firing touch events
-		lastPointerX: null # Where was the mouse when the drag started
+		startPointer: null # Where was the mouse when the drag started
+		lastPointer: null # Where was the mouse on the last move event
 		dragVelocity: null # The px/tick while dragging, negative is rightward
+		dragDirectionRatio: null # The ratio of horizontal vs vertical dragging
 
 	# Cleanup listeners
 	beforeDestroy: ->
-		window.removeEventListener 'mousemove', @onPointerMove
-		window.removeEventListener 'mouseup', @onPointerUp
-		window.removeEventListener 'touchmove', @onPointerMove
-		window.removeEventListener 'touchend', @onPointerUp
+		window.removeEventListener 'mousemove', @onPointerMove, passive: true
+		window.removeEventListener 'mouseup', @onPointerUp, passive: true
+		window.removeEventListener 'touchmove', @onPointerMove, passive: true
+		window.removeEventListener 'touchend', @onPointerUp, passive: true
 
 	computed:
 
@@ -63,6 +71,11 @@ export default
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
 
+		# Determine if the user is dragging vertically
+		isVerticalDrag: ->
+			return unless @dragDirectionRatio
+			@dragDirectionRatio < @verticalDragTreshold
+
 	watch:
 
 		# Watch for mouse move changes when the user starts dragging
@@ -75,25 +88,31 @@ export default
 
 			# Pointer is down, start watching for drags
 			if @pressing
-				window.addEventListener moveEvent, @onPointerMove
-				window.addEventListener upEvent, @onPointerUp
+				window.addEventListener moveEvent, @onPointerMove, passive: true
+				window.addEventListener upEvent, @onPointerUp, passive: true
 				@dragVelocity = 0 # Reset any previous velocity
 				@preventContentDrag()
 				@stopTweening()
 
-			# The pointer is up, clear drag listeners and cleanup
+			# The pointer is up, so tween to final position
 			else
-				window.removeEventListener moveEvent, @onPointerMove
-				window.removeEventListener upEvent, @onPointerUp
-				@dragging = false
 
 				# Tween so the track is in bounds if it was out
 				if @isOutOfBounds
 					@targetX = @applyXBoundaries @currentX
 					@startTweening()
 
+				# If user was vertically dragging, reset the index
+				else if @isVerticalDrag then @goto @index
+
 				# Handle normal swiping
 				else @goto @dragIndex
+
+				# Cleanup vars and listeners
+				window.removeEventListener moveEvent, @onPointerMove, passive: true
+				window.removeEventListener upEvent, @onPointerUp, passive: true
+				@dragging = false
+				@startPointer = @lastPointer = @dragDirectionRatio = null
 
 			# Fire events
 			if @pressing
@@ -106,14 +125,22 @@ export default
 			then @$emit 'drag:start'
 			else @$emit 'drag:end'
 
+		# If the user is dragging vertically, end the drag based on the assumption
+		# that the user is attempting to scroll the page via touch rather than
+		# pan the carousel.
+		isVerticalDrag: ->
+			return unless @isVerticalDrag and @isTouchDrag
+			@pressing = false
+
 	methods:
 
 		# Keep track of whether user is dragging
 		onPointerDown: (pointerEvent) ->
 			@isTouchDrag = TouchEvent? and pointerEvent instanceof TouchEvent
-			@lastPointerX = @getPointerX pointerEvent
+			@startPointer = @lastPointer = @getPointerCoords pointerEvent
 			@pressing = true
-			pointerEvent.preventDefault() # If browser fires touch and mouse events
+
+		# Keep track of release of press
 		onPointerUp: -> @pressing = false
 
 		# Keep x values up to date while dragging
@@ -123,17 +150,24 @@ export default
 			@dragging = true unless @dragging
 
 			# Calculated how much drag has happened since the list move
-			pointerX = @getPointerX pointerEvent
-			@dragVelocity = pointerX - @lastPointerX
+			pointer = @getPointerCoords pointerEvent
+			@dragVelocity = pointer.x - @lastPointer.x
 			@targetX += @dragVelocity
-			@lastPointerX = pointerX
+			@lastPointer = pointer
+
+			# Caculate the drag direction ratio
+			@dragDirectionRatio = Math.abs(
+				(pointer.x - @startPointer.x) /
+				(pointer.y - @startPointer.y)
+			)
 
 			# Update the track position
 			@currentX = @applyBoundaryDampening @targetX
 
 		# Helper to get the x position of either a touch or mouse event
-		getPointerX: (pointerEvent) ->
-			pointerEvent.touches?[0]?.pageX || pointerEvent.pageX
+		getPointerCoords: (pointerEvent) ->
+			x: pointerEvent.touches?[0]?.pageX || pointerEvent.pageX
+			y: pointerEvent.touches?[0]?.pageY || pointerEvent.pageY
 
 		# Prevent dragging from exceeding the min/max edges
 		applyBoundaryDampening: (x) -> switch
