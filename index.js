@@ -791,7 +791,7 @@ Code related to handling dragging of the track
         this.dragVelocity = 0; // Reset any previous velocity
 
         this.preventContentDrag();
-        return this.stopTweening();
+        this.stopTweening();
       } else {
         // The pointer is up, clear drag listeners and cleanup
         window.removeEventListener(moveEvent, this.onPointerMove);
@@ -800,11 +800,26 @@ Code related to handling dragging of the track
 
         if (this.isOutOfBounds) {
           this.targetX = this.applyXBoundaries(this.currentX);
-          return this.startTweening();
+          this.startTweening();
         } else {
           // Handle normal swiping
-          return this.goto(this.dragIndex);
+          this.goto(this.dragIndex);
         }
+      } // Fire events
+
+
+      if (this.pressing) {
+        return this.$emit('press');
+      } else {
+        return this.$emit('release');
+      }
+    },
+    // Fire events related to dragging
+    dragging: function () {
+      if (this.dragging) {
+        return this.$emit('drag:start');
+      } else {
+        return this.$emit('drag:end');
       }
     }
   },
@@ -915,6 +930,14 @@ Code related to dealing with advancing between pages
       }).length;
     }
   },
+  watch: {
+    // Emit events on index change
+    index: function () {
+      return this.$emit('change', {
+        index: this.index
+      });
+    }
+  },
   methods: {
     // Advance methods
     next: function () {
@@ -977,24 +1000,12 @@ Code related to changing the slides per page at different viewport widths
       // Width of the viewport, for media query calculation
       pageWidth: null,
       // Width of a page of slides (and the carousel container)
-      gutterWidth: 0,
-      // Computed width of gutters, since they support css vars
-      scopeId: null // CSS class uses to scope styles to the instance
+      gutterWidth: 0 // Computed width of gutters, since they support css vars
 
     };
   },
-  // Generate the scoping class during SSR
-  fetch: function () {
-    return this.scopeId = this.makeScopeId();
-  },
+  // Add resize listening
   mounted: function () {
-    if (!this.scopeId) {
-      // If no scopeId found (like because not running in Nuxt environment),
-      // generate the scopeId
-      this.scopeId = this.makeScopeId();
-    } // Add resize listening
-
-
     this.onResize();
     this.onResizeThrottled = throttle_default()(this.onResize, 200);
     return window.addEventListener('resize', this.onResizeThrottled);
@@ -1004,6 +1015,11 @@ Code related to changing the slides per page at different viewport widths
     return window.removeEventListener('resize', this.onResizeThrottled);
   },
   computed: {
+    // Make the scopeId from the based on hashing the props. If the props are
+    // the same for two instances, it's fine for them to have the same scopeId.
+    scopeId: function () {
+      return this.hashString(JSON.stringify(this.$props));
+    },
     // Massage media queries into the responsive prop
     responsiveRules: function () {
       return this.responsive.map(breakpoint => {
@@ -1201,10 +1217,19 @@ ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
 
       return this[property];
     },
-    // Make a short random string
-    // https://stackoverflow.com/a/8084248/59160
-    makeScopeId: function () {
-      return (Math.random() + 1).toString(36).substring(7);
+    // Make a hash from a string, adapted from:
+    // https://stackoverflow.com/a/33647870/59160
+    hashString: function (str) {
+      var hash, i, len;
+      hash = 0;
+      i = 0;
+      len = str.length;
+
+      while (i < len) {
+        hash = (hash << 5) - hash + str.charCodeAt(i++) << 0;
+      }
+
+      return hash.toString(36);
     },
     // Add px unit to a value if numeric
     autoUnit: function (val) {
@@ -1247,9 +1272,15 @@ Code related to tweening the position of the track
     // Start RAF based tweener
     tweening: function () {
       if (this.tweening) {
+        this.$emit('tween:start', {
+          index: this.index
+        });
         return this.tweenToTarget();
       } else {
-        return window.cancelAnimationFrame(this.rafId);
+        window.cancelAnimationFrame(this.rafId);
+        return this.$emit('tween:end', {
+          index: this.index
+        });
       }
     }
   },
@@ -1295,8 +1326,9 @@ Code related to tweening the position of the track
 
 
 /* harmony default export */ var ssr_carouselvue_type_script_lang_coffee_ = ({
-  // Load concerns
   // Component definition
+  name: 'SsrCarousel',
+  // Load concerns
   mixins: [dragging_coffee, pagination_coffee, responsive_coffee, tweening_coffee],
   components: {
     SsrCarouselArrows: ssr_carousel_arrows,
