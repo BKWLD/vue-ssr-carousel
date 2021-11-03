@@ -26,10 +26,10 @@ export default
 
 	# Cleanup listeners
 	beforeDestroy: ->
-		window.removeEventListener 'mousemove', @onPointerMove
-		window.removeEventListener 'mouseup', @onPointerUp
-		window.removeEventListener 'touchmove', @onPointerMove
-		window.removeEventListener 'touchend', @onPointerUp
+		window.removeEventListener 'mousemove', @onPointerMove, passive: true
+		window.removeEventListener 'mouseup', @onPointerUp, passive: true
+		window.removeEventListener 'touchmove', @onPointerMove, passive: true
+		window.removeEventListener 'touchend', @onPointerUp, passive: true
 
 	computed:
 
@@ -75,16 +75,16 @@ export default
 
 			# Pointer is down, start watching for drags
 			if @pressing
-				window.addEventListener moveEvent, @onPointerMove
-				window.addEventListener upEvent, @onPointerUp
+				window.addEventListener moveEvent, @onPointerMove, passive: true
+				window.addEventListener upEvent, @onPointerUp, passive: true
 				@dragVelocity = 0 # Reset any previous velocity
 				@preventContentDrag()
 				@stopTweening()
 
 			# The pointer is up, clear drag listeners and cleanup
 			else
-				window.removeEventListener moveEvent, @onPointerMove
-				window.removeEventListener upEvent, @onPointerUp
+				window.removeEventListener moveEvent, @onPointerMove, passive: true
+				window.removeEventListener upEvent, @onPointerUp, passive: true
 				@dragging = false
 
 				# Tween so the track is in bounds if it was out
@@ -113,7 +113,6 @@ export default
 			@isTouchDrag = pointerEvent instanceof TouchEvent
 			@lastPointerX = @getPointerX pointerEvent
 			@pressing = true
-			pointerEvent.preventDefault() # If browser fires touch and mouse events
 		onPointerUp: -> @pressing = false
 
 		# Keep x values up to date while dragging
