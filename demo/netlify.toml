@@ -1,4 +1,4 @@
 [build]
 
 	# Trigger redeploys on src changes
-	ignore = "git diff --quiet HEAD^ HEAD ../src ./"
+	ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ../src ./"
