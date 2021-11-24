@@ -712,6 +712,12 @@ Code related to handling dragging of the track
     dragAdvanceRatio: {
       type: Number,
       default: .33
+    },
+    // The ratio of X:Y mouse travel. Decrease this number to allow for greater
+    // y dragging before the drag is cancelled.
+    verticalDragTreshold: {
+      type: Number,
+      default: 1
     }
   },
   data: function () {
@@ -722,18 +728,30 @@ Code related to handling dragging of the track
       // The user has translated while pointer was down
       isTouchDrag: false,
       // Is the browser firing touch events
-      lastPointerX: null,
+      startPointer: null,
       // Where was the mouse when the drag started
-      dragVelocity: null // The px/tick while dragging, negative is rightward
+      lastPointer: null,
+      // Where was the mouse on the last move event
+      dragVelocity: null,
+      // The px/tick while dragging, negative is rightward
+      dragDirectionRatio: null // The ratio of horizontal vs vertical dragging
 
     };
   },
   // Cleanup listeners
   beforeDestroy: function () {
-    window.removeEventListener('mousemove', this.onPointerMove);
-    window.removeEventListener('mouseup', this.onPointerUp);
-    window.removeEventListener('touchmove', this.onPointerMove);
-    return window.removeEventListener('touchend', this.onPointerUp);
+    window.removeEventListener('mousemove', this.onPointerMove, {
+      passive: true
+    });
+    window.removeEventListener('mouseup', this.onPointerUp, {
+      passive: true
+    });
+    window.removeEventListener('touchmove', this.onPointerMove, {
+      passive: true
+    });
+    return window.removeEventListener('touchend', this.onPointerUp, {
+      passive: true
+    });
   },
   computed: {
     // The current slide or page index. It rounds differently depedning on the
@@ -776,6 +794,14 @@ Code related to handling dragging of the track
     // Check if the drag is currently out bounds
     isOutOfBounds: function () {
       return this.currentX > 0 || this.currentX < this.endX;
+    },
+    // Determine if the user is dragging vertically
+    isVerticalDrag: function () {
+      if (!this.dragDirectionRatio) {
+        return;
+      }
+
+      return this.dragDirectionRatio < this.verticalDragTreshold;
     }
   },
   watch: {
@@ -786,25 +812,38 @@ Code related to handling dragging of the track
       [moveEvent, upEvent] = this.isTouchDrag ? ['touchmove', 'touchend'] : ['mousemove', 'mouseup']; // Pointer is down, start watching for drags
 
       if (this.pressing) {
-        window.addEventListener(moveEvent, this.onPointerMove);
-        window.addEventListener(upEvent, this.onPointerUp);
+        window.addEventListener(moveEvent, this.onPointerMove, {
+          passive: true
+        });
+        window.addEventListener(upEvent, this.onPointerUp, {
+          passive: true
+        });
         this.dragVelocity = 0; // Reset any previous velocity
 
         this.preventContentDrag();
         this.stopTweening();
       } else {
-        // The pointer is up, clear drag listeners and cleanup
-        window.removeEventListener(moveEvent, this.onPointerMove);
-        window.removeEventListener(upEvent, this.onPointerUp);
-        this.dragging = false; // Tween so the track is in bounds if it was out
-
+        // Tween so the track is in bounds if it was out
+        // The pointer is up, so tween to final position
         if (this.isOutOfBounds) {
           this.targetX = this.applyXBoundaries(this.currentX);
-          this.startTweening();
+          this.startTweening(); // If user was vertically dragging, reset the index
+        } else if (this.isVerticalDrag) {
+          this.goto(this.index);
         } else {
           // Handle normal swiping
           this.goto(this.dragIndex);
-        }
+        } // Cleanup vars and listeners
+
+
+        window.removeEventListener(moveEvent, this.onPointerMove, {
+          passive: true
+        });
+        window.removeEventListener(upEvent, this.onPointerUp, {
+          passive: true
+        });
+        this.dragging = false;
+        this.startPointer = this.lastPointer = this.dragDirectionRatio = null;
       } // Fire events
 
 
@@ -821,22 +860,32 @@ Code related to handling dragging of the track
       } else {
         return this.$emit('drag:end');
       }
+    },
+    // If the user is dragging vertically, end the drag based on the assumption
+    // that the user is attempting to scroll the page via touch rather than
+    // pan the carousel.
+    isVerticalDrag: function () {
+      if (!(this.isVerticalDrag && this.isTouchDrag)) {
+        return;
+      }
+
+      return this.pressing = false;
     }
   },
   methods: {
     // Keep track of whether user is dragging
     onPointerDown: function (pointerEvent) {
-      this.isTouchDrag = pointerEvent instanceof TouchEvent;
-      this.lastPointerX = this.getPointerX(pointerEvent);
-      this.pressing = true;
-      return pointerEvent.preventDefault(); // If browser fires touch and mouse events
+      this.isTouchDrag = typeof TouchEvent !== "undefined" && TouchEvent !== null && pointerEvent instanceof TouchEvent;
+      this.startPointer = this.lastPointer = this.getPointerCoords(pointerEvent);
+      return this.pressing = true;
     },
+    // Keep track of release of press
     onPointerUp: function () {
       return this.pressing = false;
     },
     // Keep x values up to date while dragging
     onPointerMove: function (pointerEvent) {
-      var pointerX;
+      var pointer;
 
       if (!this.dragging) {
         // Mark the carousel as dragging, which is used to disable clicks
@@ -844,17 +893,22 @@ Code related to handling dragging of the track
       } // Calculated how much drag has happened since the list move
 
 
-      pointerX = this.getPointerX(pointerEvent);
-      this.dragVelocity = pointerX - this.lastPointerX;
+      pointer = this.getPointerCoords(pointerEvent);
+      this.dragVelocity = pointer.x - this.lastPointer.x;
       this.targetX += this.dragVelocity;
-      this.lastPointerX = pointerX; // Update the track position
+      this.lastPointer = pointer; // Caculate the drag direction ratio
+
+      this.dragDirectionRatio = Math.abs((pointer.x - this.startPointer.x) / (pointer.y - this.startPointer.y)); // Update the track position
 
       return this.currentX = this.applyBoundaryDampening(this.targetX);
     },
     // Helper to get the x position of either a touch or mouse event
-    getPointerX: function (pointerEvent) {
-      var ref, ref1;
-      return ((ref = pointerEvent.touches) != null ? (ref1 = ref[0]) != null ? ref1.pageX : void 0 : void 0) || pointerEvent.pageX;
+    getPointerCoords: function (pointerEvent) {
+      var ref, ref1, ref2, ref3;
+      return {
+        x: ((ref = pointerEvent.touches) != null ? (ref1 = ref[0]) != null ? ref1.pageX : void 0 : void 0) || pointerEvent.pageX,
+        y: ((ref2 = pointerEvent.touches) != null ? (ref3 = ref2[0]) != null ? ref3.pageY : void 0 : void 0) || pointerEvent.pageY
+      };
     },
     // Prevent dragging from exceeding the min/max edges
     applyBoundaryDampening: function (x) {
