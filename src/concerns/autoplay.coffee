@@ -8,10 +8,13 @@ export default
 			type: Number
 			default: 0
 
+		pauseOnFocus:
+			type: Boolean
+			default: true
+
 	computed:
 		# Stop animation if window is hidden or if carousel is focused
-		paused: -> @windowHidden or @isFocused
-
+		paused: -> (@windowHidden or @isFocused) if @pauseOnFocus
 
 	mounted: ->
 		if @autoplayDelay then @autoPlayInterval = setInterval (() =>
