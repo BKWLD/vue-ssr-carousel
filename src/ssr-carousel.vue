@@ -13,6 +13,8 @@
 		v-on=`disabled ? {} : {
 			mousedown: onPointerDown,
 			touchstart: onPointerDown,
+			mouseenter: onEnter,
+			mouseleave: onLeave
 		}`)
 
 		//- The container of the slides that animates
@@ -51,7 +53,9 @@ import SsrCarouselDots from './ssr-carousel-dots'
 import SsrCarouselTrack from './ssr-carousel-track'
 
 # Concerns
+import autoplay from './concerns/autoplay'
 import dragging from './concerns/dragging'
+import focus from './concerns/focus'
 import pagination from './concerns/pagination'
 import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
@@ -62,7 +66,9 @@ export default
 
 	# Load concerns
 	mixins: [
+		autoplay
 		dragging
+		focus
 		pagination
 		responsive
 		tweening
