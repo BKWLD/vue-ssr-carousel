@@ -10,12 +10,7 @@
 	//- The overflow mask and drag target
 	.ssr-carousel-mask(
 		:class='{ pressing, disabled }'
-		v-on=`disabled ? {} : {
-			mousedown: onPointerDown,
-			touchstart: onPointerDown,
-			mouseenter: onEnter,
-			mouseleave: onLeave
-		}`)
+		v-on='maskListeners')
 
 		//- The container of the slides that animates
 		ssr-carousel-track(
@@ -85,6 +80,20 @@ export default
 		# UI enabling controls
 		showArrows: Boolean
 		showDots: Boolean
+
+	computed:
+		watchesHover: -> @autoplayDelay > 0
+
+		maskListeners: ->
+			return {} if @disabled
+			{
+				mousedown: @onPointerDown
+				touchstart: @onPointerDown
+				...(unless @watchesHover then {} else {
+					mouseenter: @onEnter
+					mouseleave: @onLeave
+				})
+			}
 
 </script>
 

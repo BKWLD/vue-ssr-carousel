@@ -6,7 +6,6 @@ export default
 	# Some simple data about our component and window its mounted on
 	data: ->
 		hovered: false
-		buttonFocused: false
 		windowVisible: true
 
 	computed:
@@ -22,6 +21,7 @@ export default
 
 	# Watch the visibility updates of our document
 	mounted: ->
+		return unless @watchesHover
 		document.addEventListener 'visibilitychange', @updateVisibility
 
 	beforeUnmount: ->

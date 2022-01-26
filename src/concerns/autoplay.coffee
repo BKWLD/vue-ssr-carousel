@@ -14,11 +14,20 @@ export default
 
 	computed:
 		# Stop animation if window is hidden or if carousel is focused
-		paused: -> (@windowHidden or @isFocused) if @pauseOnFocus
+		autoplayPaused: -> (@windowHidden or @isFocused) if @pauseOnFocus
 
-	mounted: ->
-		if @autoplayDelay then @autoPlayInterval = setInterval (() =>
-			@next() if not @paused
-			), @autoplayDelay * 1000
+	watch:
+		autoplayPaused: (paused) ->
+			if paused then @autoplayStop() else @autoplayStart()
 
-	beforeUnmount: -> clearInterval @autoPlayInterval
+	mounted: -> @autoplayStart()
+
+	beforeDestroy: -> @autoplayStop()
+
+	methods:
+		autoplayStart: ->
+			if @autoplayDelay then @autoPlayInterval = setInterval (() =>
+				@next() if not @autoplayPaused
+				), @autoplayDelay * 1000
+
+		autoplayStop: -> clearInterval @autoPlayInterval
