@@ -24,5 +24,5 @@ export default
 		return unless @watchesHover
 		document.addEventListener 'visibilitychange', @updateVisibility
 
-	beforeUnmount: ->
+	beforeDestroy: ->
 		document.removeEventListener 'visibilitychange', @updateVisibility
