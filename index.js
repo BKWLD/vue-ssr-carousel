@@ -199,12 +199,7 @@ var render = function () {
             staticClass: "ssr-carousel-mask",
             class: { pressing: _vm.pressing, disabled: _vm.disabled },
           },
-          _vm.disabled
-            ? {}
-            : {
-                mousedown: _vm.onPointerDown,
-                touchstart: _vm.onPointerDown,
-              }
+          _vm.maskListeners
         ),
         [
           _c(
@@ -695,6 +690,60 @@ var ssr_carousel_track_component = normalizeComponent(
 if (false) { var ssr_carousel_track_api; }
 ssr_carousel_track_component.options.__file = "src/ssr-carousel-track.vue"
 /* harmony default export */ var ssr_carousel_track = (ssr_carousel_track_component.exports);
+// CONCATENATED MODULE: ./src/concerns/autoplay.coffee
+/*
+Code related to auotplay features of the carousel
+*/
+/* harmony default export */ var autoplay_coffee = ({
+  props: {
+    // A delay provided in seconds for the autoplay. 0 is disabled
+    autoplayDelay: {
+      type: Number,
+      default: 0
+    },
+    pauseOnFocus: {
+      type: Boolean,
+      default: true
+    }
+  },
+  computed: {
+    // Stop animation if window is hidden or if carousel is focused
+    autoplayPaused: function () {
+      if (this.pauseOnFocus) {
+        return this.windowHidden || this.isFocused;
+      }
+    }
+  },
+  watch: {
+    autoplayPaused: function (paused) {
+      if (paused) {
+        return this.autoplayStop();
+      } else {
+        return this.autoplayStart();
+      }
+    }
+  },
+  mounted: function () {
+    return this.autoplayStart();
+  },
+  beforeDestroy: function () {
+    return this.autoplayStop();
+  },
+  methods: {
+    autoplayStart: function () {
+      if (this.autoplayDelay) {
+        return this.autoPlayInterval = setInterval(() => {
+          if (!this.autoplayPaused) {
+            return this.next();
+          }
+        }, this.autoplayDelay * 1000);
+      }
+    },
+    autoplayStop: function () {
+      return clearInterval(this.autoPlayInterval);
+    }
+  }
+});
 // CONCATENATED MODULE: ./src/concerns/dragging.coffee
 /*
 Code related to handling dragging of the track
@@ -942,6 +991,50 @@ Code related to handling dragging of the track
       });
       return this.contentDragPrevented = true;
     }
+  }
+});
+// CONCATENATED MODULE: ./src/concerns/focus.coffee
+/*
+Code related to focus and hover state
+*/
+/* harmony default export */ var focus_coffee = ({
+  // Some simple data about our component and window its mounted on
+  data: function () {
+    return {
+      hovered: false,
+      windowVisible: true
+    };
+  },
+  computed: {
+    isFocused: function () {
+      return this.windowVisible && this.hovered;
+    },
+    windowHidden: function () {
+      return !this.windowVisible;
+    }
+  },
+  methods: {
+    onEnter: function () {
+      return this.hovered = true;
+    },
+    onLeave: function () {
+      return this.hovered = false;
+    },
+    // Updates @windowVisible based on our document
+    updateVisibility: function () {
+      return this.windowVisible = !document.hidden;
+    }
+  },
+  // Watch the visibility updates of our document
+  mounted: function () {
+    if (!this.watchesHover) {
+      return;
+    }
+
+    return document.addEventListener('visibilitychange', this.updateVisibility);
+  },
+  beforeDestroy: function () {
+    return document.removeEventListener('visibilitychange', this.updateVisibility);
   }
 });
 // CONCATENATED MODULE: ./src/concerns/pagination.coffee
@@ -1379,11 +1472,13 @@ Code related to tweening the position of the track
 
 
 
+
+
 /* harmony default export */ var ssr_carouselvue_type_script_lang_coffee_ = ({
   // Component definition
   name: 'SsrCarousel',
   // Load concerns
-  mixins: [dragging_coffee, pagination_coffee, responsive_coffee, tweening_coffee],
+  mixins: [autoplay_coffee, dragging_coffee, focus_coffee, pagination_coffee, responsive_coffee, tweening_coffee],
   components: {
     SsrCarouselArrows: ssr_carousel_arrows,
     SsrCarouselDots: ssr_carousel_dots,
@@ -1393,6 +1488,25 @@ Code related to tweening the position of the track
     // UI enabling controls
     showArrows: Boolean,
     showDots: Boolean
+  },
+  computed: {
+    watchesHover: function () {
+      return this.autoplayDelay > 0;
+    },
+    maskListeners: function () {
+      if (this.disabled) {
+        return {};
+      }
+
+      return {
+        mousedown: this.onPointerDown,
+        touchstart: this.onPointerDown,
+        ...(!this.watchesHover ? {} : {
+          mouseenter: this.onEnter,
+          mouseleave: this.onLeave
+        })
+      };
+    }
   }
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
