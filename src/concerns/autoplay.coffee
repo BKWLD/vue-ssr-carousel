@@ -26,8 +26,15 @@ export default
 
 	methods:
 		autoplayStart: ->
+			# Don't loop if we only have one page
+			return if @pages <= 0
+
 			if @autoplayDelay then @autoPlayInterval = setInterval (() =>
-				@next() if not @autoplayPaused
+				@autoplayNext() if not @autoplayPaused
 				), @autoplayDelay * 1000
 
 		autoplayStop: -> clearInterval @autoPlayInterval
+
+		autoplayNext: ->
+			nextIndex = @index + 1
+			if nextIndex < @pages then @next() else @goto 0
