@@ -731,16 +731,31 @@ Code related to auotplay features of the carousel
   },
   methods: {
     autoplayStart: function () {
+      // Don't loop if we only have one page
+      if (this.pages <= 0) {
+        return;
+      }
+
       if (this.autoplayDelay) {
         return this.autoPlayInterval = setInterval(() => {
           if (!this.autoplayPaused) {
-            return this.next();
+            return this.autoplayNext();
           }
         }, this.autoplayDelay * 1000);
       }
     },
     autoplayStop: function () {
       return clearInterval(this.autoPlayInterval);
+    },
+    autoplayNext: function () {
+      var nextIndex;
+      nextIndex = this.index + 1;
+
+      if (nextIndex < this.pages) {
+        return this.next();
+      } else {
+        return this.goto(0);
+      }
     }
   }
 });
