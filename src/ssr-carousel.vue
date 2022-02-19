@@ -51,6 +51,7 @@ import SsrCarouselTrack from './ssr-carousel-track'
 import autoplay from './concerns/autoplay'
 import dragging from './concerns/dragging'
 import focus from './concerns/focus'
+import looping from './concerns/looping'
 import pagination from './concerns/pagination'
 import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
@@ -64,6 +65,7 @@ export default
 		autoplay
 		dragging
 		focus
+		looping
 		pagination
 		responsive
 		tweening
