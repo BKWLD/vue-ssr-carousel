@@ -45,9 +45,9 @@ export default
 		# direction of the velocity.  So that it eases to a stop in the direction
 		# the user was dragging.
 		dragIndex: ->
-			fractionalIndex = Math.abs if @paginateBySlide
-			then @currentX / @slideWidth
-			else @currentX / @pageWidth
+			fractionalIndex = if @paginateBySlide
+			then @currentX / @slideWidth * -1
+			else @currentX / @pageWidth * -1
 			switch
 
 				# If there is very little velocity, go to the closet page
