@@ -5,7 +5,7 @@ export default
 
 	# Add prop to enable looping
 	props:
-		looping: Boolean
+		loop: Boolean
 
 	# Store cloned slides
 	data: ->

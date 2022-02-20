@@ -35,7 +35,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 - `slides-per-page` (`1`) - How many slides are shown per page.
 - `gutter` (`20`) - The size of the space between slides.  This can a number or any CSS resolvable string. See https://vue-ssr-carousel.netlify.app/gutters.
 - `responsive` (`[]`) - Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive.
-- `looping` (`false`) - Boolean to enable looping / infinite scroll.
+- `loop` (`false`) - Boolean to enable looping / infinite scroll.
 - `paginate-by-slide` (`false`) - When `false`, dragging the carousel or interacting with the arrows will advance a full page of slides at a time.  When `true`, the carousel will come to a rest at each slide.
 - `show-arrows` (`false`) - Whether to show back/forward arrows. See https://vue-ssr-carousel.netlify.app/ui.
 - `show-dots` (`false`) - Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
