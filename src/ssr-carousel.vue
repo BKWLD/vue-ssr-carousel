@@ -7,16 +7,21 @@
 	//- Render generated styles
 	component(is='style' v-html='instanceStyles')
 
-	//- The overflow mask and drag target
-	.ssr-carousel-mask(
-		:class='{ pressing, disabled }'
-		v-on='maskListeners')
+	//- Container so that arrows can be centered relative to slides but not be
+	//- within the mask's overflow:hidden (which prevents overriding styles from
+	//- positioning outside of carousel).
+	.ssr-carousel-slides
 
-		//- The container of the slides that animates
-		ssr-carousel-track(
-			ref='track'
-			:slides='slides'
-			v-bind='{ dragging, currentX }')
+		//- The overflow mask and drag target
+		.ssr-carousel-mask(
+			:class='{ pressing, disabled }'
+			v-on='maskListeners')
+
+			//- The container of the slides that animates
+			ssr-carousel-track(
+				ref='track'
+				:slides='slides'
+				v-bind='{ dragging, currentX }')
 
 		//- Back / Next navigation
 		ssr-carousel-arrows(
@@ -108,6 +113,10 @@ export default
 // Prevent webkit from doing elastic dragging horizontally on drag
 .ssr-carousel
 	touch-action pan-y
+
+// Posiition arrows relative to this
+.ssr-carousel-slides
+	position relative
 
 // Mask around slides
 .ssr-carousel-mask
