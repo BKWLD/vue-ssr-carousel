@@ -9,7 +9,7 @@ export default
 		paginateBySlide: Boolean
 
 	data: ->
-		index: 0 # The current page
+		index: 0 # The current page; when looping may exceed slideCount
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 
@@ -24,9 +24,8 @@ export default
 		# Disable carousel-ness when there aren't enough slides
 		disabled: -> @slidesCount <= @currentSlidesPerPage
 
-		# Filter out slides that have a "text" property, these aren't actual
-		# elements. They are whitespace, like newlines.
-		slidesCount: -> @slides.length
+		# Get the total number of slides
+		slidesCount: -> @slottedSlides.length
 
 	watch:
 
@@ -54,9 +53,5 @@ export default
 
 		# Apply boundaries to the index
 		applyIndexBoundaries: (index) ->
-			unless @loop
-			then Math.max 0, Math.min @pages - 1, index
-			else
-				if index < 0 then @pages + index
-				else if index >= @pages then index - @pages
-				else index
+			if @loop then index
+			else Math.max 0, Math.min @pages - 1, index

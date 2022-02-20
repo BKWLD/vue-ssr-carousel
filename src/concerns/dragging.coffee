@@ -98,7 +98,7 @@ export default
 			else
 
 				# Tween so the track is in bounds if it was out
-				if @isOutOfBounds
+				if @isOutOfBounds and not @loop
 					@targetX = @applyXBoundaries @currentX
 					@startTweening()
 
@@ -171,12 +171,15 @@ export default
 
 		# Prevent dragging from exceeding the min/max edges
 		applyBoundaryDampening: (x) -> switch
+			when @loop then x # Don't apply dampening
 			when x > 0 then Math.pow x, @boundaryDampening
 			when x < @endX then @endX - Math.pow @endX - x, @boundaryDampening
 			else @applyXBoundaries x
 
 		# Constraint the x value to the min and max values
-		applyXBoundaries: (x) -> Math.max @endX, Math.min 0, x
+		applyXBoundaries: (x) ->
+			if @loop then x # Don't apply boundaries
+			else Math.max @endX, Math.min 0, x
 
 		# Prevent the anchors and images from being draggable (like via their
 		# ghost outlines). Using this approach because the draggable html attribute
