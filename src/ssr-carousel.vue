@@ -82,8 +82,11 @@ export default
 		showDots: Boolean
 
 	computed:
+
+		# Determine whether to create hover event bindings
 		watchesHover: -> @autoplayDelay > 0
 
+		# Create event bindings
 		maskListeners: ->
 			return {} if @disabled
 			{
