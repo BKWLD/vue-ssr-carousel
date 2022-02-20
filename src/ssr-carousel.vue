@@ -22,6 +22,7 @@
 		ssr-carousel-arrows(
 			v-if='showArrows'
 			v-bind='{ index, pages }'
+			:loop='loop'
 			@back='back'
 			@next='next')
 			template(#back): slot(name='back-arrow')

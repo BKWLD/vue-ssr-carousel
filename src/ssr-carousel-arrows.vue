@@ -30,12 +30,13 @@ export default
 	props:
 		index: Number
 		pages: Number
+		loop: Boolean
 
 	computed:
 
 		# Determine if button should be disabled because we're at the limits
-		backDisabled: -> @index == 0
-		nextDisabled: -> @index == @pages - 1
+		backDisabled: -> @index == 0 unless @loop
+		nextDisabled: -> @index == @pages - 1 unless @loop
 
 </script>
 

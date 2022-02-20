@@ -54,4 +54,9 @@ export default
 
 		# Apply boundaries to the index
 		applyIndexBoundaries: (index) ->
-			Math.max 0, Math.min @pages - 1, index
+			unless @loop
+			then Math.max 0, Math.min @pages - 1, index
+			else
+				if index < 0 then @pages + index
+				else if index >= @pages then index - @pages
+				else index
