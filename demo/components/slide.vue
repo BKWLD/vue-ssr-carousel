@@ -3,7 +3,7 @@
 <template lang='pug'>
 
 .slide: div
-	.title Slide {{ index }}
+	.title(v-if='index') Slide {{ index }}
 	slot
 
 </template>
