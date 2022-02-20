@@ -10574,7 +10574,7 @@ vue-unorphan@^1.2.3:
   dependencies:
     unorphan "^1.2.1"
 
-vue-visual@^2.0.0:
+vue-visual@^2.0.0, vue-visual@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/vue-visual/-/vue-visual-2.5.4.tgz#3675bdea3a748bfc56775d88cdeaf27bd0f5e1c2"
   integrity sha512-UUMxj0l9vPyR9W28y3g5eel4JsznuBgaqgEm8EhG/Vi2QVhhaDRsTUj0fkN++YcmwXt2iJcpewRDy6ITxQsHjQ==

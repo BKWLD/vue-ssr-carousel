@@ -21,12 +21,14 @@ article
 <script lang='coffee'>
 import pageMixin from '@bkwld/cloak/mixins/page'
 import SsrCarousel from '../../src/ssr-carousel'
+import Visual from 'vue-visual'
+import 'vue-visual/index.css'
 
 export default
 	name: 'Page'
 	mixins: [ pageMixin ]
 
-	components: { SsrCarousel }
+	components: { SsrCarousel, Visual }
 
 	# Get Tower data
 	asyncData: ({ app, params, $content }) ->

@@ -36,6 +36,8 @@ export default
 	flex-center()
 	text-align center
 	fluid-space padding 's'
+	> div
+		width 100%
 
 // Increase slide text size
 .title
