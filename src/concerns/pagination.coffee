@@ -26,10 +26,7 @@ export default
 
 		# Filter out slides that have a "text" property, these aren't actual
 		# elements. They are whitespace, like newlines.
-		slidesCount: ->
-			@slides
-			.filter (vnode) -> !vnode?.text
-			.length
+		slidesCount: -> @slides.length
 
 	watch:
 

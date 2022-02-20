@@ -21,8 +21,7 @@ export default
 
 		# Wrap the slides in ssr-carousel-slide functional components
 		children = @slides.map (child) ->
-			unless child.tag then child # Text nodes like newlines
-			else create SsrCarouselSlide, { parent: this }, [ child ]
+			create SsrCarouselSlide, { parent: this }, [ child ]
 
 		# Create the track div
 		create 'div',

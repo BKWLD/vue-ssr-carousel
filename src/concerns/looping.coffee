@@ -20,7 +20,11 @@ export default
 	computed:
 
 		# Combine slotted slides and clones
-		slides: -> [...@prependedSlides, ...@$slots.default, ...@appendedSlides]
+		slides: -> [...@prependedSlides, ...@slottedSlides, ...@appendedSlides]
+
+		# Get just the slotted slides that are components, ignoring text nodes
+		# which may exist as a result of whitespace
+		slottedSlides: -> @$slots.default.filter (vnode) -> !!vnode.tag
 
 	methods:
 
