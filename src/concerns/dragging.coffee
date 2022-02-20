@@ -41,9 +41,9 @@ export default
 
 	computed:
 
-		# The current slide or page index. It rounds differently depedning on the
+		# The current slide or page index. It rounds differently depending on the
 		# direction of the velocity.  So that it eases to a stop in the direction
-		# the user was dragging
+		# the user was dragging.
 		dragIndex: ->
 			fractionalIndex = Math.abs if @paginateBySlide
 			then @currentX / @slideWidth
