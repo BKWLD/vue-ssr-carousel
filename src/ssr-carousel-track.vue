@@ -9,6 +9,7 @@ export default
 	props:
 		dragging: Boolean
 		currentX: Number
+		slides: Array
 
 	computed:
 
@@ -19,8 +20,8 @@ export default
 	render: (create) ->
 
 		# Wrap the slides in ssr-carousel-slide functional components
-		children = @$slots.default.map (child) ->
-			if child.text then child # Text nodes like newlines
+		children = @slides.map (child) ->
+			unless child.tag then child # Text nodes like newlines
 			else create SsrCarouselSlide, { parent: this }, [ child ]
 
 		# Create the track div
