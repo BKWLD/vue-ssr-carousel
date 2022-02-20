@@ -13,9 +13,9 @@ export default
 		appendedSlides: []
 
 	# Testing cloneVnode
-	created: ->
-		clone = @cloneVnode @$slots.default[1]
-		@prependedSlides.push clone
+	# created: ->
+	# 	clone = @cloneVnode @$slots.default[1]
+	# 	@prependedSlides.push clone
 
 	computed:
 
