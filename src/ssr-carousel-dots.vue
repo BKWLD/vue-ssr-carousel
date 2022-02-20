@@ -6,7 +6,7 @@
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
 		:aria-label='`Page ${i}`'
-		:disabled='index == i - 1'
+		:disabled='boundedIndex == i - 1'
 		@click='$emit("goto", i - 1)')
 			slot(v-if='$slots.dot' name='dot')
 			span.ssr-carousel-dot-icon(v-else)
@@ -19,7 +19,7 @@
 export default
 
 	props:
-		index: Number
+		boundedIndex: Number
 		pages: Number
 
 </script>

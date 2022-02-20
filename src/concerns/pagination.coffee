@@ -27,16 +27,27 @@ export default
 		# Get the total number of slides
 		slidesCount: -> @slottedSlides.length
 
+		# Apply boundaries to the index, which will exceed them when looping
+		boundedIndex: ->
+			if @index < 0 then @pages + @index
+			else if @index >= @pages then @index - @pages
+			else @index
+
 	watch:
 
 		# Emit events on index change
-		index: -> @$emit 'change', { @index }
+		boundedIndex: -> @$emit 'change', { @boundedIndex }
 
 	methods:
 
 		# Advance methods
 		next: -> @goto @index + 1
 		back: -> @goto @index - 1
+
+		# The dots are ignorant of looping, so convert their bounded index to the
+		# true index so we don't animate through a ton of pages going to the
+		# clicked dot.
+		gotoDot: (dotIndex) -> @goto dotIndex - @boundedIndex + @index
 
 		# Go to a specific index
 		goto: (index) ->

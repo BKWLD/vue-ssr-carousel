@@ -36,8 +36,8 @@
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
-		v-bind='{ index, pages }'
-		@goto='goto')
+		v-bind='{ boundedIndex, pages }'
+		@goto='gotoDot')
 		template(#dot): slot(name='dot')
 
 </template>
