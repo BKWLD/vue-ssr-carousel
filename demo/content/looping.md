@@ -42,18 +42,14 @@ title: 'Looping / Inifinte Scroll'
   <slide>
     <visual
       image='https://via.placeholder.com/1920x1080?text=Slide+1'
+      lazyload
       :aspect='16/9'>
     </visual>
   </slide>
   <slide>
     <visual
       image='https://via.placeholder.com/1920x1080?text=Slide+2'
-      :aspect='16/9'>
-    </visual>
-  </slide>
-  <slide>
-    <visual
-      image='https://via.placeholder.com/1920x1080?text=Slide+3'
+      lazyload
       :aspect='16/9'>
     </visual>
   </slide>
@@ -64,18 +60,14 @@ title: 'Looping / Inifinte Scroll'
   <slide>
     <visual
       image='https://via.placeholder.com/1920x1080?text=Slide+1'
+      lazyload
       :aspect='16/9'>
     </visual>
   </slide>
   <slide>
     <visual
       image='https://via.placeholder.com/1920x1080?text=Slide+2'
-      :aspect='16/9'>
-    </visual>
-  </slide>
-  <slide>
-    <visual
-      image='https://via.placeholder.com/1920x1080?text=Slide+3'
+      lazyload
       :aspect='16/9'>
     </visual>
   </slide>
