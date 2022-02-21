@@ -1,5 +1,5 @@
 ---
-title: 'Looping / Inifinte Scroll'
+title: 'Looping / Wrap-Around / Infinite Scroll'
 ---
 
 ## Basic looping
