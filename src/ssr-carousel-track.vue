@@ -9,12 +9,13 @@ export default
 	props:
 		dragging: Boolean
 		currentX: Number
+		trackOffset: Number
 		slides: Array
 
 	computed:
 
 		# Styles that are used to position the track
-		styles: -> transform: "translateX(#{@currentX}px)"
+		styles: -> transform: "translateX(#{@currentX + @trackOffset}px)"
 
 	# Render the track and slotted slides
 	render: (create) ->
