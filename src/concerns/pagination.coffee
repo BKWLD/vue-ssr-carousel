@@ -34,6 +34,9 @@ export default
 		# Apply boundaries to the index, which will exceed them when looping
 		boundedIndex: -> Math.abs(@index) % @pages
 
+		# The current incomplete page offset
+		currentIncompletePageOffset: -> @makeIncompletePageOffset @index
+
 	watch:
 
 		# Emit events on index change
@@ -57,11 +60,27 @@ export default
 
 		# Tween to a specific index
 		tweenToIndex: (index) ->
+
+			# Figure out the new x position
 			x = if @paginateBySlide
-			then index * @slideWidth
-			else index * @pageWidth
-			@targetX = @applyXBoundaries -1 * x
+			then index * @slideWidth * -1
+			else index * @pageWidth * -1
+
+			# Apply adjustments to x value and persist
+			x += @makeIncompletePageOffset index
+			@targetX = @applyXBoundaries x
+
+			# Start tweening
 			@startTweening()
+
+		# Creates a px value to represent adjustments that should be made to
+		# account for incommplete pages of slides when looping is enbaled. Like
+		# when there is 3 slotted slides and 2 slides per page.
+		makeIncompletePageOffset: (index) ->
+			return 0 unless @loop and not @paginateBySlide
+			Math.floor(index / @pages) *
+			(@slidesCount % @currentSlidesPerPage) *
+			@slideWidth
 
 		# Apply boundaries to the index
 		applyIndexBoundaries: (index) ->

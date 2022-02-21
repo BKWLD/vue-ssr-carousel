@@ -20,11 +20,12 @@ title: 'Looping / Inifinte Scroll'
 
 ## Looping with multiple slides per page
 
+Note how the incomplete 2nd page is handled.  The 3rd and 1st slide are shown simulataneously. On the next advance forward, the track advances a half width so that the *new* first page contains the 1st and 2nd slide.
+
 <ssr-carousel :slides-per-page='2' loop show-dots show-arrows>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
-  <slide :index='4'></slide>
 </ssr-carousel>
 
 ```vue
@@ -32,11 +33,12 @@ title: 'Looping / Inifinte Scroll'
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
-  <slide :index='4'></slide>
 </ssr-carousel>
 ```
 
 ## Cloned slides can contain components
+
+In this case, we're using [vue-visual](https://github.com/BKWLD/vue-visual) components to render image assets.  Note how lazy loading prevents the loading of the second image until you advance forward.
 
 <ssr-carousel :slides-per-page='1' loop>
   <slide>

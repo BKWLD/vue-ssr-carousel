@@ -44,20 +44,25 @@ export default
 		# The current slide or page index. It rounds differently depending on the
 		# direction of the velocity.  So that it eases to a stop in the direction
 		# the user was dragging.
-		dragIndex: ->
-			fractionalIndex = if @paginateBySlide
-			then @currentX / @slideWidth * -1
-			else @currentX / @pageWidth * -1
-			switch
+		dragIndex: -> switch
 
-				# If there is very little velocity, go to the closet page
-				when Math.abs(@dragVelocity) <= 2 then Math.round fractionalIndex
+			# If there is very little velocity, go to the closet page
+			when Math.abs(@dragVelocity) <= 2 then Math.round @fractionalIndex
 
-				# User was moving forward
-				when @dragVelocity < 0 then Math.ceil fractionalIndex
+			# User was moving forward
+			when @dragVelocity < 0 then Math.ceil @fractionalIndex
 
-				# User was moving backward
-				else Math.floor fractionalIndex
+			# User was moving backward
+			else Math.floor @fractionalIndex
+
+		# Determine the current index given the currentX as a fraction. For
+		# instance, when dragging forward, it will be like 0.1 and when you've
+		# dragged almost a full page, forward it would be 0.9.
+		fractionalIndex: ->
+			x = @currentX - @currentIncompletePageOffset
+			if @paginateBySlide
+			then x / @slideWidth * -1
+			else x / @pageWidth * -1
 
 		# Calculate the width of a slide
 		slideWidth: -> @pageWidth / @currentSlidesPerPage
