@@ -24,6 +24,10 @@ export default
 		# Disable carousel-ness when there aren't enough slides
 		disabled: -> @slidesCount <= @currentSlidesPerPage
 
+		# Get just the slotted slides that are components, ignoring text nodes
+		# which may exist as a result of whitespace
+		slottedSlides: -> @$slots.default.filter (vnode) -> !!vnode.tag
+
 		# Get the total number of slides
 		slidesCount: -> @slottedSlides.length
 
