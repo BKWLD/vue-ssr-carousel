@@ -32,10 +32,7 @@ export default
 		slidesCount: -> @slottedSlides.length
 
 		# Apply boundaries to the index, which will exceed them when looping
-		boundedIndex: ->
-			if @index < 0 then @pages + @index
-			else if @index >= @pages then @index - @pages
-			else @index
+		boundedIndex: -> Math.abs(@index) % @pages
 
 	watch:
 
