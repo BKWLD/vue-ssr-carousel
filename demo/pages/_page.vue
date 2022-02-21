@@ -80,8 +80,7 @@ h1
 
 // Seperate regions on a page
 h2
-	fluid-space margin-top, 'm'
-	fluid-space margin-bottom, 's'
+	fluid-space margin-top, 'l'
 	style-h2()
 
 // Syntax highlighting
@@ -89,9 +88,22 @@ h2
 	background darken(primary-background, 15%)
 	border 1px solid darken(primary-background, 30%)
 	basic-border-radius()
-	fluid-space margin-v, 's'
+	fluid-space margin-bottom, 's'
 >>> code
 	font-size 14px
 	line-height 1.2
+
+// Style body text, like notes
+p
+	line-height 1.5
+	color lighten(primary-background, 50%)
+
+	// Underline links
+	a
+		text-decoration underline
+
+// Add constant margins around demos
+.ssr-carousel
+	fluid-space margin-v, 's'
 
 </style>
