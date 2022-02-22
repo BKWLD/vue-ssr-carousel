@@ -205,4 +205,4 @@ export default
 		# Add px unit to a value if numeric
 		autoUnit: (val) ->
 			return '0px' unless val
-			if String(val).match /^\d+$/ then "#{val}px" else val
+			if String(val).match /^[\d\-\.]+$/ then "#{val}px" else val
