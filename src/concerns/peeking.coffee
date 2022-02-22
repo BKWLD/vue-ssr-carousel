@@ -4,40 +4,29 @@ gutter space.
 ###
 export default
 
-	data: -> leftPeekingSlide: null
+	data: ->
+		leftPeekingSlide: null
+		rightPeekingSlide: null
 
 	props:
 
 		# Distinct left/right peeking values
-		peekLeft:
-			type: Number | String
-			default: -> 0
-		peekRight:
-			type: Number | String
-			default: -> 0
+		peekLeft: Number | String
+		peekRight: Number | String
 
 	data: ->
-		peekLeftPx: Number @peekLeft
-		peekRightPx: Number @peekRight
+		peekLeftPx: Number @peekLeft || 0
+		peekRightPx: Number @peekRight || 0
+
+	created: ->
+		return unless @loop
+		@leftPeekingSlide = @cloneVnode @slottedSlides[@slidesCount - 1]
+		@rightPeekingSlide = @cloneVnode @slottedSlides[0]
 
 	computed:
 
 		# Combine the peeking values, which is needed commonly
 		combinedPeek: -> @peekLeftPx + @peekRightPx
-
-		# Determine whether a clone of the last slide should be made
-		shouldCreateLeftPeekingSlide: -> not @disabled and @loop and @peekLeft
-
-	watch:
-
-		# Clone the last slide for prepending to slides list. Watching this
-		# property because it updates as user drags.
-		currentSlideIndex:
-			immediate: true
-			handler: (index) ->
-				return unless @shouldCreateLeftPeekingSlide
-				lastSlideVnode = @slottedSlides[@slidesCount - 1]
-				@leftPeekingSlide = @cloneVnode lastSlideVnode
 
 	methods:
 

@@ -145,7 +145,7 @@ export default
 			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
 			gutter = @getResponsiveValue 'gutter', breakpoint
 			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
-			peekRight = @getResponsiveValue 'peekLeft', breakpoint
+			peekRight = @getResponsiveValue 'peekRight', breakpoint
 			"calc(
 				#{100 / slidesPerPage}% -
 				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -

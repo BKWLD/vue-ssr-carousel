@@ -23,8 +23,9 @@ export default
 			remainder = slides.slice 0, count - prepended.length
 			slides = [ ...prepended, ...remainder ]
 
-			# Prepend the left peeking slide if it exists
-			slides = [ @leftPeekingSlide, ...slides] if @leftPeekingSlide
+			# Add cloned, peeking slides to the periphery
+			if @leftPeekingSlide and @rightPeekingSlide
+			then slides = [ @leftPeekingSlide, ...slides, @rightPeekingSlide]
 
 			# Return adjusted list of slides
 			slides
@@ -38,6 +39,6 @@ export default
 		# track transform so that the slides don't feel like they were re-ordered.
 		trackLoopOffset: ->
 			return 0 unless @loop
-			offsetIndex = @currentSlideIndex
-			offsetIndex -= 1 if @leftPeekingSlide
-			return offsetIndex * @slideWidth
+			offsetSlideCount = @currentSlideIndex
+			offsetSlideCount -= 1 if @leftPeekingSlide
+			return offsetSlideCount * @slideWidth
