@@ -11,12 +11,16 @@ export default
 	props:
 
 		# Distinct left/right peeking values
-		peekLeft: Number | String
-		peekRight: Number | String
+		peekLeft:
+			type: Number | String
+			default: -> 0
+		peekRight:
+			type: Number | String
+			default: -> 0
 
 	data: ->
-		peekLeftPx: Number @peekLeft || 0
-		peekRightPx: Number @peekRight || 0
+		peekLeftPx: Number @peekLeft
+		peekRightPx: Number @peekRight
 
 	created: ->
 		return unless @loop
