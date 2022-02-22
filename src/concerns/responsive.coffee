@@ -169,7 +169,7 @@ export default
 		getResponsiveValue: (property, breakpoint) ->
 
 			# If this breakpoint has a value, use it
-			return val if val = breakpoint[property]
+			return val if (val = breakpoint[property])?
 
 			# If no responsive rules, use default
 			return @[property] unless @responsiveRules.length
@@ -178,7 +178,8 @@ export default
 			breakpointIndex = @responsiveRules.findIndex ({ maxWidth }) ->
 				maxWidth == breakpoint.maxWidth
 			unless breakpointIndex >= 0
-			then throw "Breakpoint missing: #{JSON.stringify(breakpoint)}"
+			then throw "Breakpoint missing for #{property} in
+				#{JSON.stringify(breakpoint)}"
 
 			# ... if it _wasn't_ the first entry, check if any preceeding breakpoints
 			# have this value set
