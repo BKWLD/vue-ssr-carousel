@@ -7,7 +7,18 @@ export default
 	props:
 
 		# Distinct left/right peeking values
-		peekLeft: Number | String
-		peekRight: Number | String
+		peekLeft:
+			type: Number | String
+			default: -> 0
+		peekRight:
+			type: Number | String
+			default: -> 0
 
+	data: ->
+		peekLeftPx: Number @peekLeft
+		peekRightPx: Number @peekRight
 
+	computed:
+
+		# Combine the peeking values, which is needed commonly
+		combinedPeek: -> @peekLeftPx + @peekRightPx

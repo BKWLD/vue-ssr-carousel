@@ -29,7 +29,7 @@ export default
 		# The ending x value
 		endX: ->
 			return 0 if @disabled
-			@pageWidth - @trackWidth
+			@pageWidth - @trackWidth + @peekRightPx
 
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX

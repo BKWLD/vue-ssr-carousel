@@ -124,8 +124,8 @@ export default
 
 			# Otherwise use a calc to adjust to accomodate gutter
 			else "width: calc(#{widthPercentage}% -
-				#{@autoUnit(gutter)} *
-				#{slidesPerPage - 1} / #{slidesPerPage});"
+				#{@autoUnit(@combinedPeek)} -
+				#{@autoUnit(gutter)} * #{slidesPerPage - 1} / #{slidesPerPage});"
 
 		# Apply gutters between slides via margins
 		makeBreakpointMarginStyle: (breakpoint) ->
