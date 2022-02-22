@@ -57,12 +57,15 @@ export default
 
 		# Determine the current index given the currentX as a fraction. For
 		# instance, when dragging forward, it will be like 0.1 and when you've
-		# dragged almost a full page, forward it would be 0.9.
+		# dragged almost a full page, forward it would be 0.9. I'm using
+		# `trackWidth` as the base of my calculation because it takes into account
+		# the `peekRightPx`.
 		fractionalIndex: ->
 			x = @currentX - @currentIncompletePageOffset
-			if @paginateBySlide
-			then x / @slideWidth * -1
-			else x / @pageWidth * -1
+			trackPercent = x / @trackWidth
+			return if @paginateBySlide
+			then trackPercent * @slidesCount * -1
+			else trackPercent * @pages * -1
 
 		# Determine if the user is dragging vertically
 		isVerticalDrag: ->
