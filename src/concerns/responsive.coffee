@@ -110,7 +110,7 @@ export default
 				#{@scopeSelector} .ssr-carousel-dots { display: flex; }
 				"""
 
-		# Make the flex-basis style that gives a slide it's width given
+		# Make the width style that gives a slide it's width given
 		# slidesPerPage. Reduce this width by the gutter if present
 		makeBreakpointWidthStyle: (breakpoint) ->
 
@@ -120,10 +120,10 @@ export default
 
 			# If there is no gutter, then width is simply a percentage
 			widthPercentage = 100 / slidesPerPage
-			unless gutter then "flex-basis: #{widthPercentage}%;"
+			unless gutter then "width: #{widthPercentage}%;"
 
 			# Otherwise use a calc to adjust to accomodate gutter
-			else "flex-basis: calc( #{widthPercentage}% -
+			else "width: calc(#{widthPercentage}% -
 				#{@autoUnit(gutter)} *
 				#{slidesPerPage - 1} / #{slidesPerPage});"
 
