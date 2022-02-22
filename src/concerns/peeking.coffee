@@ -26,7 +26,7 @@ export default
 		combinedPeek: -> @peekLeftPx + @peekRightPx
 
 		# Determine whether a clone of the last slide should be made
-		shouldCreateLeftPeekingSlide: -> @loop and @peekLeft
+		shouldCreateLeftPeekingSlide: -> not @disabled and @loop and @peekLeft
 
 	watch:
 
