@@ -37,6 +37,11 @@ export default
 		# The current incomplete page offset
 		currentIncompletePageOffset: -> @makeIncompletePageOffset @index
 
+		# Combine the different factors that come together to determine the x
+		# transfrom of the track
+		trackTranslateX: ->
+			@currentX + @trackOffset
+
 	watch:
 
 		# Emit events on index change

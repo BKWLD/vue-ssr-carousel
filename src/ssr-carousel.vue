@@ -21,7 +21,7 @@
 			ssr-carousel-track(
 				ref='track'
 				:slides='slides'
-				v-bind='{ dragging, currentX, trackOffset }')
+				v-bind='{ dragging, trackTranslateX }')
 
 		//- Back / Next navigation
 		ssr-carousel-arrows(
