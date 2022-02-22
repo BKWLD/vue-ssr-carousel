@@ -14,7 +14,8 @@ export default
 	computed:
 
 		# Styles that are used to position the track
-		styles: -> transform: "translateX(#{@trackTranslateX}px)"
+		styles: ->
+			transform: "translateX(#{@trackTranslateX}px)" if @trackTranslateX
 
 	# Render the track and slotted slides
 	render: (create) ->
