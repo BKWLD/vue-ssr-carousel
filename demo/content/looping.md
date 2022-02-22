@@ -1,8 +1,10 @@
 ---
-title: 'Looping / Wrap-Around / Infinite Scroll'
+title: 'Looping'
 ---
 
 ## Basic looping
+
+Looping is also known as `wrapAround` or `infinite` in other carousels.
 
 <ssr-carousel :slides-per-page='1' loop show-dots show-arrows>
   <slide :index='1'></slide>
