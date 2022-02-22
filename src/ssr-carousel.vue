@@ -94,11 +94,13 @@ export default
 	computed:
 
 		# Combine the different factors that come together to determine the x
-		# transfrom of the track
+		# transfrom of the track.  We don't return a value until the carousel
+		# width is measured since the calculation depends on that.
 		trackTranslateX: ->
+			return unless @carouselWidth and not @disabled
 			@currentX + # The value from tweening or dragging
 			@trackLoopOffset + # Offset from re-ordering slides for looping
-			(if @disabled then 0 else @peekLeftPx) # Offset slides for the left peek
+			@peekLeftPx # Offset slides for the left peek
 
 		# Determine whether to create hover event bindings
 		watchesHover: -> @autoplayDelay > 0
