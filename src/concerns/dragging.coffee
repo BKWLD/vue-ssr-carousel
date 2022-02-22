@@ -64,12 +64,6 @@ export default
 			then x / @slideWidth * -1
 			else x / @pageWidth * -1
 
-		# The ending x value
-		endX: -> if @disabled then 0 else @pageWidth - @trackWidth
-
-		# Check if the drag is currently out bounds
-		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
-
 		# Determine if the user is dragging vertically
 		isVerticalDrag: ->
 			return unless @dragDirectionRatio

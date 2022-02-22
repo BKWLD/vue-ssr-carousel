@@ -26,6 +26,14 @@ export default
 		# Calculate the width of the track
 		trackWidth: -> @slideWidth * @slidesCount
 
+		# The ending x value
+		endX: ->
+			return 0 if @disabled
+			@pageWidth - @trackWidth
+
+		# Check if the drag is currently out bounds
+		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
+
 	methods:
 
 		# Measure the component width for various calculations. Using
