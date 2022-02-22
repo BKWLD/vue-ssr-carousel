@@ -57,6 +57,7 @@ import dragging from './concerns/dragging'
 import focus from './concerns/focus'
 import looping from './concerns/looping'
 import pagination from './concerns/pagination'
+import peeking from './concerns/peeking'
 import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
 
@@ -71,6 +72,7 @@ export default
 		focus
 		looping
 		pagination
+		peeking
 		responsive
 		tweening
 	]

@@ -20,6 +20,7 @@ export default
 		{ title: 'Gutters', path: '/gutters' }
 		{ title: 'UI', path: '/ui' }
 		{ title: 'Looping', path: '/looping' }
+		{ title: 'Peeking', path: '/peeking' }
 		{ title: 'Miscellaneous', path: '/misc' }
 	]
 
