@@ -4,7 +4,7 @@ gutter space.
 ###
 export default
 
-	data: -> clonedLastSlide: null
+	data: -> leftPeekingSlide: null
 
 	props:
 
@@ -26,7 +26,7 @@ export default
 		combinedPeek: -> @peekLeftPx + @peekRightPx
 
 		# Determine whether a clone of the last slide should be made
-		shouldCloneLastSlide: -> @loop and @peekLeft
+		shouldCreateLeftPeekingSlide: -> @loop and @peekLeft
 
 	watch:
 
@@ -35,8 +35,9 @@ export default
 		currentSlideIndex:
 			immediate: true
 			handler: (index) ->
-				return unless @shouldCloneLastSlide
-				# console.log index
+				return unless @shouldCreateLeftPeekingSlide
+				lastSlideVnode = @slottedSlides[@slidesCount - 1]
+				@leftPeekingSlide = @cloneVnode lastSlideVnode
 
 	methods:
 
