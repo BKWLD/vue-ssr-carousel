@@ -31,7 +31,7 @@ export default
 
 		# When looping, slides get re-ordered. This value is added to the
 		# track transform so that the slides don't feel like they were re-ordered.
-		trackOffset: ->
+		trackLoopOffset: ->
 			unless @loop then 0
 			else @currentSlideIndex * @slideWidth
 

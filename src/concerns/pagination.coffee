@@ -40,7 +40,7 @@ export default
 		# Combine the different factors that come together to determine the x
 		# transfrom of the track
 		trackTranslateX: ->
-			@currentX + @trackOffset
+			@currentX + @trackLoopOffset
 
 	watch:
 
