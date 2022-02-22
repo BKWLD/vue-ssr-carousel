@@ -96,9 +96,10 @@ export default
 		# Combine the different factors that come together to determine the x
 		# transfrom of the track
 		trackTranslateX: ->
-			@currentX +
-			@trackLoopOffset +
-			@combinedPeek * @index
+			@currentX + # The value from tweening or dragging
+			@trackLoopOffset + # Offset from re-ordering slides for looping
+			@peekLeftPx + # Offset slides for the left peek
+			@combinedPeek * @index # Increasing offset peek effect on each page
 
 		# Determine whether to create hover event bindings
 		watchesHover: -> @autoplayDelay > 0

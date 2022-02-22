@@ -74,7 +74,7 @@ export default
 			@startTweening()
 
 		# Creates a px value to represent adjustments that should be made to
-		# account for incommplete pages of slides when looping is enbaled. Like
+		# account for incommplete pages of slides when looping is enabled. Like
 		# when there is 3 slotted slides and 2 slides per page.
 		makeIncompletePageOffset: (index) ->
 			return 0 unless @loop and not @paginateBySlide

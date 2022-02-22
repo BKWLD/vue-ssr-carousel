@@ -20,16 +20,21 @@ export default
 
 	computed:
 
-		# Calculate the width of a slide
-		slideWidth: -> @pageWidth / @currentSlidesPerPage
+		# Calculate the width of a slide based on client side measured pageWidth
+		# rather than measuring it explicitly in the DOM. This value includes the
+		# gutter.
+		slideWidth: ->
+			@pageWidth / @currentSlidesPerPage -
+			@combinedPeek / @currentSlidesPerPage
 
-		# Calculate the width of the track
+		# Calculate the width of the whole track from the slideWidth.
 		trackWidth: -> @slideWidth * @slidesCount
 
 		# The ending x value
 		endX: ->
 			return 0 if @disabled
-			@pageWidth - @trackWidth + @peekRightPx
+			@pageWidth - @trackWidth -
+			@combinedPeek * (@pages - 1) - @peekLeftPx # Inverse of track offset
 
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX

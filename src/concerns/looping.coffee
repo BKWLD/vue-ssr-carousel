@@ -6,9 +6,6 @@ export default
 	# Add prop to enable looping
 	props: loop: Boolean
 
-	# Store cloned slides
-	data: -> clonedLastSlide: null
-
 	computed:
 
 		# Put slides in order, applying rules related to looping
@@ -27,36 +24,12 @@ export default
 		# This represents the current (as in while scrolling / animating) left most
 		# slide index. This is used in looping calculation so that the reordering
 		# of slides isn't affected by paginatePerSlide setting.
-		currentSlideIndex: -> Math.floor @currentX / @slideWidth * -1
+		currentSlideIndex: ->
+			console.log (@currentX - @currentIncompletePageOffset) / (@pageWidth / @currentSlidesPerPage) * -1
+			Math.floor @currentX / @slideWidth * -1
 
 		# When looping, slides get re-ordered. This value is added to the
 		# track transform so that the slides don't feel like they were re-ordered.
 		trackLoopOffset: ->
 			unless @loop then 0
 			else @currentSlideIndex * @slideWidth
-
-	methods:
-
-		# Clone a vnode, based on
-		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89
-		cloneVnode: (vnode) ->
-			cloned = new vnode.constructor(
-				vnode.tag,
-				vnode.data,
-				vnode.children && vnode.children.slice(),
-				vnode.text,
-				vnode.elm,
-				vnode.context,
-				vnode.componentOptions,
-				vnode.asyncFactory
-			)
-			cloned.ns = vnode.ns
-			cloned.isStatic = vnode.isStatic
-			cloned.key = vnode.key
-			cloned.isComment = vnode.isComment
-			cloned.fnContext = vnode.fnContext
-			cloned.fnOptions = vnode.fnOptions
-			cloned.fnScopeId = vnode.fnScopeId
-			cloned.asyncMeta = vnode.asyncMeta
-			cloned.isCloned = true
-			return cloned
