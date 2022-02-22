@@ -98,8 +98,7 @@ export default
 		trackTranslateX: ->
 			@currentX + # The value from tweening or dragging
 			@trackLoopOffset + # Offset from re-ordering slides for looping
-			@peekLeftPx + # Offset slides for the left peek
-			@combinedPeek * @index # Increasing offset peek effect on each page
+			@peekLeftPx #+ # Offset slides for the left peek
 
 		# Determine whether to create hover event bindings
 		watchesHover: -> @autoplayDelay > 0

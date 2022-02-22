@@ -6,7 +6,7 @@ export default
 
 	data: ->
 		viewportWidth: null # Width of the viewport, for media query calculation
-		pageWidth: null # Width of a page of slides (aka the carousel container)
+		carouselWidth: null # Width of a page of the carousel
 		gutterWidth: 0 # Computed width of gutters, since they support css vars
 
 	# Add resize listening
@@ -20,21 +20,20 @@ export default
 
 	computed:
 
+		# The width of a page of slides, which may be less than the carouselWidth
+		# if there is peeking. This includes the affect of gutters.
+		pageWidth: -> @carouselWidth - @combinedPeek
+
 		# Calculate the width of a slide based on client side measured pageWidth
 		# rather than measuring it explicitly in the DOM. This value includes the
 		# gutter.
-		slideWidth: ->
-			@pageWidth / @currentSlidesPerPage -
-			@combinedPeek / @currentSlidesPerPage
+		slideWidth: -> @pageWidth  / @currentSlidesPerPage
 
 		# Calculate the width of the whole track from the slideWidth.
-		trackWidth: -> @slideWidth * @slidesCount
+		trackWidth: -> @slideWidth * @slidesCount - @peekRightPx
 
 		# The ending x value
-		endX: ->
-			return 0 if @disabled
-			@pageWidth - @trackWidth -
-			@combinedPeek * (@pages - 1) - @peekLeftPx # Inverse of track offset
+		endX: -> if @disabled then 0 else @pageWidth - @trackWidth
 
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
@@ -48,5 +47,5 @@ export default
 			return unless @$el?.nodeType == Node.ELEMENT_NODE
 			return unless firstSlide = @$refs.track.$el.firstElementChild
 			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
-			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
+			@carouselWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
