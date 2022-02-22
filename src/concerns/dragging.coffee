@@ -64,12 +64,6 @@ export default
 			then x / @slideWidth * -1
 			else x / @pageWidth * -1
 
-		# Calculate the width of a slide
-		slideWidth: -> @pageWidth / @currentSlidesPerPage
-
-		# Calculate the width of the track
-		trackWidth: -> @slideWidth * @slidesCount
-
 		# The ending x value
 		endX: -> if @disabled then 0 else @pageWidth - @trackWidth
 

@@ -53,6 +53,7 @@ import SsrCarouselTrack from './ssr-carousel-track'
 
 # Concerns
 import autoplay from './concerns/autoplay'
+import dimensions from './concerns/dimensions'
 import dragging from './concerns/dragging'
 import focus from './concerns/focus'
 import looping from './concerns/looping'
@@ -68,6 +69,7 @@ export default
 	# Load concerns
 	mixins: [
 		autoplay
+		dimensions
 		dragging
 		focus
 		looping

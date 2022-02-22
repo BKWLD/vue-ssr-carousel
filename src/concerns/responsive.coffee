@@ -1,7 +1,6 @@
 ###
 Code related to changing the slides per page at different viewport widths
 ###
-import throttle from 'lodash/throttle'
 export default
 
 	props:
@@ -21,20 +20,6 @@ export default
 		responsive:
 			type: Array
 			default: -> []
-
-	data: ->
-		viewportWidth: null # Width of the viewport, for media query calculation
-		pageWidth: null # Width of a page of slides (and the carousel container)
-		gutterWidth: 0 # Computed width of gutters, since they support css vars
-
-	# Add resize listening
-	mounted: ->
-		@onResize()
-		@onResizeThrottled = throttle @onResize, 200
-		window.addEventListener 'resize', @onResizeThrottled
-
-	# Cleanup listeners
-	beforeDestroy: -> window.removeEventListener 'resize', @onResizeThrottled
 
 	computed:
 
@@ -83,16 +68,6 @@ export default
 		disabled: -> @goto(0) if @disabled
 
 	methods:
-
-		# Measure the component width for various calculations. Using
-		# getBoundingClientRect so we can get fractional values.  We also need
-		# the width of the gutter since that's effectively part of the page.
-		onResize: ->
-			return unless @$el?.nodeType == Node.ELEMENT_NODE
-			return unless firstSlide = @$refs.track.$el.firstElementChild
-			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
-			@pageWidth = @$el.getBoundingClientRect().width + @gutterWidth
-			@viewportWidth = window.innerWidth
 
 		# Take an item form the responsive array and make a media query from it
 		makeMediaQuery: (breakpoint) ->
