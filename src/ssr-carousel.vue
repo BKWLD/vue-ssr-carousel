@@ -78,8 +78,8 @@ export default
 		focus
 		looping
 		pagination
-		peeking
 		responsive
+		peeking # After `responsive` so prop can access `gutter` prop
 		tweening
 	]
 

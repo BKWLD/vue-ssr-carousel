@@ -10,13 +10,26 @@ export default
 
 	props:
 
+		# Use gutter's as the peeking value
+		peekGutter: Boolean
+
+		# Set both peeking values at once
+		peek:
+			type: Number | String
+			default: ->
+
+				# Prevent subpixel rounding issues from causing a sliver of offscreen
+				# slide from peaking in.
+				unless @peekGutter then 0
+				else "calc(#{@gutter} - 1px)"
+
 		# Distinct left/right peeking values
 		peekLeft:
 			type: Number | String
-			default: 0
+			default: -> @peek
 		peekRight:
 			type: Number | String
-			default: 0
+			default: -> @peek
 
 	data: ->
 		peekLeftPx: 0

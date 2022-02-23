@@ -6,7 +6,7 @@ title: 'Peeking'
 
 This is an example of implementing peeking on the right side only, which is useful for teasing the presence of other cards.
 
-<ssr-carousel :slides-per-page='2' peek-right='40'>
+<ssr-carousel :slides-per-page='2' :peek-right='40'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
@@ -28,7 +28,7 @@ This is an example of implementing peeking on the right side only, which is usef
 
 You should add `loop` when using a left peek so that space is filled on the first page.
 
-<ssr-carousel loop peek-left='40' peek-right='40'>
+<ssr-carousel loop :peek-left='40' :peek-right='40'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
@@ -46,7 +46,7 @@ You should add `loop` when using a left peek so that space is filled on the firs
 
 Note how there is only one more slide than the amount we're showing per page. The last slide gets cloned so it peeks in on both the left and right sides.  This example also uses the `peek` shorthand that sets both `peek-left` and `peek-right` to the same value.
 
-<ssr-carousel loop :slides-per-page='3' peek-left='40' peek-right='40' show-arrows show-dots>
+<ssr-carousel loop :slides-per-page='3' :peek='40' show-arrows show-dots>
   <slide :index='1' tint='red'></slide>
   <slide :index='2' tint='orange'></slide>
   <slide :index='3' tint='yellow'></slide>
@@ -54,7 +54,7 @@ Note how there is only one more slide than the amount we're showing per page. Th
 </ssr-carousel>
 
 ```vue
-<ssr-carousel loop :slides-per-page='3' peek-left='40' peek-right='40' show-arrows>
+<ssr-carousel loop :slides-per-page='3' :peek='40' show-arrows>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
@@ -70,14 +70,12 @@ This example uses the `peek-gutters` sugar that automatically sets the peek valu
   :slides-per-page='2'
   paginate-by-slide
   loop
-  peek-left='10%'
-  peek-right='10%'
+  peek='10%'
   :responsive='[
     {
       maxWidth: 767,
       gutter: 10,
-      peekLeft: 20,
-      peekRight: 20,
+      peek: 20,
     }
   ]'>
   <slide :index='1'></slide>
@@ -90,18 +88,52 @@ This example uses the `peek-gutters` sugar that automatically sets the peek valu
   :slides-per-page='2'
   paginate-by-slide
   loop
-  peek-left='10%'
-  peek-right='10%'
+  peek='10%'
   :responsive='[
     {
       maxWidth: 767,
       gutter: 10,
-      peekLeft: 20,
-      peekRight: 20,
+      peek: 20,
     }
   ]'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
 </ssr-carousel>
+```
+
+## Sync with gutter setting
+
+The `peek-gutter` prop uses your gutter value for the prop.  This is useful setting when your `vue-ssr-carousel` instance is flush with the edges of your browser and you use your site gutter value; the slides will transition out the edge of the page.  Then, use the `min-feather-break` prop to automatically add a light feathering mask fade out exiting slides at large viewports.
+
+<ssr-carousel
+  :slides-per-page='3'
+  paginate-by-slide
+  loop
+  peek-gutter
+  gutter='var(--fluid-gutter)'>
+  <slide :index='1'></slide>
+  <slide :index='2'></slide>
+  <slide :index='3'></slide>
+  <slide :index='4'></slide>
+  <slide :index='5'></slide>
+</ssr-carousel>
+
+```vue
+<ssr-carousel
+  :slides-per-page='3'
+  paginate-by-slide
+  loop
+  peek-gutter
+  gutter='var(--fluid-gutter)'>
+  <slide :index='1'></slide>
+  <slide :index='2'></slide>
+  <slide :index='3'></slide>
+  <slide :index='4'></slide>
+  <slide :index='5'></slide>
+</ssr-carousel>
+<style lang="stylus">
+body
+  fluid --fluid-gutter, 40, 20
+</style>
 ```
