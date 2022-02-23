@@ -16,9 +16,16 @@ export default
 	computed:
 
 		# The current number of pages
-		pages: ->
-			if @paginateBySlide
-			then Math.max 1, @slidesCount - @currentSlidesPerPage
+		pages: -> switch
+
+			# When looping and paginating per slide, make a dot per slide
+			when @paginateBySlide and @loop then @slidesCount
+
+			# Else, restrict pages so you the last slide is flush with right edge
+			when @paginateBySlide then @slidesCount - @currentSlidesPerPage + 1
+
+			# When not paginating by slide, the amount of pages is related to the
+			# current number of slides shown per page.
 			else Math.ceil @slidesCount / @currentSlidesPerPage
 
 		# Disable carousel-ness when there aren't enough slides
