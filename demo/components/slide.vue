@@ -3,6 +3,7 @@
 <template lang='pug'>
 
 .slide: div
+	.tint(v-if='tint' :style='{ background: tint }')
 	.title(v-if='index') Slide {{ index }}
 	slot
 
@@ -14,6 +15,7 @@
 export default
 	props:
 		index: Number
+		tint: String
 
 </script>
 
@@ -38,6 +40,15 @@ export default
 	fluid-space padding 's'
 	> div
 		width 100%
+
+	// Capture tint
+	position relative
+	overflow hidden
+
+// Optional tint layer, for easier tracking of cloning
+.tint
+	expand()
+	opacity 0.4
 
 // Increase slide text size
 .title
