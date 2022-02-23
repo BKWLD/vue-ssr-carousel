@@ -49,3 +49,4 @@ export default
 			@gutterWidth = parseInt getComputedStyle(firstSlide).marginRight
 			@carouselWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
+			@capturePeekingMeasurements()

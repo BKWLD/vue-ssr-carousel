@@ -12,6 +12,10 @@
 	//- positioning outside of carousel).
 	.ssr-carousel-slides
 
+		//- Render peeking styles to an element so their computed px values can be
+		//- measured
+		.ssr-peek-values(ref='peekValues' :style='peekStyles')
+
 		//- The overflow mask and drag target
 		.ssr-carousel-mask(
 			:class='{ pressing, disabled }'
@@ -130,6 +134,10 @@ export default
 // Posiition arrows relative to this
 .ssr-carousel-slides
 	position relative
+
+// Used to capture computed values
+.ssr-peek-values
+	position: absolute
 
 // Mask around slides
 .ssr-carousel-mask

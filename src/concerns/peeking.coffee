@@ -13,17 +13,18 @@ export default
 		# Distinct left/right peeking values
 		peekLeft:
 			type: Number | String
-			default: -> 0
+			default: 0
 		peekRight:
 			type: Number | String
-			default: -> 0
+			default: 0
 
 	data: ->
-		peekLeftPx: Number @peekLeft
-		peekRightPx: Number @peekRight
+		peekLeftPx: 0
+		peekRightPx: 0
 
+	# Make clones of slides for left and right
 	created: ->
-		return unless @loop
+		return unless @loop and @slidesCount > 1
 		@leftPeekingSlide = @cloneVnode @slottedSlides[@slidesCount - 1]
 		@rightPeekingSlide = @cloneVnode @slottedSlides[0]
 
@@ -32,7 +33,21 @@ export default
 		# Combine the peeking values, which is needed commonly
 		combinedPeek: -> @peekLeftPx + @peekRightPx
 
+		# Make the styles object for reading computed styles
+		peekStyles: ->
+			breakpoint = @currentResponsiveBreakpoint
+			left: @autoUnit @getResponsiveValue 'peekLeft', breakpoint
+			right: @autoUnit @getResponsiveValue 'peekRight', breakpoint
+
 	methods:
+
+		# Capture measurements of peeking values
+		capturePeekingMeasurements: ->
+			return unless @$refs.peekValues
+			@$nextTick -> # Wait for getResponsiveValue on @peekStyles
+				styles = getComputedStyle @$refs.peekValues
+				@peekLeftPx = parseInt styles.left
+				@peekRightPx = parseInt styles.right
 
 		# Clone a vnode, based on
 		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89

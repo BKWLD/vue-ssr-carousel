@@ -43,7 +43,7 @@ export default
 		currentResponsiveBreakpoint: ->
 			if match = [...@responsiveRules].reverse().find ({ active }) -> active
 			then match # Return the matching rule
-			else { @slidesPerPage, @gutter } # Else return defaults
+			else { @slidesPerPage, @gutter, @peekLeft, @peekRight } # Defaults
 
 		# Make the scoping selecotr
 		scopeSelector: -> "[data-ssrc-id='#{@scopeId}']"
