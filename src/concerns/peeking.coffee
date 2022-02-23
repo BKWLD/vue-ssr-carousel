@@ -31,6 +31,12 @@ export default
 			type: Number | String
 			default: -> @peek
 
+		# Add feathering effect at this min-width
+		featheringMinWidth: Number | String
+		featheringSize:
+			type: Number | String
+			default: -> @gutter
+
 	data: ->
 		peekLeftPx: 0
 		peekRightPx: 0

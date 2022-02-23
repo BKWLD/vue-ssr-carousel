@@ -18,7 +18,8 @@
 
 		//- The overflow mask and drag target
 		.ssr-carousel-mask(
-			:class='{ pressing, disabled }'
+			:class='{ pressing, disabled, feathering }'
+			:style='maskStyles'
 			v-on='maskListeners')
 
 			//- The container of the slides that animates
@@ -59,6 +60,7 @@ import SsrCarouselTrack from './ssr-carousel-track'
 import autoplay from './concerns/autoplay'
 import dimensions from './concerns/dimensions'
 import dragging from './concerns/dragging'
+import feathering from './concerns/feathering'
 import focus from './concerns/focus'
 import looping from './concerns/looping'
 import pagination from './concerns/pagination'
@@ -75,6 +77,7 @@ export default
 		autoplay
 		dimensions
 		dragging
+		feathering
 		focus
 		looping
 		pagination
@@ -151,5 +154,12 @@ export default
 		cursor grab
 		&.pressing
 			cursor grabbing
+
+	// Add feathering
+	&.feathering
+		mask-image linear-gradient(to right,
+			transparent, black var(--feather-width, 20px),
+			black calc(100% - var(--feather-width, 20px)),
+			transparent)
 
 </style>

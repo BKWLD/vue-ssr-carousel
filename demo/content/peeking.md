@@ -64,13 +64,14 @@ Note how there is only one more slide than the amount we're showing per page. Th
 
 ## Peeking values are responsive and support CSS units
 
-This example uses the `peek-gutters` sugar that automatically sets the peek values to the same value as the `gutter`.
+This example also uses the `feather` prop with a boolean value.
 
 <ssr-carousel
   :slides-per-page='2'
   paginate-by-slide
   loop
   peek='10%'
+  feather
   :responsive='[
     {
       maxWidth: 767,
@@ -89,6 +90,7 @@ This example uses the `peek-gutters` sugar that automatically sets the peek valu
   paginate-by-slide
   loop
   peek='10%'
+  feather
   :responsive='[
     {
       maxWidth: 767,
@@ -111,7 +113,21 @@ The `peek-gutter` prop uses your gutter value for the prop.  This is useful sett
   paginate-by-slide
   loop
   peek-gutter
-  gutter='var(--fluid-gutter)'>
+  gutter='var(--fluid-gutter)'
+  :responsive='[
+    {
+      minWidth: 1024,
+      feather: "var(--fluid-gutter)",
+    },
+    {
+      maxWidth: 768,
+      slidesPerPage: 2,
+    },
+    {
+      maxWidth: 500,
+      slidesPerPage: 1,
+    },
+  ]'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
@@ -125,7 +141,8 @@ The `peek-gutter` prop uses your gutter value for the prop.  This is useful sett
   paginate-by-slide
   loop
   peek-gutter
-  gutter='var(--fluid-gutter)'>
+  gutter='var(--fluid-gutter)'
+  feather='var(--fluid-gutter)'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>
