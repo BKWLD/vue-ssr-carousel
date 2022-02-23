@@ -40,10 +40,12 @@ export default
 			immediate: true
 			handler: ->
 				return unless @loop and @slidesCount > 1
-				firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
-				lastSlide = @slottedSlides[@slideOrder[0]]
-				@leftPeekingSlide = @cloneVnode firstSlide
-				@rightPeekingSlide = @cloneVnode lastSlide
+				if @peekLeft
+					firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
+					@leftPeekingSlide = @cloneVnode firstSlide
+				if @peekRight
+					lastSlide = @slottedSlides[@slideOrder[0]]
+					@rightPeekingSlide = @cloneVnode lastSlide
 
 	methods:
 
