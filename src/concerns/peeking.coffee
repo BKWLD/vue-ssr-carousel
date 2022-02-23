@@ -22,12 +22,6 @@ export default
 		peekLeftPx: 0
 		peekRightPx: 0
 
-	# Make clones of slides for left and right
-	created: ->
-		return unless @loop and @slidesCount > 1
-		@leftPeekingSlide = @cloneVnode @slottedSlides[@slidesCount - 1]
-		@rightPeekingSlide = @cloneVnode @slottedSlides[0]
-
 	computed:
 
 		# Combine the peeking values, which is needed commonly
@@ -38,6 +32,18 @@ export default
 			breakpoint = @currentResponsiveBreakpoint
 			left: @autoUnit @getResponsiveValue 'peekLeft', breakpoint
 			right: @autoUnit @getResponsiveValue 'peekRight', breakpoint
+
+	watch:
+
+		# Clone the edge slides for merging into the slides array
+		slideOrder:
+			immediate: true
+			handler: ->
+				return unless @loop and @slidesCount > 1
+				firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
+				lastSlide = @slottedSlides[@slideOrder[0]]
+				@leftPeekingSlide = @cloneVnode firstSlide
+				@rightPeekingSlide = @cloneVnode lastSlide
 
 	methods:
 

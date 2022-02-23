@@ -6,22 +6,19 @@ export default
 	# Add prop to enable looping
 	props: loop: Boolean
 
+	# Store the slide order indexes
+	data: -> slideOrder: []
+
 	computed:
 
 		# Put slides in order, applying rules related to looping
 		slides: ->
-			slides = @slottedSlides
-			count = slides.length
 
 			# If not looping, don't show other slides during boundary dampening
-			return slides unless @loop
+			return @slottedSlides unless @loop
 
-			# Breakup the slides into arrays using the modulo of the current
-			# side index.  I came up with this by figuring out how the arrays should
-			# look and working back from there.
-			prepended = slides.slice @currentSlideIndex % count
-			remainder = slides.slice 0, count - prepended.length
-			slides = [ ...prepended, ...remainder ]
+			# Build array of slides according to slideOrder
+			slides = @slideOrder.map (index) => @slottedSlides[index]
 
 			# Add cloned, peeking slides to the periphery
 			if @leftPeekingSlide and @rightPeekingSlide
@@ -42,3 +39,18 @@ export default
 			offsetSlideCount = @currentSlideIndex
 			offsetSlideCount -= 1 if @leftPeekingSlide
 			return offsetSlideCount * @slideWidth
+
+	watch:
+
+		# This represents the current (as in while scrolling / animating) left most
+		# slide index. This is used in looping calculation so that the reordering
+		# of slides isn't affected by paginatePerSlide setting. Calculating via
+		# watcher to prevent unnecesary recalculations (I noticed a bunch of calls
+		# when this was done via a computed property)
+		currentSlideIndex:
+			immediate: true
+			handler: ->
+				indexes = [...Array(@slidesCount).keys()]
+				prepended = indexes.slice @currentSlideIndex % @slidesCount
+				remainder = indexes.slice 0, @slidesCount - prepended.length
+				@slideOrder = [ ...prepended, ...remainder ]
