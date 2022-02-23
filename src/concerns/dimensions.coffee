@@ -68,3 +68,23 @@ export default
 			@carouselWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
 			@capturePeekingMeasurements()
+
+		# Make the width style that gives a slide it's width given
+		# slidesPerPage. Reduce this width by the gutter if present
+		makeBreakpointWidthStyle: (breakpoint) ->
+			"width: #{@makeSlideWidthCalc(breakpoint)};"
+
+		# Build the calc string which makes a percentage width for a slide and
+		# reduces it by combined peeking and gutter influence. The computed
+		# style this produces should have an equal value to the `slideWidth`
+		# computed property which is client side JS dependent.
+		makeSlideWidthCalc: (breakpoint) ->
+			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
+			gutter = @getResponsiveValue 'gutter', breakpoint
+			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
+			peekRight = @getResponsiveValue 'peekRight', breakpoint
+			"calc(
+				#{100 / slidesPerPage}% -
+				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -
+				(#{@autoUnit(gutter)} * #{slidesPerPage - 1}) / #{slidesPerPage}
+			)"

@@ -61,6 +61,7 @@ import dimensions from './concerns/dimensions'
 import dragging from './concerns/dragging'
 import feathering from './concerns/feathering'
 import focus from './concerns/focus'
+import gutters from './concerns/gutters'
 import looping from './concerns/looping'
 import pagination from './concerns/pagination'
 import peeking from './concerns/peeking'
@@ -78,6 +79,7 @@ export default
 		dragging
 		feathering
 		focus
+		gutters
 		looping
 		pagination
 		responsive

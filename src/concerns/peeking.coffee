@@ -76,6 +76,25 @@ export default
 				@peekLeftPx = parseInt styles.left
 				@peekRightPx = parseInt styles.right
 
+		# Calculate the offset that gets added to the current position to account
+		# for prepended slides from peeking. This replicates the JS required to
+		# make `trackLoopOffset` using CSS only so there is now reflow when JS
+		# hydrates.  This gets overridden by the track's inline translateX style.
+		makeBreakpointTrackTransformStyle: (breakpoint) ->
+			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
+
+			# If no peeking slide, just add the offset
+			unless @leftPeekingSlide
+			then "transform: translateX(#{@autoUnit(peekLeft)});"
+
+			# Otherwise, offset by one slide width (including it's gutter)
+			else
+				gutter = @getResponsiveValue 'gutter', breakpoint
+				"transform: translateX(calc(
+					#{@autoUnit(peekLeft)} -
+					(#{@makeSlideWidthCalc(breakpoint)} + #{@autoUnit(gutter)})
+				));"
+
 		# Clone a vnode, based on
 		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89
 		cloneVnode: (vnode) ->

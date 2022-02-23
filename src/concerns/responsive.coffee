@@ -11,11 +11,6 @@ export default
 			type: Number
 			default: 1
 
-		# The gutters between slides
-		gutter:
-			type: Number | String
-			default: 20
-
 		# Provide different slides per page at different viewport widths
 		responsive:
 			type: Array
@@ -121,50 +116,6 @@ export default
 				#{@scopeSelector} .ssr-carousel-arrows { display: block; }
 				#{@scopeSelector} .ssr-carousel-dots { display: flex; }
 				"""
-
-		# Calculate the offset that gets added to the current position to account
-		# for prepended slides from peeking. This replicates the JS required to
-		# make `trackLoopOffset` using CSS only so there is now reflow when JS
-		# hydrates.  This gets overridden by the track's inline translateX style.
-		makeBreakpointTrackTransformStyle: (breakpoint) ->
-			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
-
-			# If no peeking slide, just add the offset
-			unless @leftPeekingSlide
-			then "transform: translateX(#{@autoUnit(peekLeft)});"
-
-			# Otherwise, offset by one slide width (including it's gutter)
-			else
-				gutter = @getResponsiveValue 'gutter', breakpoint
-				"transform: translateX(calc(
-					#{@autoUnit(peekLeft)} -
-					(#{@makeSlideWidthCalc(breakpoint)} + #{@autoUnit(gutter)})
-				));"
-
-		# Make the width style that gives a slide it's width given
-		# slidesPerPage. Reduce this width by the gutter if present
-		makeBreakpointWidthStyle: (breakpoint) ->
-			"width: #{@makeSlideWidthCalc(breakpoint)};"
-
-		# Build the calc string which makes a percentage width for a slide and
-		# reduces it by combined peeking and gutter influence. The computed
-		# style this produces should have an equal value to the `slideWidth`
-		# computed property which is client side JS dependent.
-		makeSlideWidthCalc: (breakpoint) ->
-			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
-			gutter = @getResponsiveValue 'gutter', breakpoint
-			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
-			peekRight = @getResponsiveValue 'peekRight', breakpoint
-			"calc(
-				#{100 / slidesPerPage}% -
-				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -
-				(#{@autoUnit(gutter)} * #{slidesPerPage - 1}) / #{slidesPerPage}
-			)"
-
-		# Apply gutters between slides via margins
-		makeBreakpointMarginStyle: (breakpoint) ->
-			gutter = @getResponsiveValue 'gutter', breakpoint
-			"margin-right: #{@autoUnit(gutter)};"
 
 		# Check if a breakpoint would apply currently. Not using window.matchQuery
 		# so I can consume via a compued property
