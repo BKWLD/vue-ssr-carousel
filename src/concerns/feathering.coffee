@@ -10,20 +10,27 @@ export default
 			type: Boolean | String | Number
 			default: false
 
-		# Explicit feather width prop
-		featherWidth:
-			type: String | Number
-			default: -> @feather || 20
+	methods:
 
-	computed:
+		# Add feathering styles via breakpoint
+		makeBreakpointFeatheringStyle: (breakpoint) ->
 
-		# Enable feathering as long as feather is not falsey
-		feathering: -> @feather not in [false, null] and @featherWidth
+			# Get feathering amount
+			feather = @getResponsiveValue 'feather', breakpoint
+			return if feather in [false, null]
+			feather = 20 unless feather
+			feather = @autoUnit feather
 
-		# Toggle feathering on
-		maskClasses: -> feather: @feathering
+			# Make the rule value
+			cssValue = """
+			linear-gradient(to right,
+				transparent, black #{feather},
+				black calc(100% - #{feather}),
+				transparent)
+			"""
 
-		# Make feathering styles
-		maskStyles: ->
-			return unless @feathering
-			'--feather-width': @autoUnit @featherWidth
+			# Write the style, with browser prefixes
+			"""
+			-webkit-mask-image: #{cssValue};
+			mask-image: #{cssValue};
+			"""

@@ -43,7 +43,13 @@ export default
 		currentResponsiveBreakpoint: ->
 			if match = [...@responsiveRules].reverse().find ({ active }) -> active
 			then match # Return the matching rule
-			else { @slidesPerPage, @gutter, @peekLeft, @peekRight } # Defaults
+			else { # Defaults
+				@slidesPerPage
+				@gutter
+				@peekLeft
+				@peekRight
+				@feather
+			}
 
 		# Make the scoping selecotr
 		scopeSelector: -> "[data-ssrc-id='#{@scopeId}']"
@@ -81,6 +87,9 @@ export default
 		# Make the block of styles for a breakpoint
 		makeBreakpointStyles: (breakpoint) -> """
 			#{@makeBreakpointDisablingRules(breakpoint)}
+			#{@scopeSelector} .ssr-carousel-mask {
+				#{@makeBreakpointFeatheringStyle(breakpoint)}
+			}
 			#{@scopeSelector} .ssr-carousel-track {
 				#{@makeBreakpointTrackTransformStyle(breakpoint)}
 			}

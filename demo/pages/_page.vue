@@ -102,8 +102,23 @@ p
 	a
 		text-decoration underline
 
+	// Style inline code
+	code
+		border 1px solid lighten(primary-background, 15%)
+		border-radius 2px
+		padding-h .3em
+		background darken(primary-background, 10%)
+
 // Add constant margins around demos
 .ssr-carousel
 	fluid-space margin-v, 's'
+
+// Clear the effect of the page gutters
+.clear-page-gutters
+	fluid(margin-h,
+		gutter * -1,
+		gutter-mobile * -1,
+		max-break: desktop,
+		min-break: mobile)
 
 </style>

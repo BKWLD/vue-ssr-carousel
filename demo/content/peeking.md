@@ -106,8 +106,38 @@ This example also uses the `feather` prop with a boolean value.
 
 ## Sync with gutter setting
 
-The `peek-gutter` prop uses your gutter value for the prop.  This is useful setting when your `vue-ssr-carousel` instance is flush with the edges of your browser and you use your site gutter value; the slides will transition out the edge of the page.  Then, use the `min-feather-break` prop to automatically add a light feathering mask fade out exiting slides at large viewports.
+The `peek-gutter` prop uses your gutter value for the prop.  This is useful setting when your `vue-ssr-carousel` instance is flush with the edges of your browser and you use your site gutter value; the slides will transition out the edge of the page.  Then, use the `feather` with `responsive` to automatically add a light feathering mask when the viewport is wider than the carousel width.
 
+<div class="clear-page-gutters">
+  <ssr-carousel
+    :slides-per-page='3'
+    paginate-by-slide
+    loop
+    peek-gutter
+    gutter='var(--fluid-gutter)'
+    :responsive='[
+      {
+        minWidth: 1440,
+        feather: "calc(var(--fluid-gutter) * 0.5)",
+      },
+      {
+        maxWidth: 768,
+        slidesPerPage: 2,
+      },
+      {
+        maxWidth: 500,
+        slidesPerPage: 1,
+      },
+    ]'>
+    <slide :index='1'></slide>
+    <slide :index='2'></slide>
+    <slide :index='3'></slide>
+    <slide :index='4'></slide>
+    <slide :index='5'></slide>
+  </ssr-carousel>
+</div>
+
+```vue
 <ssr-carousel
   :slides-per-page='3'
   paginate-by-slide
@@ -116,8 +146,8 @@ The `peek-gutter` prop uses your gutter value for the prop.  This is useful sett
   gutter='var(--fluid-gutter)'
   :responsive='[
     {
-      minWidth: 1024,
-      feather: "var(--fluid-gutter)",
+      minWidth: 1440,
+      feather: "calc(var(--fluid-gutter) * 0.5)",
     },
     {
       maxWidth: 768,
@@ -128,21 +158,6 @@ The `peek-gutter` prop uses your gutter value for the prop.  This is useful sett
       slidesPerPage: 1,
     },
   ]'>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-  <slide :index='4'></slide>
-  <slide :index='5'></slide>
-</ssr-carousel>
-
-```vue
-<ssr-carousel
-  :slides-per-page='3'
-  paginate-by-slide
-  loop
-  peek-gutter
-  gutter='var(--fluid-gutter)'
-  feather='var(--fluid-gutter)'>
   <slide :index='1'></slide>
   <slide :index='2'></slide>
   <slide :index='3'></slide>

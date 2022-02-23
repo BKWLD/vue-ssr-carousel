@@ -34,15 +34,16 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 
 - `slides-per-page` (`1`) - How many slides are shown per page.
 - `gutter` (`20`) - The size of the space between slides.  This can a number or any CSS resolvable string. See https://vue-ssr-carousel.netlify.app/gutters.
-- `responsive` (`[]`) - Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive.  The following properties can be set responsively: `slidesPerPage`, `gutter`, and any `peek` related property.
 - `paginate-by-slide` (`false`) - When `false`, dragging the carousel or interacting with the arrows will advance a full page of slides at a time.  When `true`, the carousel will come to a rest at each slide.
 - `loop` (`false`) - Boolean to enable looping / infinite scroll. See https://vue-ssr-carousel.netlify.app/looping.
 - `peek` (`0`) - A width value for how far adjacent cards should peek into the carousel canvas. This can a number or any CSS resolvable string. See https://vue-ssr-carousel.netlify.app/peeking.  There are couple related properties:
   - `peek-left` - Set peek value on just the left edge.
   - `peek-right` - Set peek value on just the right edge.
   - `peek-gutter` - Set peek value on to the `gutter` value.
+- `feather` (`false`) - Fades out the left and right edges using a CSS `mask-image` gradient.  Set to `true` to use the default `20px` value or as number or any CSS resolvable string to set an explicit width. This is designed to be used with `peek` properties. See https://vue-ssr-carousel.netlify.app/peeking
 - `show-arrows` (`false`) - Whether to show back/forward arrows. See https://vue-ssr-carousel.netlify.app/ui.
 - `show-dots` (`false`) - Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
+- `responsive` (`[]`) - Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
 
 ### Slots
 

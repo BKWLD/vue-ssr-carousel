@@ -18,8 +18,7 @@
 
 		//- The overflow mask and drag target
 		.ssr-carousel-mask(
-			:class='{ pressing, disabled, feathering }'
-			:style='maskStyles'
+			:class='{ pressing, disabled }'
 			v-on='maskListeners')
 
 			//- The container of the slides that animates
@@ -154,12 +153,5 @@ export default
 		cursor grab
 		&.pressing
 			cursor grabbing
-
-	// Add feathering
-	&.feathering
-		mask-image linear-gradient(to right,
-			transparent, black var(--feather-width, 20px),
-			black calc(100% - var(--feather-width, 20px)),
-			transparent)
 
 </style>
