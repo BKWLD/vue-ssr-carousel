@@ -27,13 +27,31 @@ export default
 		# Calculate the width of a slide based on client side measured pageWidth
 		# rather than measuring it explicitly in the DOM. This value includes the
 		# gutter.
-		slideWidth: -> @pageWidth  / @currentSlidesPerPage
+		slideWidth: -> @pageWidth / @currentSlidesPerPage
 
 		# Calculate the width of the whole track from the slideWidth.
-		trackWidth: -> @slideWidth * @slidesCount - @peekRightPx
+		trackWidth: -> @slideWidth * @slidesCount
 
-		# The ending x value
-		endX: -> if @disabled then 0 else @pageWidth - @trackWidth
+		# Figure out the width of the last page, which may not have enough slides
+		# to fill it.
+		lastPageWidth: ->
+
+			# Determine how many slides are on the final page of pagination. If the
+			# remainder was 0, that means the page is flush with slides, so swap
+			# the 0 for the max amount.
+			slidesPerPage = @currentSlidesPerPage
+			slidesOnLastPage = @slidesCount % slidesPerPage
+			if slidesOnLastPage == 0
+			then slidesOnLastPage = slidesPerPage
+
+			# Turn the slide count into a width value
+			width = slidesOnLastPage * @slideWidth
+			return width
+
+		# The ending x value, only used when not looping
+		endX: ->
+			if @disabled then 0
+			else @pageWidth - @trackWidth + @peekRightPx
 
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX

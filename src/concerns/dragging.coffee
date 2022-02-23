@@ -57,20 +57,44 @@ export default
 
 		# Determine the current index given the currentX as a fraction. For
 		# instance, when dragging forward, it will be like 0.1 and when you've
-		# dragged almost a full page, forward it would be 0.9. I'm using
-		# `trackWidth` as the base of my calculation because it takes into account
-		# the `peekRightPx`.
+		# dragged almost a full page, forward it would be 0.9.  This got
+		# complicated because the final page may not have a full compliment of
+		# slides like if we have 2 per page and 3 slides.  When you have tweened
+		# to the 2nd page, the fractionalIndex should be 2 even though you
+		# haven't traveled the same width as it took to get from 1 to 2.
 		fractionalIndex: ->
-			x = @currentX - @currentIncompletePageOffset
-			trackPercent = x / @trackWidth
-			return if @paginateBySlide
-			then trackPercent * @slidesCount * -1
-			else trackPercent * @pages * -1
+			return 0 unless @trackWidth
 
-		# Determine if the user is dragging vertically
-		isVerticalDrag: ->
-			return unless @dragDirectionRatio
-			@dragDirectionRatio < @verticalDragTreshold
+			# Work in positive numbers
+			x = @currentX * -1
+
+			# Figure out what set we're in, like if, through looping, we've gone
+			# through all the pages multiple times.
+			setIndex = Math.floor x / @trackWidth
+
+			# Figure out the index of last page of the set that has been fully
+			# scrolled into. Not using modulo for this because I got rounding errors.
+			widthDivisor = if @paginateBySlide then @slideWidth else @pageWidth
+			pageIndex = Math.floor (x - setIndex * @trackWidth) / widthDivisor
+
+			# Figure out the progress into the current page
+			distanceIntoPage = x - setIndex * @trackWidth - pageIndex * widthDivisor
+
+			# Determine if we're on the last page. If we're not looping, an extra
+			# "page" of slides is treated as part of the last page because of how we
+			# end with the slides flush with the right edge.
+			slidesPerPage = @currentSlidesPerPage
+			remainingSlides = switch
+				when @loop then @slidesCount - pageIndex * slidesPerPage
+				else @slidesCount - (pageIndex + 1) * slidesPerPage
+			isLastPage = remainingSlides <= slidesPerPage
+
+			# Make a percentage of travel into the page
+			pageWidth = if isLastPage then @lastPageWidth else widthDivisor
+			pageProgressPercent = distanceIntoPage / pageWidth
+
+			# Return the final value by adding all the passed index values
+			return pageProgressPercent + setIndex * @pages + pageIndex
 
 	watch:
 

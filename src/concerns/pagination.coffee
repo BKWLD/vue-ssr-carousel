@@ -82,12 +82,13 @@ export default
 
 		# Creates a px value to represent adjustments that should be made to
 		# account for incommplete pages of slides when looping is enabled. Like
-		# when there is 3 slotted slides and 2 slides per page.
+		# when there is 3 slotted slides and 2 slides per page and you have looped
+		# over to the 2nd page index of 0. The track needs to be shifted to the
+		# left by one slideWidth in this case.
 		makeIncompletePageOffset: (index) ->
 			return 0 unless @loop and not @paginateBySlide
-			Math.floor(index / @pages) *
-			(@slidesCount % @currentSlidesPerPage) *
-			@slideWidth
+			incompleteWidth = @pageWidth - @lastPageWidth
+			Math.floor(index / @pages) * incompleteWidth
 
 		# Apply boundaries to the index
 		applyIndexBoundaries: (index) ->
