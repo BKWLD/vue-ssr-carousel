@@ -13,6 +13,10 @@ export default
 	methods:
 
 		# Apply gutters between slides via margins
-		makeBreakpointMarginStyle: (breakpoint) ->
+		makeBreakpointSlideGutterStyle: (breakpoint) ->
 			gutter = @getResponsiveValue 'gutter', breakpoint
-			"margin-right: #{@autoUnit(gutter)};"
+			"""
+			#{@scopeSelector} .ssr-carousel-slide {
+				margin-right: #{@autoUnit(gutter)};
+			}
+			"""

@@ -33,10 +33,10 @@ export default
 
 		# Get just the slotted slides that are components, ignoring text nodes
 		# which may exist as a result of whitespace
-		slottedSlides: -> @$slots.default.filter (vnode) -> !vnode.text
+		slides: -> @$slots.default.filter (vnode) -> !vnode.text
 
 		# Get the total number of slides
-		slidesCount: -> @slottedSlides.length
+		slidesCount: -> @slides.length
 
 		# Apply boundaries to the index, which will exceed them when looping
 		boundedIndex: -> Math.abs(@index) % @pages

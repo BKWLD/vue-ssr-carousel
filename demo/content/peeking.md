@@ -32,7 +32,7 @@ You should add `loop` when using a left peek so that space is filled on the firs
 </ssr-carousel>
 ```
 
-## Slides are cloned as needed
+## Peeking slides may be cloned
 
 Note how there is only one more slide than the amount we're showing per page. The last slide gets cloned so it peeks in on both the left and right sides.  This example also uses the `peek` shorthand that sets both `peek-left` and `peek-right` to the same value. This works with stateful components like [vue-visual](https://github.com/BKWLD/vue-visual).
 

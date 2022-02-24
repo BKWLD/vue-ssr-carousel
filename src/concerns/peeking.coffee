@@ -35,15 +35,27 @@ export default
 
 	data: ->
 
-		# Store cloned slides
-		leftPeekingSlide: null
-		rightPeekingSlide: null
+		# Store clones of the slides used for peeking
+		clones: []
 
 		# Store computed peek values
 		peekLeftPx: 0
 		peekRightPx: 0
 
+	# Clone all of the slides for use in peeking
+	created: -> @clones = @slides.map @cloneVnode if @hasPeekClones
+
 	computed:
+
+		# Determine if clones should be created
+		hasPeekClones: -> @hasLeftPeekClone or @hasRightPeekClone
+		hasPeekPrerequisites: -> @loop and @slidesCount > 1
+		hasLeftPeekClone: -> @hasPeekPrerequisites and @peekLeft
+		hasRightPeekClone: -> @hasPeekPrerequisites and @peekRight
+
+		# Figure out which slide indexes to show in the left and right peek slots
+		leftPeekingSlideIndex: -> @rightMostSlideIndex if @hasLeftPeekClone
+		rightPeekingSlideIndex: -> @leftMostSlideIndex if @hasRightPeekClone
 
 		# Combine the peeking values, which is needed commonly
 		combinedPeek: -> @peekLeftPx + @peekRightPx
@@ -53,20 +65,6 @@ export default
 			breakpoint = @currentResponsiveBreakpoint
 			left: @autoUnit @getResponsiveValue 'peekLeft', breakpoint
 			right: @autoUnit @getResponsiveValue 'peekRight', breakpoint
-
-	watch:
-
-		# Clone the edge slides for merging into the slides array
-		slideOrder:
-			immediate: true
-			handler: ->
-				return unless @loop and @slidesCount > 1
-				if @peekLeft
-					firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
-					@leftPeekingSlide = @cloneVnode firstSlide
-				if @peekRight
-					lastSlide = @slottedSlides[@slideOrder[0]]
-					@rightPeekingSlide = @cloneVnode lastSlide
 
 	methods:
 
@@ -86,7 +84,7 @@ export default
 			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
 
 			# If no peeking slide, just add the offset
-			unless @leftPeekingSlide
+			rule = unless @hasLeftPeekClone
 			then "transform: translateX(#{@autoUnit(peekLeft)});"
 
 			# Otherwise, offset by one slide width (including it's gutter)
@@ -96,6 +94,9 @@ export default
 					#{@autoUnit(peekLeft)} -
 					(#{@makeSlideWidthCalc(breakpoint)} + #{@autoUnit(gutter)})
 				));"
+
+			# Wrap rule in selector
+			"#{@scopeSelector} .ssr-carousel-track { #{rule} }"
 
 		# Clone a vnode, based on
 		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89

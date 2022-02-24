@@ -25,14 +25,20 @@
 			//- The container of the slides that animates
 			ssr-carousel-track(
 				ref='track'
-				:slides='slides'
-				v-bind='{ dragging, trackTranslateX }')
+				v-bind=`{
+					dragging,
+					trackTranslateX,
+					slides,
+					slideOrder,
+					clones,
+					leftPeekingSlideIndex,
+					rightPeekingSlideIndex,
+				}`)
 
 		//- Back / Next navigation
 		ssr-carousel-arrows(
 			v-if='showArrows'
-			v-bind='{ index, pages }'
-			:loop='loop'
+			v-bind='{ index, pages, loop }'
 			@back='back'
 			@next='next')
 			template(#back): slot(name='back-arrow')
