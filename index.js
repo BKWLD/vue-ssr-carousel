@@ -194,24 +194,43 @@ var render = function () {
       }),
       _c(
         "div",
-        _vm._g(
-          {
-            staticClass: "ssr-carousel-mask",
-            class: { pressing: _vm.pressing, disabled: _vm.disabled },
-          },
-          _vm.maskListeners
-        ),
+        { staticClass: "ssr-carousel-slides" },
         [
+          _c("div", {
+            ref: "peekValues",
+            staticClass: "ssr-peek-values",
+            style: _vm.peekStyles,
+          }),
           _c(
-            "ssr-carousel-track",
-            _vm._b(
-              { ref: "track" },
-              "ssr-carousel-track",
-              { dragging: _vm.dragging, currentX: _vm.currentX },
-              false
+            "div",
+            _vm._g(
+              {
+                ref: "mask",
+                staticClass: "ssr-carousel-mask",
+                class: { pressing: _vm.pressing, disabled: _vm.disabled },
+              },
+              _vm.maskListeners
             ),
-            [_vm._t("default")],
-            2
+            [
+              _c(
+                "ssr-carousel-track",
+                _vm._b(
+                  { ref: "track" },
+                  "ssr-carousel-track",
+                  {
+                    dragging: _vm.dragging,
+                    trackTranslateX: _vm.trackTranslateX,
+                    slides: _vm.slides,
+                    slideOrder: _vm.slideOrder,
+                    clones: _vm.clones,
+                    leftPeekingSlideIndex: _vm.leftPeekingSlideIndex,
+                    rightPeekingSlideIndex: _vm.rightPeekingSlideIndex,
+                  },
+                  false
+                )
+              ),
+            ],
+            1
           ),
           _vm.showArrows
             ? _c(
@@ -241,7 +260,7 @@ var render = function () {
                     ),
                   },
                   "ssr-carousel-arrows",
-                  { index: _vm.index, pages: _vm.pages },
+                  { index: _vm.index, pages: _vm.pages, loop: _vm.loop },
                   false
                 )
               )
@@ -254,7 +273,7 @@ var render = function () {
             "ssr-carousel-dots",
             _vm._b(
               {
-                on: { goto: _vm.goto },
+                on: { goto: _vm.gotoDot },
                 scopedSlots: _vm._u(
                   [
                     {
@@ -270,7 +289,7 @@ var render = function () {
                 ),
               },
               "ssr-carousel-dots",
-              { index: _vm.index, pages: _vm.pages },
+              { boundedIndex: _vm.boundedIndex, pages: _vm.pages },
               false
             )
           )
@@ -304,7 +323,7 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
       },
       [
         _vm.$slots.back
-          ? _vm._t("back")
+          ? _vm._t("back", null, { disabled: _vm.backDisabled })
           : _c("span", { staticClass: "ssr-carousel-back-icon" }),
       ],
       2
@@ -322,7 +341,7 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
       },
       [
         _vm.$slots.next
-          ? _vm._t("next")
+          ? _vm._t("next", null, { disabled: _vm.nextDisabled })
           : _c("span", { staticClass: "ssr-carousel-next-icon" }),
       ],
       2
@@ -339,15 +358,20 @@ ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render._withStripped =
 /* harmony default export */ var ssr_carousel_arrowsvue_type_script_lang_coffee_ = ({
   props: {
     index: Number,
-    pages: Number
+    pages: Number,
+    loop: Boolean
   },
   computed: {
     // Determine if button should be disabled because we're at the limits
     backDisabled: function () {
-      return this.index === 0;
+      if (!this.loop) {
+        return this.index === 0;
+      }
     },
     nextDisabled: function () {
-      return this.index === this.pages - 1;
+      if (!this.loop) {
+        return this.index === this.pages - 1;
+      }
     }
   }
 });
@@ -494,7 +518,7 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function ()
         {
           key: i,
           staticClass: "ssr-carousel-dot-button",
-          attrs: { "aria-label": "Page " + i, disabled: _vm.index == i - 1 },
+          attrs: { "aria-label": "Page " + i, disabled: _vm.isDisabled(i) },
           on: {
             click: function ($event) {
               return _vm.$emit("goto", i - 1)
@@ -503,7 +527,7 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function ()
         },
         [
           _vm.$slots.dot
-            ? _vm._t("dot")
+            ? _vm._t("dot", null, { index: i, disabled: _vm.isDisabled(i) })
             : _c("span", { staticClass: "ssr-carousel-dot-icon" }),
         ],
         2
@@ -521,8 +545,14 @@ ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render._withStripped = t
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
 /* harmony default export */ var ssr_carousel_dotsvue_type_script_lang_coffee_ = ({
   props: {
-    index: Number,
+    boundedIndex: Number,
     pages: Number
+  },
+  methods: {
+    // Check if dot index shuold be disabled
+    isDisabled: function (index) {
+      return this.boundedIndex === index - 1;
+    }
   }
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
@@ -555,16 +585,14 @@ if (false) { var ssr_carousel_dots_api; }
 ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
 /* harmony default export */ var ssr_carousel_dots = (ssr_carousel_dots_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-slide.vue?vue&type=script&lang=coffee&
+// Not a functional component so style values can be set by track
 var addStaticClass;
 /* harmony default export */ var ssr_carousel_slidevue_type_script_lang_coffee_ = ({
   name: 'SsrCarouselSlide',
-  functional: true,
-  render: function (create, {
-    children
-  }) {
+  render: function (create) {
     var slide; // Get at the slide vnode
 
-    slide = children[0]; // If the slide is a component, the data may need to be set in asyncMeta.
+    slide = this.$slots.default[0]; // If the slide is a component, the data may need to be set in asyncMeta.
     // Otherwise, it's set on the slide itself
 
     if (slide.asyncMeta) {
@@ -629,29 +657,58 @@ ssr_carousel_slide_component.options.__file = "src/ssr-carousel-slide.vue"
   },
   props: {
     dragging: Boolean,
-    currentX: Number
+    trackTranslateX: Number,
+    slides: Array,
+    slideOrder: Array,
+    clones: Array,
+    leftPeekingSlideIndex: Number,
+    rightPeekingSlideIndex: Number
   },
   computed: {
     // Styles that are used to position the track
     styles: function () {
-      return {
-        transform: `translateX(${this.currentX}px)`
-      };
+      if (this.trackTranslateX) {
+        return {
+          transform: `translateX(${this.trackTranslateX}px)`
+        };
+      }
     }
   },
   // Render the track and slotted slides
   render: function (create) {
-    var children; // Wrap the slides in ssr-carousel-slide functional components
+    var children; // Wrap the slides in ssr-carousel-slide components. When I passed the order
+    // in as a prop and tried to set the style from within the component, it
+    // never updated. Thus, I'm setting the style here as part of the create().
 
-    children = this.$slots.default.map(function (child) {
-      if (child.text) {
-        return child; // Text nodes like newlines
-      } else {
-        return create(ssr_carousel_slide, {
-          parent: this
-        }, [child]);
-      }
-    }); // Create the track div
+    children = this.slides.map((child, index) => {
+      return create(ssr_carousel_slide, {
+        parent: this,
+        style: {
+          order: this.slideOrder[index]
+        }
+      }, [child]);
+    }); // Append all clones and set their styles.  See above comment for why this
+    // is done here rather than in SsrCarouselSlide.
+
+    children = children.concat(this.clones.map((child, index) => {
+      return create(ssr_carousel_slide, {
+        parent: this,
+        style: {
+          // Put left and right peeking slides at the end of the list
+          order: function () {
+            switch (false) {
+              case index !== this.leftPeekingSlideIndex:
+                return '-1';
+
+              case index !== this.rightPeekingSlideIndex:
+                return this.slides.length;
+            }
+          }.call(this),
+          // Hide all clones that aren't peeking
+          display: index !== this.leftPeekingSlideIndex && index !== this.rightPeekingSlideIndex ? 'none' : void 0
+        }
+      }, [child]);
+    })); // Create the track div
 
     return create('div', {
       class: ['ssr-carousel-track', {
@@ -759,10 +816,135 @@ Code related to auotplay features of the carousel
     }
   }
 });
+// EXTERNAL MODULE: external "lodash/throttle"
+var throttle_ = __webpack_require__(5);
+var throttle_default = /*#__PURE__*/__webpack_require__.n(throttle_);
+
+// CONCATENATED MODULE: ./src/concerns/dimensions.coffee
+/*
+Code related to measuring the size of the carousel after mounting
+*/
+
+/* harmony default export */ var dimensions_coffee = ({
+  data: function () {
+    return {
+      viewportWidth: null,
+      // Width of the viewport, for media query calculation
+      carouselWidth: null,
+      // Width of a page of the carousel
+      gutterWidth: 0 // Computed width of gutters, since they support css vars
+
+    };
+  },
+  // Add resize listening
+  mounted: function () {
+    this.onResize();
+    this.onResizeThrottled = throttle_default()(this.onResize, 200);
+    return window.addEventListener('resize', this.onResizeThrottled);
+  },
+  // Cleanup listeners
+  beforeDestroy: function () {
+    return window.removeEventListener('resize', this.onResizeThrottled);
+  },
+  computed: {
+    // The width of a page of slides, which may be less than the carouselWidth
+    // if there is peeking. This includes the affect of gutters.
+    pageWidth: function () {
+      return this.carouselWidth - this.combinedPeek;
+    },
+    // Calculate the width of a slide based on client side measured pageWidth
+    // rather than measuring it explicitly in the DOM. This value includes the
+    // gutter.
+    slideWidth: function () {
+      return this.pageWidth / this.currentSlidesPerPage;
+    },
+    // Calculate the width of the whole track from the slideWidth.
+    trackWidth: function () {
+      return this.slideWidth * this.slidesCount;
+    },
+    // Figure out the width of the last page, which may not have enough slides
+    // to fill it.
+    lastPageWidth: function () {
+      var slidesOnLastPage, slidesPerPage, width; // Determine how many slides are on the final page of pagination. If the
+      // remainder was 0, that means the page is flush with slides, so swap
+      // the 0 for the max amount.
+
+      slidesPerPage = this.currentSlidesPerPage;
+      slidesOnLastPage = this.slidesCount % slidesPerPage;
+
+      if (slidesOnLastPage === 0) {
+        slidesOnLastPage = slidesPerPage;
+      } // Turn the slide count into a width value
+
+
+      width = slidesOnLastPage * this.slideWidth;
+      return width;
+    },
+    // The ending x value, only used when not looping
+    endX: function () {
+      if (this.disabled) {
+        return 0;
+      } else {
+        return this.pageWidth - this.trackWidth + this.peekRightPx;
+      }
+    },
+    // Check if the drag is currently out bounds
+    isOutOfBounds: function () {
+      return this.currentX > 0 || this.currentX < this.endX;
+    }
+  },
+  methods: {
+    // Measure the component width for various calculations. Using
+    // getBoundingClientRect so we can get fractional values.  We also need
+    // the width of the gutter since that's effectively part of the page.
+    onResize: function () {
+      var firstSlide, ref;
+
+      if (((ref = this.$el) != null ? ref.nodeType : void 0) !== Node.ELEMENT_NODE) {
+        return;
+      }
+
+      if (!(firstSlide = this.$refs.track.$el.firstElementChild)) {
+        return;
+      }
+
+      this.gutterWidth = parseInt(getComputedStyle(firstSlide).marginRight);
+      this.carouselWidth = this.$el.getBoundingClientRect().width + this.gutterWidth;
+      this.viewportWidth = window.innerWidth;
+      return this.capturePeekingMeasurements();
+    },
+    // Make the width style that gives a slide it's width given
+    // slidesPerPage. Reduce this width by the gutter if present
+    makeBreakpointWidthStyle: function (breakpoint) {
+      return `${this.scopeSelector} .ssr-carousel-slide {
+	width: ${this.makeSlideWidthCalc(breakpoint)};
+}`;
+    },
+    // Build the calc string which makes a percentage width for a slide and
+    // reduces it by combined peeking and gutter influence. The computed
+    // style this produces should have an equal value to the `slideWidth`
+    // computed property which is client side JS dependent.
+    makeSlideWidthCalc: function (breakpoint) {
+      var gutter, peekLeft, peekRight, slidesPerPage;
+      slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint);
+      gutter = this.getResponsiveValue('gutter', breakpoint);
+      peekLeft = this.getResponsiveValue('peekLeft', breakpoint);
+      peekRight = this.getResponsiveValue('peekRight', breakpoint);
+      return `calc( ${100 / slidesPerPage}% - (${this.autoUnit(peekLeft)} + ${this.autoUnit(peekRight)}) / ${slidesPerPage} - (${this.autoUnit(gutter)} * ${slidesPerPage - 1}) / ${slidesPerPage} )`;
+    }
+  }
+});
 // CONCATENATED MODULE: ./src/concerns/dragging.coffee
 /*
 Code related to handling dragging of the track
 */
+var notPassive, passive;
+passive = {
+  passive: true
+};
+notPassive = {
+  passive: false
+};
 /* harmony default export */ var dragging_coffee = ({
   props: {
     // Boundary drag dampening modifier. Increase to allow greater travel outside
@@ -804,60 +986,77 @@ Code related to handling dragging of the track
   },
   // Cleanup listeners
   beforeDestroy: function () {
-    window.removeEventListener('mousemove', this.onPointerMove, {
-      passive: true
-    });
-    window.removeEventListener('mouseup', this.onPointerUp, {
-      passive: true
-    });
-    window.removeEventListener('touchmove', this.onPointerMove, {
-      passive: true
-    });
-    return window.removeEventListener('touchend', this.onPointerUp, {
-      passive: true
-    });
+    window.removeEventListener('mousemove', this.onPointerMove, passive);
+    window.removeEventListener('mouseup', this.onPointerUp, passive);
+    window.removeEventListener('touchmove', this.onPointerMove, passive);
+    window.removeEventListener('touchend', this.onPointerUp, passive);
+    return window.removeEventListener('touchmove', this.onWinMove, notPassive);
   },
   computed: {
-    // The current slide or page index. It rounds differently depedning on the
+    // The current slide or page index. It rounds differently depending on the
     // direction of the velocity.  So that it eases to a stop in the direction
-    // the user was dragging
+    // the user was dragging.
     dragIndex: function () {
-      var fractionalIndex;
-      fractionalIndex = Math.abs(this.paginateBySlide ? this.currentX / this.slideWidth : this.currentX / this.pageWidth);
-
       switch (false) {
         // If there is very little velocity, go to the closet page
         case !(Math.abs(this.dragVelocity) <= 2):
-          return Math.round(fractionalIndex);
+          return Math.round(this.fractionalIndex);
         // User was moving forward
 
         case !(this.dragVelocity < 0):
-          return Math.ceil(fractionalIndex);
+          return Math.ceil(this.fractionalIndex);
 
         default:
           // User was moving backward
-          return Math.floor(fractionalIndex);
+          return Math.floor(this.fractionalIndex);
       }
     },
-    // Calculate the width of a slide
-    slideWidth: function () {
-      return this.pageWidth / this.currentSlidesPerPage;
-    },
-    // Calculate the width of the track
-    trackWidth: function () {
-      return this.slideWidth * this.slidesCount;
-    },
-    // The ending x value
-    endX: function () {
-      if (this.disabled) {
+    // Determine the current index given the currentX as a fraction. For
+    // instance, when dragging forward, it will be like 0.1 and when you've
+    // dragged almost a full page, forward it would be 0.9.  This got
+    // complicated because the final page may not have a full compliment of
+    // slides like if we have 2 per page and 3 slides.  When you have tweened
+    // to the 2nd page, the fractionalIndex should be 2 even though you
+    // haven't traveled the same width as it took to get from 1 to 2.
+    fractionalIndex: function () {
+      var distanceIntoPage, isLastPage, pageIndex, pageProgressPercent, pageWidth, remainingSlides, setIndex, slidesPerPage, widthDivisor, x;
+
+      if (!this.trackWidth) {
         return 0;
-      } else {
-        return this.pageWidth - this.trackWidth;
-      }
-    },
-    // Check if the drag is currently out bounds
-    isOutOfBounds: function () {
-      return this.currentX > 0 || this.currentX < this.endX;
+      } // Work in positive numbers
+
+
+      x = this.currentX * -1; // Figure out what set we're in, like if, through looping, we've gone
+      // through all the pages multiple times.
+
+      setIndex = Math.floor(x / this.trackWidth); // Figure out the index of last page of the set that has been fully
+      // scrolled into. Not using modulo for this because I got rounding errors.
+
+      widthDivisor = this.paginateBySlide ? this.slideWidth : this.pageWidth;
+      pageIndex = Math.floor((x - setIndex * this.trackWidth) / widthDivisor); // Figure out the progress into the current page
+
+      distanceIntoPage = x - setIndex * this.trackWidth - pageIndex * widthDivisor; // Determine if we're on the last page. If we're not looping, an extra
+      // "page" of slides is treated as part of the last page because of how we
+      // end with the slides flush with the right edge.
+
+      slidesPerPage = this.currentSlidesPerPage;
+
+      remainingSlides = function () {
+        switch (false) {
+          case !this.loop:
+            return this.slidesCount - pageIndex * slidesPerPage;
+
+          default:
+            return this.slidesCount - (pageIndex + 1) * slidesPerPage;
+        }
+      }.call(this);
+
+      isLastPage = remainingSlides <= slidesPerPage; // Make a percentage of travel into the page
+
+      pageWidth = isLastPage ? this.lastPageWidth : widthDivisor;
+      pageProgressPercent = distanceIntoPage / pageWidth; // Return the final value by adding all the passed index values
+
+      return pageProgressPercent + setIndex * this.pages + pageIndex;
     },
     // Determine if the user is dragging vertically
     isVerticalDrag: function () {
@@ -866,6 +1065,10 @@ Code related to handling dragging of the track
       }
 
       return this.dragDirectionRatio < this.verticalDragTreshold;
+    },
+    // If we're horiztonally swiping on a touch device, prevent vertical scroll
+    preventVerticalScroll: function () {
+      return this.pressing && this.isTouchDrag && !this.isVerticalDrag;
     }
   },
   watch: {
@@ -876,12 +1079,9 @@ Code related to handling dragging of the track
       [moveEvent, upEvent] = this.isTouchDrag ? ['touchmove', 'touchend'] : ['mousemove', 'mouseup']; // Pointer is down, start watching for drags
 
       if (this.pressing) {
-        window.addEventListener(moveEvent, this.onPointerMove, {
-          passive: true
-        });
-        window.addEventListener(upEvent, this.onPointerUp, {
-          passive: true
-        });
+        window.addEventListener(moveEvent, this.onPointerMove, passive);
+        window.addEventListener(upEvent, this.onPointerUp, passive);
+        window.addEventListener('contextmenu', this.onPointerUp, passive);
         this.dragVelocity = 0; // Reset any previous velocity
 
         this.preventContentDrag();
@@ -889,9 +1089,13 @@ Code related to handling dragging of the track
       } else {
         // Tween so the track is in bounds if it was out
         // The pointer is up, so tween to final position
-        if (this.isOutOfBounds) {
-          this.targetX = this.applyXBoundaries(this.currentX);
-          this.startTweening(); // If user was vertically dragging, reset the index
+        if (this.isOutOfBounds && !this.loop) {
+          if (this.currentX >= 0) {
+            this.goto(0);
+          } else {
+            this.goto(this.pages - 1);
+          } // If user was vertically dragging, reset the index
+
         } else if (this.isVerticalDrag) {
           this.goto(this.index);
         } else {
@@ -900,12 +1104,9 @@ Code related to handling dragging of the track
         } // Cleanup vars and listeners
 
 
-        window.removeEventListener(moveEvent, this.onPointerMove, {
-          passive: true
-        });
-        window.removeEventListener(upEvent, this.onPointerUp, {
-          passive: true
-        });
+        window.removeEventListener(moveEvent, this.onPointerMove, passive);
+        window.removeEventListener(upEvent, this.onPointerUp, passive);
+        window.removeEventListener('contextmenu', this.onPointerUp, passive);
         this.dragging = false;
         this.startPointer = this.lastPointer = this.dragDirectionRatio = null;
       } // Fire events
@@ -934,9 +1135,23 @@ Code related to handling dragging of the track
       }
 
       return this.pressing = false;
+    },
+    // Stop vertical scrolling by listening for touchmove events on the body
+    // and cancel them. Need to explicitly set pasive because some mobile
+    // browsers set to true by default.
+    preventVerticalScroll: function (shouldPrevent) {
+      if (shouldPrevent) {
+        return window.addEventListener('touchmove', this.stopEvent, notPassive);
+      } else {
+        return window.removeEventListener('touchmove', this.stopEvent, notPassive);
+      }
     }
   },
   methods: {
+    // Cancel an Event
+    stopEvent: function (e) {
+      return e.preventDefault();
+    },
     // Keep track of whether user is dragging
     onPointerDown: function (pointerEvent) {
       this.isTouchDrag = typeof TouchEvent !== "undefined" && TouchEvent !== null && pointerEvent instanceof TouchEvent;
@@ -977,6 +1192,10 @@ Code related to handling dragging of the track
     // Prevent dragging from exceeding the min/max edges
     applyBoundaryDampening: function (x) {
       switch (false) {
+        case !this.loop:
+          return x;
+        // Don't apply dampening
+
         case !(x > 0):
           return Math.pow(x, this.boundaryDampening);
 
@@ -989,7 +1208,11 @@ Code related to handling dragging of the track
     },
     // Constraint the x value to the min and max values
     applyXBoundaries: function (x) {
-      return Math.max(this.endX, Math.min(0, x));
+      if (this.loop) {
+        return x; // Don't apply boundaries
+      } else {
+        return Math.max(this.endX, Math.min(0, x));
+      }
     },
     // Prevent the anchors and images from being draggable (like via their
     // ghost outlines). Using this approach because the draggable html attribute
@@ -1005,6 +1228,47 @@ Code related to handling dragging of the track
         });
       });
       return this.contentDragPrevented = true;
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/concerns/feathering.coffee
+/*
+Code related to implementing feathering effect.
+*/
+/* harmony default export */ var feathering_coffee = ({
+  props: {
+    // Shorthand for enabling boolean and setting it's width
+    feather: {
+      type: Boolean | String | Number,
+      default: false
+    }
+  },
+  methods: {
+    // Add feathering styles via breakpoint
+    makeBreakpointFeatheringStyle: function (breakpoint) {
+      var cssValue, feather; // Get feathering amount
+
+      feather = this.getResponsiveValue('feather', breakpoint);
+
+      if (feather === false || feather === null) {
+        return;
+      }
+
+      if (!feather) {
+        feather = 20;
+      }
+
+      feather = this.autoUnit(feather); // Make the rule value
+
+      cssValue = `linear-gradient(to right,
+	transparent, black ${feather},
+	black calc(100% - ${feather}),
+	transparent)`; // Write the style, with browser prefixes
+
+      return `${this.scopeSelector} .ssr-carousel-mask {
+	-webkit-mask-image: ${cssValue};
+	mask-image: ${cssValue};
+}`;
     }
   }
 });
@@ -1052,6 +1316,102 @@ Code related to focus and hover state
     return document.removeEventListener('visibilitychange', this.updateVisibility);
   }
 });
+// CONCATENATED MODULE: ./src/concerns/gutters.coffee
+/*
+Code related to the gutters between slides
+*/
+/* harmony default export */ var gutters_coffee = ({
+  props: {
+    // The gutters between slides
+    gutter: {
+      type: Number | String,
+      default: 20
+    }
+  },
+  methods: {
+    // Apply gutters between slides via margins
+    makeBreakpointSlideGutterStyle: function (breakpoint) {
+      var gutter;
+      gutter = this.getResponsiveValue('gutter', breakpoint);
+      return `${this.scopeSelector} .ssr-carousel-slide {
+	margin-right: ${this.autoUnit(gutter)};
+}`;
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/concerns/looping.coffee
+/*
+Code related to looping / infinite scroll
+*/
+/* harmony default export */ var looping_coffee = ({
+  // Add prop to enable looping
+  props: {
+    loop: Boolean
+  },
+  // Store the slide order indexes
+  data: function () {
+    return {
+      slideOrder: []
+    };
+  },
+  computed: {
+    // This represents the current (as in while scrolling / animating) left most
+    // slide index. This is used in looping calculation so that the reordering
+    // of slides isn't affected by paginatePerSlide setting.
+    currentSlideIndex: function () {
+      return Math.floor(this.currentX / this.slideWidth * -1);
+    },
+    // When looping, slides get re-ordered. This value is added to the
+    // track transform so that the slides don't feel like they were re-ordered.
+    trackLoopOffset: function () {
+      var offsetSlideCount;
+
+      if (!this.loop) {
+        return 0;
+      }
+
+      offsetSlideCount = this.currentSlideIndex;
+
+      if (this.hasLeftPeekClone) {
+        offsetSlideCount -= 1;
+      }
+
+      return offsetSlideCount * this.slideWidth;
+    },
+    // Get slideIndex of the right most and left most slides indexes
+    leftMostSlideIndex: function () {
+      return this.slideOrder.findIndex(index => {
+        return index === 0;
+      });
+    },
+    rightMostSlideIndex: function () {
+      return this.slideOrder.findIndex(index => {
+        return index === this.slideOrder.length - 1;
+      });
+    }
+  },
+  watch: {
+    // This represents the current (as in while scrolling / animating) left most
+    // slide index. This is used in looping calculation so that the reordering
+    // of slides isn't affected by paginatePerSlide setting. Calculating via
+    // watcher to prevent unnecesary recalculations (I noticed a bunch of calls
+    // when this was done via a computed property)
+    currentSlideIndex: {
+      immediate: true,
+      handler: function () {
+        var indexes, insertion;
+        indexes = [...Array(this.slidesCount).keys()];
+
+        if (!this.loop) {
+          return indexes;
+        }
+
+        insertion = indexes.length - this.currentSlideIndex % indexes.length;
+        return this.slideOrder = [...indexes.slice(insertion), ...indexes.slice(0, insertion)];
+      }
+    }
+  }
+});
 // CONCATENATED MODULE: ./src/concerns/pagination.coffee
 /*
 Code related to dealing with advancing between pages
@@ -1064,7 +1424,7 @@ Code related to dealing with advancing between pages
   data: function () {
     return {
       index: 0,
-      // The current page
+      // The current page; when looping may exceed slideCount
       currentX: 0,
       // The actual left offset of the slides container
       targetX: 0 // Where we may be tweening the slide to
@@ -1074,29 +1434,50 @@ Code related to dealing with advancing between pages
   computed: {
     // The current number of pages
     pages: function () {
-      if (this.paginateBySlide) {
-        return Math.max(1, this.slidesCount - this.currentSlidesPerPage);
-      } else {
-        return Math.ceil(this.slidesCount / this.currentSlidesPerPage);
+      switch (false) {
+        // When looping and paginating per slide, make a dot per slide
+        case !(this.paginateBySlide && this.loop):
+          return this.slidesCount;
+        // Else, restrict pages so you the last slide is flush with right edge
+
+        case !this.paginateBySlide:
+          return this.slidesCount - this.currentSlidesPerPage + 1;
+
+        default:
+          // When not paginating by slide, the amount of pages is related to the
+          // current number of slides shown per page.
+          return Math.ceil(this.slidesCount / this.currentSlidesPerPage);
       }
     },
     // Disable carousel-ness when there aren't enough slides
     disabled: function () {
       return this.slidesCount <= this.currentSlidesPerPage;
     },
-    // Filter out slides that have a "text" property, these aren't actual
-    // elements. They are whitespace, like newlines.
+    // Get just the slotted slides that are components, ignoring text nodes
+    // which may exist as a result of whitespace
+    slides: function () {
+      return this.$slots.default.filter(function (vnode) {
+        return !vnode.text;
+      });
+    },
+    // Get the total number of slides
     slidesCount: function () {
-      return (this.$slots.default || []).filter(function (vnode) {
-        return !(vnode != null ? vnode.text : void 0);
-      }).length;
+      return this.slides.length;
+    },
+    // Apply boundaries to the index, which will exceed them when looping
+    boundedIndex: function () {
+      return Math.abs(this.index) % this.pages;
+    },
+    // The current incomplete page offset
+    currentIncompletePageOffset: function () {
+      return this.makeIncompletePageOffset(this.index);
     }
   },
   watch: {
     // Emit events on index change
-    index: function () {
+    boundedIndex: function () {
       return this.$emit('change', {
-        index: this.index
+        boundedIndex: this.boundedIndex
       });
     }
   },
@@ -1108,6 +1489,12 @@ Code related to dealing with advancing between pages
     back: function () {
       return this.goto(this.index - 1);
     },
+    // The dots are ignorant of looping, so convert their bounded index to the
+    // true index so we don't animate through a ton of pages going to the
+    // clicked dot.
+    gotoDot: function (dotIndex) {
+      return this.goto(dotIndex - this.boundedIndex + this.index);
+    },
     // Go to a specific index
     goto: function (index) {
       this.index = this.applyIndexBoundaries(index);
@@ -1115,26 +1502,188 @@ Code related to dealing with advancing between pages
     },
     // Tween to a specific index
     tweenToIndex: function (index) {
-      var x;
-      x = this.paginateBySlide ? index * this.slideWidth : index * this.pageWidth;
-      this.targetX = this.applyXBoundaries(-1 * x);
+      var x; // Figure out the new x position
+
+      x = this.paginateBySlide ? index * this.slideWidth * -1 : index * this.pageWidth * -1; // Apply adjustments to x value and persist
+
+      x += this.makeIncompletePageOffset(index);
+      this.targetX = this.applyXBoundaries(x); // Start tweening
+
       return this.startTweening();
+    },
+    // Creates a px value to represent adjustments that should be made to
+    // account for incommplete pages of slides when looping is enabled. Like
+    // when there is 3 slotted slides and 2 slides per page and you have looped
+    // over to the 2nd page index of 0. The track needs to be shifted to the
+    // left by one slideWidth in this case.
+    makeIncompletePageOffset: function (index) {
+      var incompleteWidth;
+
+      if (!(this.loop && !this.paginateBySlide)) {
+        return 0;
+      }
+
+      incompleteWidth = this.pageWidth - this.lastPageWidth;
+      return Math.floor(index / this.pages) * incompleteWidth;
     },
     // Apply boundaries to the index
     applyIndexBoundaries: function (index) {
-      return Math.max(0, Math.min(this.pages - 1, index));
+      if (this.loop) {
+        return index;
+      } else {
+        return Math.max(0, Math.min(this.pages - 1, index));
+      }
     }
   }
 });
-// EXTERNAL MODULE: external "lodash/throttle"
-var throttle_ = __webpack_require__(5);
-var throttle_default = /*#__PURE__*/__webpack_require__.n(throttle_);
+// CONCATENATED MODULE: ./src/concerns/peeking.coffee
+/*
+Code related to allowing edge slides to peek in from the side, including empty
+gutter space.
+*/
+/* harmony default export */ var peeking_coffee = ({
+  props: {
+    // Use gutter's as the peeking value
+    peekGutter: Boolean,
+    // Set both peeking values at once
+    peek: {
+      type: Number | String,
+      default: function () {
+        // Prevent subpixel rounding issues from causing a sliver of offscreen
+        // slide from peaking in.
+        if (!this.peekGutter) {
+          return 0;
+        } else {
+          return `calc(${this.gutter} - 1px)`;
+        }
+      }
+    },
+    // Distinct left/right peeking values
+    peekLeft: {
+      type: Number | String,
+      default: function () {
+        return this.peek;
+      }
+    },
+    peekRight: {
+      type: Number | String,
+      default: function () {
+        return this.peek;
+      }
+    },
+    // Add feathering effect at this min-width
+    featheringMinWidth: Number | String,
+    featheringSize: {
+      type: Number | String,
+      default: function () {
+        return this.gutter;
+      }
+    }
+  },
+  data: function () {
+    return {
+      // Store clones of the slides used for peeking
+      clones: [],
+      // Store computed peek values
+      peekLeftPx: 0,
+      peekRightPx: 0
+    };
+  },
+  // Clone all of the slides for use in peeking
+  created: function () {
+    if (this.hasPeekClones) {
+      return this.clones = this.slides.map(this.cloneVnode);
+    }
+  },
+  computed: {
+    // Determine if clones should be created
+    hasPeekClones: function () {
+      return this.hasLeftPeekClone || this.hasRightPeekClone;
+    },
+    hasPeekPrerequisites: function () {
+      return this.loop && this.slidesCount > 1;
+    },
+    hasLeftPeekClone: function () {
+      return this.hasPeekPrerequisites && this.peekLeft;
+    },
+    hasRightPeekClone: function () {
+      return this.hasPeekPrerequisites && this.peekRight;
+    },
+    // Figure out which slide indexes to show in the left and right peek slots
+    leftPeekingSlideIndex: function () {
+      if (this.hasLeftPeekClone) {
+        return this.rightMostSlideIndex;
+      }
+    },
+    rightPeekingSlideIndex: function () {
+      if (this.hasRightPeekClone) {
+        return this.leftMostSlideIndex;
+      }
+    },
+    // Combine the peeking values, which is needed commonly
+    combinedPeek: function () {
+      return this.peekLeftPx + this.peekRightPx;
+    },
+    // Make the styles object for reading computed styles
+    peekStyles: function () {
+      var breakpoint;
+      breakpoint = this.currentResponsiveBreakpoint;
+      return {
+        left: this.autoUnit(this.getResponsiveValue('peekLeft', breakpoint)),
+        right: this.autoUnit(this.getResponsiveValue('peekRight', breakpoint))
+      };
+    }
+  },
+  methods: {
+    // Capture measurements of peeking values
+    capturePeekingMeasurements: function () {
+      if (!this.$refs.peekValues) {
+        return;
+      }
 
+      return this.$nextTick(function () {
+        // Wait for getResponsiveValue on @peekStyles
+        var styles;
+        styles = getComputedStyle(this.$refs.peekValues);
+        this.peekLeftPx = parseInt(styles.left);
+        return this.peekRightPx = parseInt(styles.right);
+      });
+    },
+    // Calculate the offset that gets added to the current position to account
+    // for prepended slides from peeking. This replicates the JS required to
+    // make `trackLoopOffset` using CSS only so there is now reflow when JS
+    // hydrates.  This gets overridden by the track's inline translateX style.
+    makeBreakpointTrackTransformStyle: function (breakpoint) {
+      var gutter, peekLeft, rule;
+      peekLeft = this.getResponsiveValue('peekLeft', breakpoint); // If no peeking slide, just add the offset
+
+      rule = !this.hasLeftPeekClone ? `transform: translateX(${// Otherwise, offset by one slide width (including it's gutter)
+      this.autoUnit(peekLeft)});` : (gutter = this.getResponsiveValue('gutter', breakpoint), `transform: translateX(calc( ${this.autoUnit(peekLeft)} - (${this.makeSlideWidthCalc(breakpoint)} + ${this.autoUnit(gutter)}) ));`); // Wrap rule in selector
+
+      return `${this.scopeSelector} .ssr-carousel-track { ${rule} }`;
+    },
+    // Clone a vnode, based on
+    // https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89
+    cloneVnode: function (vnode) {
+      var cloned;
+      cloned = new vnode.constructor(vnode.tag, vnode.data, vnode.children && vnode.children.slice(), vnode.text, vnode.elm, vnode.context, vnode.componentOptions, vnode.asyncFactory);
+      cloned.ns = vnode.ns;
+      cloned.isStatic = vnode.isStatic;
+      cloned.key = vnode.key;
+      cloned.isComment = vnode.isComment;
+      cloned.fnContext = vnode.fnContext;
+      cloned.fnOptions = vnode.fnOptions;
+      cloned.fnScopeId = vnode.fnScopeId;
+      cloned.asyncMeta = vnode.asyncMeta;
+      cloned.isCloned = true;
+      return cloned;
+    }
+  }
+});
 // CONCATENATED MODULE: ./src/concerns/responsive.coffee
 /*
 Code related to changing the slides per page at different viewport widths
 */
-
 /* harmony default export */ var responsive_coffee = ({
   props: {
     // How many slides are visible at once in the viewport if no responsive
@@ -1143,11 +1692,6 @@ Code related to changing the slides per page at different viewport widths
       type: Number,
       default: 1
     },
-    // The gutters between slides
-    gutter: {
-      type: Number | String,
-      default: 20
-    },
     // Provide different slides per page at different viewport widths
     responsive: {
       type: Array,
@@ -1155,26 +1699,6 @@ Code related to changing the slides per page at different viewport widths
         return [];
       }
     }
-  },
-  data: function () {
-    return {
-      viewportWidth: null,
-      // Width of the viewport, for media query calculation
-      pageWidth: null,
-      // Width of a page of slides (and the carousel container)
-      gutterWidth: 0 // Computed width of gutters, since they support css vars
-
-    };
-  },
-  // Add resize listening
-  mounted: function () {
-    this.onResize();
-    this.onResizeThrottled = throttle_default()(this.onResize, 200);
-    return window.addEventListener('resize', this.onResizeThrottled);
-  },
-  // Cleanup listeners
-  beforeDestroy: function () {
-    return window.removeEventListener('resize', this.onResizeThrottled);
   },
   computed: {
     // Make the scopeId from the based on hashing the props. If the props are
@@ -1206,11 +1730,15 @@ Code related to changing the slides per page at different viewport widths
         return active;
       })) {
         return match; // Return the matching rule
+        // Defaults
       } else {
         return {
           slidesPerPage: this.slidesPerPage,
-          gutter: this.gutter
-        }; // Else return defaults
+          gutter: this.gutter,
+          peekLeft: this.peekLeft,
+          peekRight: this.peekRight,
+          feather: this.feather
+        };
       }
     },
     // Make the scoping selecotr
@@ -1239,24 +1767,6 @@ Code related to changing the slides per page at different viewport widths
     }
   },
   methods: {
-    // Measure the component width for various calculations. Using
-    // getBoundingClientRect so we can get fractional values.  We also need
-    // the width of the gutter since that's effectively part of the page.
-    onResize: function () {
-      var firstSlide, ref;
-
-      if (((ref = this.$el) != null ? ref.nodeType : void 0) !== Node.ELEMENT_NODE) {
-        return;
-      }
-
-      if (!(firstSlide = this.$refs.track.$el.firstElementChild)) {
-        return;
-      }
-
-      this.gutterWidth = parseInt(getComputedStyle(firstSlide).marginRight);
-      this.pageWidth = this.$el.getBoundingClientRect().width + this.gutterWidth;
-      return this.viewportWidth = window.innerWidth;
-    },
     // Take an item form the responsive array and make a media query from it
     makeMediaQuery: function (breakpoint) {
       var rules;
@@ -1274,13 +1784,7 @@ Code related to changing the slides per page at different viewport widths
     },
     // Make the block of styles for a breakpoint
     makeBreakpointStyles: function (breakpoint) {
-      return `${this.makeBreakpointDisablingRules(breakpoint)}
-${this.scopeSelector} .ssr-carousel-slide {
-	${this.makeBreakpointWidthStyle(breakpoint)}
-}
-${this.scopeSelector} .ssr-carousel-slide:not(:last-child) {
-	${this.makeBreakpointMarginStyle(breakpoint) || ''}
-}`;
+      return this.makeBreakpointDisablingRules(breakpoint) + this.makeBreakpointFeatheringStyle(breakpoint) + this.makeBreakpointTrackTransformStyle(breakpoint) + this.makeBreakpointWidthStyle(breakpoint) + this.makeBreakpointSlideGutterStyle(breakpoint);
     },
     // Apply disabling styles via breakpoint when there are not enough slides
     // for the slidesPerPage
@@ -1298,29 +1802,6 @@ ${this.scopeSelector} .ssr-carousel-dots { display: none; }`;
 ${this.scopeSelector} .ssr-carousel-arrows { display: block; }
 ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
       }
-    },
-    // Make the flex-basis style that gives a slide it's width given
-    // slidesPerPage. Reduce this width by the gutter if present
-    makeBreakpointWidthStyle: function (breakpoint) {
-      var gutter, slidesPerPage, widthPercentage; // Collect responsive values
-
-      slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint);
-      gutter = this.getResponsiveValue('gutter', breakpoint); // If there is no gutter, then width is simply a percentage
-
-      widthPercentage = 100 / slidesPerPage;
-
-      if (!gutter) {
-        return `flex-basis: ${widthPercentage}%;`;
-      } else {
-        // Otherwise use a calc to adjust to accomodate gutter
-        return `flex-basis: calc( ${widthPercentage}% - ${this.autoUnit(gutter)} * ${slidesPerPage - 1} / ${slidesPerPage});`;
-      }
-    },
-    // Apply gutters between slides via margins
-    makeBreakpointMarginStyle: function (breakpoint) {
-      var gutter;
-      gutter = this.getResponsiveValue('gutter', breakpoint);
-      return `margin-right: ${this.autoUnit(gutter)};`;
     },
     // Check if a breakpoint would apply currently. Not using window.matchQuery
     // so I can consume via a compued property
@@ -1345,7 +1826,7 @@ ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
     getResponsiveValue: function (property, breakpoint) {
       var breakpointIndex, match, val;
 
-      if (val = breakpoint[property]) {
+      if ((val = breakpoint[property]) != null) {
         // If this breakpoint has a value, use it
         return val;
       }
@@ -1363,7 +1844,7 @@ ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
       });
 
       if (!(breakpointIndex >= 0)) {
-        throw `Breakpoint missing: ${JSON.stringify(breakpoint)}`;
+        throw `Breakpoint missing for ${property} in ${JSON.stringify(breakpoint)}`;
       } // ... if it _wasn't_ the first entry, check if any preceeding breakpoints
       // have this value set
 
@@ -1395,7 +1876,11 @@ ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
     },
     // Add px unit to a value if numeric
     autoUnit: function (val) {
-      if (String(val).match(/^\d+$/)) {
+      if (!val) {
+        return '0px';
+      }
+
+      if (String(val).match(/^[\d\-\.]+$/)) {
         return `${val}px`;
       } else {
         return val;
@@ -1489,11 +1974,17 @@ Code related to tweening the position of the track
 
 
 
+
+
+
+
+
 /* harmony default export */ var ssr_carouselvue_type_script_lang_coffee_ = ({
   // Component definition
   name: 'SsrCarousel',
   // Load concerns
-  mixins: [autoplay_coffee, dragging_coffee, focus_coffee, pagination_coffee, responsive_coffee, tweening_coffee],
+  mixins: [autoplay_coffee, dimensions_coffee, dragging_coffee, feathering_coffee, focus_coffee, gutters_coffee, looping_coffee, pagination_coffee, responsive_coffee, peeking_coffee, // After `responsive` so prop can access `gutter` prop
+  tweening_coffee],
   components: {
     SsrCarouselArrows: ssr_carousel_arrows,
     SsrCarouselDots: ssr_carousel_dots,
@@ -1505,9 +1996,21 @@ Code related to tweening the position of the track
     showDots: Boolean
   },
   computed: {
+    // Combine the different factors that come together to determine the x
+    // transfrom of the track.  We don't return a value until the carousel
+    // width is measured since the calculation depends on that.
+    trackTranslateX: function () {
+      if (!(this.carouselWidth && !this.disabled)) {
+        return;
+      }
+
+      return this.currentX + this.trackLoopOffset + this.peekLeftPx; // The value from tweening or dragging // Offset from re-ordering slides for looping // Offset slides for the left peek
+    },
+    // Determine whether to create hover event bindings
     watchesHover: function () {
       return this.autoplayDelay > 0;
     },
+    // Create event bindings
     maskListeners: function () {
       if (this.disabled) {
         return {};
