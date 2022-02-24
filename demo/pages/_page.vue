@@ -24,6 +24,13 @@ import SsrCarousel from '../../src/ssr-carousel'
 import Visual from 'vue-visual'
 import 'vue-visual/index.css'
 
+# Include the slide in this chunk so it doens't require client side JS to inject
+# styles. Since there aren't any other references to this component besides
+# within the content *.md files, I think Nuxt can only client side mount this
+# using nuxt/components but I want the demo site fully SSG everything, including
+# extracting CSS.
+import Slide from '~/components/slide'
+
 export default
 	name: 'Page'
 	mixins: [ pageMixin ]
