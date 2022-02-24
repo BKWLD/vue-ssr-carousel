@@ -80,21 +80,12 @@ export default
 			return rules.join ' and '
 
 		# Make the block of styles for a breakpoint
-		makeBreakpointStyles: (breakpoint) -> """
-			#{@makeBreakpointDisablingRules(breakpoint) || ''}
-			#{@scopeSelector} .ssr-carousel-mask {
-				#{@makeBreakpointFeatheringStyle(breakpoint) || ''}
-			}
-			#{@scopeSelector} .ssr-carousel-track {
-				#{@makeBreakpointTrackTransformStyle(breakpoint) || ''}
-			}
-			#{@scopeSelector} .ssr-carousel-slide {
-				#{@makeBreakpointWidthStyle(breakpoint) || ''}
-			}
-			#{@scopeSelector} .ssr-carousel-slide {
-				#{@makeBreakpointMarginStyle(breakpoint) || ''}
-			}
-		"""
+		makeBreakpointStyles: (breakpoint) ->
+			@makeBreakpointDisablingRules(breakpoint) +
+			@makeBreakpointFeatheringStyle(breakpoint) +
+			@makeBreakpointTrackTransformStyle(breakpoint) +
+			@makeBreakpointWidthStyle(breakpoint) +
+			@makeBreakpointSlideGutterStyle(breakpoint)
 
 		# Apply disabling styles via breakpoint when there are not enough slides
 		# for the slidesPerPage

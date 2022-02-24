@@ -31,6 +31,8 @@ export default
 
 			# Write the style, with browser prefixes
 			"""
-			-webkit-mask-image: #{cssValue};
-			mask-image: #{cssValue};
+			#{@scopeSelector} .ssr-carousel-mask {
+				-webkit-mask-image: #{cssValue};
+				mask-image: #{cssValue};
+			}
 			"""

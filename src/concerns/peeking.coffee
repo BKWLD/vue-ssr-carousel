@@ -84,7 +84,7 @@ export default
 			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
 
 			# If no peeking slide, just add the offset
-			unless @hasLeftPeekClone
+			rule = unless @hasLeftPeekClone
 			then "transform: translateX(#{@autoUnit(peekLeft)});"
 
 			# Otherwise, offset by one slide width (including it's gutter)
@@ -94,6 +94,9 @@ export default
 					#{@autoUnit(peekLeft)} -
 					(#{@makeSlideWidthCalc(breakpoint)} + #{@autoUnit(gutter)})
 				));"
+
+			# Wrap rule in selector
+			"#{@scopeSelector} .ssr-carousel-track { #{rule} }"
 
 		# Clone a vnode, based on
 		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89
