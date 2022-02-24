@@ -34,16 +34,35 @@ You should add `loop` when using a left peek so that space is filled on the firs
 
 ## Slides are cloned as needed
 
-Note how there is only one more slide than the amount we're showing per page. The last slide gets cloned so it peeks in on both the left and right sides.  This example also uses the `peek` shorthand that sets both `peek-left` and `peek-right` to the same value.
+Note how there is only one more slide than the amount we're showing per page. The last slide gets cloned so it peeks in on both the left and right sides.  This example also uses the `peek` shorthand that sets both `peek-left` and `peek-right` to the same value. This works with stateful components like [vue-visual](https://github.com/BKWLD/vue-visual).
 
 <peeking-demos-cloning></peeking-demos-cloning>
+<peeking-demos-visual></peeking-demos-visual>
 
 ```vue
 <ssr-carousel loop :slides-per-page='3' :peek='40' show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-  <slide :index='4'></slide>
+  <slide :index='1' tint='red'></slide>
+  <slide :index='2' tint='orange'></slide>
+  <slide :index='3' tint='yellow'></slide>
+  <slide :index='4' tint='green'></slide>
+</ssr-carousel>
+
+<ssr-carousel loop :slides-per-page='2' :peek='80' paginate-by-slide show-arrows>
+	<visual
+		image='https://via.placeholder.com/1920x1080/91169C/FFFFFF?text=Slide+1'
+		lazyload
+		:aspect='16/9'>
+	</visual>
+	<visual
+		image='https://via.placeholder.com/1920x1080/681596/FFFFFF?text=Slide+2'
+		lazyload
+		:aspect='16/9'>
+	</visual>
+	<visual
+		image='https://via.placeholder.com/1920x1080/3E1880/FFFFFF?text=Slide+3'
+		lazyload
+		:aspect='16/9'>
+	</visual>
 </ssr-carousel>
 ```
 
