@@ -1,6 +1,8 @@
 <!-- Wraps a slotted slide to control things like style attributes -->
 
 <script lang='coffee'>
+
+# Not a functional component so style values can be set by track
 export default
 	name: 'SsrCarouselSlide'
 

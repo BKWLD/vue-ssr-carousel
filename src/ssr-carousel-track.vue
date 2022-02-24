@@ -12,6 +12,8 @@ export default
 		slides: Array
 		slideOrder: Array
 		clones: Array
+		leftPeekingSlideIndex: Number
+		rightPeekingSlideIndex: Number
 
 	computed:
 
@@ -26,10 +28,28 @@ export default
 		# in as a prop and tried to set the style from within the component, it
 		# never updated. Thus, I'm setting the style here as part of the create().
 		children = @slides.map (child, index) =>
-			console.log 'loop', index, @slideOrder[index]
 			create SsrCarouselSlide, {
 				parent: this
 				style: order: @slideOrder[index]
+			}, [ child ]
+
+		# Append all clones and set their styles.  See above comment for why this
+		# is done here rather than in SsrCarouselSlide.
+		children = children.concat @clones.map (child, index) =>
+			create SsrCarouselSlide, {
+				parent: this
+				style:
+
+					# Put left and right peeking slides at the end of the list
+					order: switch
+						when index == @leftPeekingSlideIndex then '-1'
+						when index == @rightPeekingSlideIndex then @slides.length
+
+					# Hide all clones that aren't peeking
+					display: 'none' unless index in [
+						@leftPeekingSlideIndex
+						@rightPeekingSlideIndex
+					]
 			}, [ child ]
 
 		# Create the track div

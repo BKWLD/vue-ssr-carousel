@@ -11,24 +11,6 @@ export default
 
 	computed:
 
-		# Put slides in order, applying rules related to looping
-		slides: ->
-
-			return @slottedSlides
-
-			# If not looping, don't show other slides during boundary dampening
-			return @slottedSlides unless @loop
-
-			# Build array of slides according to slideOrder
-			slides = @slideOrder.map (index) => @slottedSlides[index]
-
-			# Add cloned, peeking slides to the periphery
-			slides = [ @leftPeekingSlide, ...slides, @rightPeekingSlide]
-			.filter (val) -> !!val # Remove empty peeking slides
-
-			# Return adjusted list of slides
-			slides
-
 		# This represents the current (as in while scrolling / animating) left most
 		# slide index. This is used in looping calculation so that the reordering
 		# of slides isn't affected by paginatePerSlide setting.
@@ -39,8 +21,13 @@ export default
 		trackLoopOffset: ->
 			return 0 unless @loop
 			offsetSlideCount = @currentSlideIndex
-			offsetSlideCount -= 1 if @leftPeekingSlide
+			offsetSlideCount -= 1 if @hasLeftPeekClone
 			return offsetSlideCount * @slideWidth
+
+		# Get slideIndex of the right most and left most slides indexes
+		leftMostSlideIndex: -> @slideOrder.findIndex (index) => index == 0
+		rightMostSlideIndex: -> @slideOrder.findIndex (index) =>
+			index == @slideOrder.length - 1
 
 	watch:
 
@@ -53,6 +40,7 @@ export default
 			immediate: true
 			handler: ->
 				indexes = [...Array(@slidesCount).keys()]
+				return indexes unless @loop
 				insertion = indexes.length - @currentSlideIndex % indexes.length
 				@slideOrder = [
 					...indexes.slice insertion
