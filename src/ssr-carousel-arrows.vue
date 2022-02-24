@@ -9,7 +9,7 @@
 		aria-label='Back'
 		:disabled='backDisabled'
 		@click='$emit("back")')
-			slot(v-if='$slots.back' name='back')
+			slot(v-if='$slots.back' name='back' :disabled='backDisabled')
 			span.ssr-carousel-back-icon(v-else)
 
 	//- Next arrow
@@ -17,7 +17,7 @@
 		aria-label='Next'
 		:disabled='nextDisabled'
 		@click='$emit("next")')
-			slot(v-if='$slots.next' name='next')
+			slot(v-if='$slots.next' name='next' :disabled='nextDisabled')
 			span.ssr-carousel-next-icon(v-else)
 
 </template>

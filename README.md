@@ -48,9 +48,13 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 ### Slots
 
 - `default` - Where your slides get injected.
-- `back-arrow` - Replace the default back icon.
-- `next-arrow` - Replace the default next icon.
-- `dot` - Replace the default pagination dots.
+- `back-arrow` - Replace the default back icon. **Slot props:**
+  - `disabled` - True if at first page when not looping.
+- `next-arrow` - Replace the default next icon. **Slot props:**
+  - `disabled` - True if at first page when not looping.
+- `dot` - Replace the default pagination dots.  **Slot props:**
+  - `index` - The page index that the dot represents.
+  - `disabled` - True if dot represents current page.
 
 ### Methods
 
