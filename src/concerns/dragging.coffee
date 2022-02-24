@@ -96,6 +96,11 @@ export default
 			# Return the final value by adding all the passed index values
 			return pageProgressPercent + setIndex * @pages + pageIndex
 
+		# Determine if the user is dragging vertically
+		isVerticalDrag: ->
+			return unless @dragDirectionRatio
+			@dragDirectionRatio < @verticalDragTreshold
+
 	watch:
 
 		# Watch for mouse move changes when the user starts dragging
