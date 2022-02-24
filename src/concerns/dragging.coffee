@@ -158,15 +158,12 @@ export default
 
 		# Keep track of whether user is dragging
 		onPointerDown: (pointerEvent) ->
-			console.log 'onPointerDown'
 			@isTouchDrag = TouchEvent? and pointerEvent instanceof TouchEvent
 			@startPointer = @lastPointer = @getPointerCoords pointerEvent
 			@pressing = true
 
 		# Keep track of release of press
-		onPointerUp: ->
-			console.log 'onPointerUp'
-			@pressing = false
+		onPointerUp: -> @pressing = false
 
 		# Keep x values up to date while dragging
 		onPointerMove: (pointerEvent) ->
