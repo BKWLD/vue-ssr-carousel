@@ -18,6 +18,7 @@
 
 		//- The overflow mask and drag target
 		.ssr-carousel-mask(
+			ref='mask'
 			:class='{ pressing, disabled }'
 			v-on='maskListeners')
 
