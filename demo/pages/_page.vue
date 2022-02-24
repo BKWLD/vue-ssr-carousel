@@ -25,8 +25,9 @@ import SsrCarousel from '../../src/ssr-carousel'
 import Visual from 'vue-visual'
 import 'vue-visual/index.css'
 
-# Register globally so peeking-demo/* components can easily use it
+# Register globally so demo components can easily use it
 Vue.component 'ssr-carousel', SsrCarousel
+Vue.component 'visual', Visual
 
 # Include the slide in this chunk so it doens't require client side JS to inject
 # styles. Since there aren't any other references to this component besides
@@ -38,8 +39,6 @@ import Slide from '~/components/slide'
 export default
 	name: 'Page'
 	mixins: [ pageMixin ]
-
-	components: { Visual }
 
 	# Get Tower data
 	asyncData: ({ app, params, $content }) ->

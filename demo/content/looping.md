@@ -42,22 +42,7 @@ Note how the incomplete 2nd page is handled.  The 3rd and 1st slide are shown si
 
 In this case, we're using [vue-visual](https://github.com/BKWLD/vue-visual) components to render image assets.  Note how lazy loading prevents the loading of the second image until you advance forward.
 
-<ssr-carousel loop>
-  <slide>
-    <visual
-      image='https://via.placeholder.com/1920x1080?text=Slide+1'
-      lazyload
-      :aspect='16/9'>
-    </visual>
-  </slide>
-  <slide>
-    <visual
-      image='https://via.placeholder.com/1920x1080?text=Slide+2'
-      lazyload
-      :aspect='16/9'>
-    </visual>
-  </slide>
-</ssr-carousel>
+<looping-demos-visual></looping-demos-visual>
 
 ```vue
 <ssr-carousel loop>
