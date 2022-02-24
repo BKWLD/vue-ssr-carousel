@@ -242,17 +242,15 @@ var render = function () {
                       [
                         {
                           key: "back",
-                          fn: function () {
-                            return [_vm._t("back-arrow")]
+                          fn: function (props) {
+                            return [_vm._t("back-arrow", null, null, props)]
                           },
-                          proxy: true,
                         },
                         {
                           key: "next",
-                          fn: function () {
-                            return [_vm._t("next-arrow")]
+                          fn: function (props) {
+                            return [_vm._t("next-arrow", null, null, props)]
                           },
-                          proxy: true,
                         },
                       ],
                       null,
@@ -278,10 +276,9 @@ var render = function () {
                   [
                     {
                       key: "dot",
-                      fn: function () {
-                        return [_vm._t("dot")]
+                      fn: function (props) {
+                        return [_vm._t("dot", null, null, props)]
                       },
-                      proxy: true,
                     },
                   ],
                   null,
@@ -322,7 +319,7 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
         },
       },
       [
-        _vm.$slots.back
+        _vm.$scopedSlots.back
           ? _vm._t("back", null, { disabled: _vm.backDisabled })
           : _c("span", { staticClass: "ssr-carousel-back-icon" }),
       ],
@@ -340,7 +337,7 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
         },
       },
       [
-        _vm.$slots.next
+        _vm.$scopedSlots.next
           ? _vm._t("next", null, { disabled: _vm.nextDisabled })
           : _c("span", { staticClass: "ssr-carousel-next-icon" }),
       ],
@@ -526,7 +523,7 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function ()
           },
         },
         [
-          _vm.$slots.dot
+          _vm.$scopedSlots.dot
             ? _vm._t("dot", null, { index: i, disabled: _vm.isDisabled(i) })
             : _c("span", { staticClass: "ssr-carousel-dot-icon" }),
         ],
@@ -804,14 +801,12 @@ Code related to auotplay features of the carousel
     autoplayStop: function () {
       return clearInterval(this.autoPlayInterval);
     },
+    // Advance to the next slide
     autoplayNext: function () {
-      var nextIndex;
-      nextIndex = this.index + 1;
-
-      if (nextIndex < this.pages) {
+      if (this.loop || this.index < this.pages - 1) {
         return this.next();
       } else {
-        return this.goto(0);
+        return this.goto(0); // Reset because loop wasn't enabled
       }
     }
   }
@@ -1456,7 +1451,7 @@ Code related to dealing with advancing between pages
     // Get just the slotted slides that are components, ignoring text nodes
     // which may exist as a result of whitespace
     slides: function () {
-      return this.$slots.default.filter(function (vnode) {
+      return (this.$slots.default || []).filter(function (vnode) {
         return !vnode.text;
       });
     },
@@ -1569,14 +1564,6 @@ gutter space.
       type: Number | String,
       default: function () {
         return this.peek;
-      }
-    },
-    // Add feathering effect at this min-width
-    featheringMinWidth: Number | String,
-    featheringSize: {
-      type: Number | String,
-      default: function () {
-        return this.gutter;
       }
     }
   },
