@@ -43,6 +43,10 @@ export default
 		peekLeftPx: 0
 		peekRightPx: 0
 
+	# Create peeking slide clones on client side only. The cloneVnode() method
+	# doesn't create vnodes that survive the SSG process.
+	mounted: -> @clonePeekingSlides()
+
 	computed:
 
 		# Combine the peeking values, which is needed commonly
@@ -56,17 +60,8 @@ export default
 
 	watch:
 
-		# Clone the edge slides for merging into the slides array
-		slideOrder:
-			immediate: true
-			handler: ->
-				return unless @loop and @slidesCount > 1
-				if @peekLeft
-					firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
-					@leftPeekingSlide = @cloneVnode firstSlide
-				if @peekRight
-					lastSlide = @slottedSlides[@slideOrder[0]]
-					@rightPeekingSlide = @cloneVnode lastSlide
+		# Update the cloned slides when the slides are re-ordered by looping
+		slideOrder: -> @clonePeekingSlides()
 
 	methods:
 
@@ -96,6 +91,16 @@ export default
 					#{@autoUnit(peekLeft)} -
 					(#{@makeSlideWidthCalc(breakpoint)} + #{@autoUnit(gutter)})
 				));"
+
+		# Clone peeking slides
+		clonePeekingSlides: ->
+			return unless @loop and @slidesCount > 1
+			if @peekLeft
+				firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
+				@leftPeekingSlide = @cloneVnode firstSlide
+			if @peekRight
+				lastSlide = @slottedSlides[@slideOrder[0]]
+				@rightPeekingSlide = @cloneVnode lastSlide
 
 		# Clone a vnode, based on
 		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89

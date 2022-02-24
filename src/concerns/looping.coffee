@@ -25,7 +25,7 @@ export default
 			.filter (val) -> !!val # Remove empty peeking slides
 
 			# Return adjusted list of slides
-			slides
+			return slides
 
 		# This represents the current (as in while scrolling / animating) left most
 		# slide index. This is used in looping calculation so that the reordering
