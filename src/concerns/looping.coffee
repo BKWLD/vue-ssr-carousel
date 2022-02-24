@@ -21,11 +21,11 @@ export default
 			slides = @slideOrder.map (index) => @slottedSlides[index]
 
 			# Add cloned, peeking slides to the periphery
-			# slides = [ @leftPeekingSlide, ...slides, @rightPeekingSlide]
-			# .filter (val) -> !!val # Remove empty peeking slides
+			slides = [ @leftPeekingSlide, ...slides, @rightPeekingSlide]
+			.filter (val) -> !!val # Remove empty peeking slides
 
 			# Return adjusted list of slides
-			return slides
+			slides
 
 		# This represents the current (as in while scrolling / animating) left most
 		# slide index. This is used in looping calculation so that the reordering
