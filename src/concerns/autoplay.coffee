@@ -35,6 +35,8 @@ export default
 
 		autoplayStop: -> clearInterval @autoPlayInterval
 
+		# Advance to the next slide
 		autoplayNext: ->
-			nextIndex = @index + 1
-			if nextIndex < @pages then @next() else @goto 0
+			if @loop or @index < @pages - 1
+			then @next()
+			else @goto 0 # Reset because loop wasn't enabled
