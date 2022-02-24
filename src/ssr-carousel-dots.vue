@@ -8,7 +8,15 @@
 		:aria-label='`Page ${i}`'
 		:disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
-			slot(v-if='$slots.dot' name='dot' :index='i' :disabled='isDisabled(i)')
+
+			//- Custom dot
+			slot(
+				v-if='$scopedSlots.dot'
+				name='dot'
+				:index='i'
+				:disabled='isDisabled(i)')
+
+			//- Default dot UI
 			span.ssr-carousel-dot-icon(v-else)
 
 </template>

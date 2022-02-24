@@ -6,5 +6,4 @@
   <slide :index='3'></slide>
 </ssr-carousel>
 
-
 </template>

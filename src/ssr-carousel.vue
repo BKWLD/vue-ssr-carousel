@@ -41,15 +41,15 @@
 			v-bind='{ index, pages, loop }'
 			@back='back'
 			@next='next')
-			template(#back): slot(name='back-arrow')
-			template(#next): slot(name='next-arrow')
+			template(#back='props'): slot(name='back-arrow' v-bind='props')
+			template(#next='props'): slot(name='next-arrow' v-bind='props')
 
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
 		v-bind='{ boundedIndex, pages }'
 		@goto='gotoDot')
-		template(#dot): slot(name='dot')
+		template(#dot='props'): slot(name='dot' v-bind='props')
 
 </template>
 

@@ -1,9 +1,12 @@
 <template>
 
 <ssr-carousel show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
+
+	<template>
+		<slide :index='1'></slide>
+		<slide :index='2'></slide>
+		<slide :index='3'></slide>
+	</template>
 
   <template #back-arrow='{ disabled }'>
     Back {{ disabled ? "(Disabled)" : '' }}

@@ -16,13 +16,16 @@ title: 'UI Options'
 
 ## Replace the icons through slots
 
-<demos-ui-arrows-custom></demos-ui-arrows-custom>
+<demos-ui-custom-arrows></demos-ui-custom-arrows>
 
 ```vue
 <ssr-carousel show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
+
+  <template>
+    <slide :index='1'></slide>
+    <slide :index='2'></slide>
+    <slide :index='3'></slide>
+  </template>
 
   <template #back-arrow='{ disabled }'>
     Back {{ disabled ? "(Disabled)" : '' }}
