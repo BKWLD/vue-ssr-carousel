@@ -3,26 +3,12 @@
 <template lang='pug'>
 
 ul.layout-nav
-	li(v-for='link in links' :key='link.path')
-		nuxt-link(:to='link.path') {{ link.title }}
-
 </template>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
-export default
-
-	data: -> links: [
-		{ title: 'Introduction', path: '/' }
-		{ title: 'Events', path: '/events' }
-		{ title: 'Responsive', path: '/responsive' }
-		{ title: 'Gutters', path: '/gutters' }
-		{ title: 'UI', path: '/ui' }
-		{ title: 'Looping', path: '/looping' }
-		{ title: 'Peeking', path: '/peeking' }
-		{ title: 'Miscellaneous', path: '/misc' }
-	]
+export default {}
 
 </script>
 

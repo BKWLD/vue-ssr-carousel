@@ -41,7 +41,7 @@ export default
 	asyncData: ({ app, params, $content }) ->
 
 		# Get data
-		page = await $content(params.page || 'intro').fetch()
+		page = await $content(params.page || 'index').fetch()
 		return app.$notFound() unless page
 
 		# Set data
