@@ -6,7 +6,7 @@ title: 'Peeking'
 
 This is an example of implementing peeking on the right side only, which is useful for teasing the presence of other cards.
 
-<peeking-demos-basic></peeking-demos-basic>
+<demos-peeking-basic></demos-peeking-basic>
 
 ```vue
 <ssr-carousel :slides-per-page='2' :peek-right='40'>
@@ -22,7 +22,7 @@ This is an example of implementing peeking on the right side only, which is usef
 
 You should add `loop` when using a left peek so that space is filled on the first page.
 
-<peeking-demos-loop></peeking-demos-loop>
+<demos-peeking-loop></demos-peeking-loop>
 
 ```vue
 <ssr-carousel loop peek-left='40' peek-right='40'>
@@ -36,8 +36,8 @@ You should add `loop` when using a left peek so that space is filled on the firs
 
 Note how there is only one more slide than the amount we're showing per page. The last slide gets cloned so it peeks in on both the left and right sides.  This example also uses the `peek` shorthand that sets both `peek-left` and `peek-right` to the same value. This works with stateful components like [vue-visual](https://github.com/BKWLD/vue-visual).
 
-<peeking-demos-cloning></peeking-demos-cloning>
-<peeking-demos-visual></peeking-demos-visual>
+<demos-peeking-cloning></demos-peeking-cloning>
+<demos-peeking-visual></demos-peeking-visual>
 
 ```vue
 <ssr-carousel loop :slides-per-page='3' :peek='40' show-arrows>
@@ -70,7 +70,7 @@ Note how there is only one more slide than the amount we're showing per page. Th
 
 This example also uses the `feather` prop with a boolean value.
 
-<peeking-demos-responsive></peeking-demos-responsive>
+<demos-peeking-responsive></demos-peeking-responsive>
 
 ```vue
 <ssr-carousel
@@ -96,7 +96,7 @@ This example also uses the `feather` prop with a boolean value.
 
 The `peek-gutter` prop uses your gutter value for the prop.  This is useful setting when your `vue-ssr-carousel` instance is flush with the edges of your browser and you use your site gutter value; the slides will transition out the edge of the page.  Then, use the `feather` with `responsive` to automatically add a light feathering mask when the viewport is wider than the carousel width.
 
-<peeking-demos-gutters></peeking-demos-gutters>
+<demos-peeking-gutters></demos-peeking-gutters>
 
 ```vue
 <ssr-carousel

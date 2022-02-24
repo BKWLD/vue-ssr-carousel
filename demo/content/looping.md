@@ -6,11 +6,7 @@ title: 'Looping'
 
 Looping is also known as `wrapAround` or `infinite` in other carousels.
 
-<ssr-carousel loop show-dots show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-</ssr-carousel>
+<demos-looping-basic></demos-looping-basic>
 
 ```vue
 <ssr-carousel loop show-dots show-arrows>
@@ -24,11 +20,7 @@ Looping is also known as `wrapAround` or `infinite` in other carousels.
 
 Note how the incomplete 2nd page is handled.  The 3rd and 1st slide are shown simulataneously. On the next advance forward, the track advances a half width so that the *new* first page contains the 1st and 2nd slide.
 
-<ssr-carousel :slides-per-page='2' loop show-dots show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-</ssr-carousel>
+<demos-looping-multiple></demos-looping-multiple>
 
 ```vue
 <ssr-carousel :slides-per-page='2' loop show-dots show-arrows>
@@ -42,7 +34,7 @@ Note how the incomplete 2nd page is handled.  The 3rd and 1st slide are shown si
 
 In this case, we're using [vue-visual](https://github.com/BKWLD/vue-visual) components to render image assets.  Note how lazy loading prevents the loading of the second image until you advance forward.
 
-<looping-demos-visual></looping-demos-visual>
+<demos-looping-visual></demos-looping-visual>
 
 ```vue
 <ssr-carousel loop>

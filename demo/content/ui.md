@@ -4,11 +4,7 @@ title: 'UI Options'
 
 ## Built-in arrow nav
 
-<ssr-carousel show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-</ssr-carousel>
+<demos-ui-arrows></demos-ui-arrows>
 
 ```vue
 <ssr-carousel show-arrows>
@@ -20,19 +16,7 @@ title: 'UI Options'
 
 ## Replace the icons through slots
 
-<ssr-carousel show-arrows>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-
-  <template v-slot:back-arrow>
-    Back
-  </template>
-
-  <template v-slot:next-arrow>
-    Next
-  </template>
-</ssr-carousel>
+<demos-ui-arrows-custom></demos-ui-arrows-custom>
 
 ```vue
 <ssr-carousel show-arrows>
@@ -40,22 +24,19 @@ title: 'UI Options'
   <slide :index='2'></slide>
   <slide :index='3'></slide>
 
-  <template v-slot:back-arrow>
-    Back
+  <template #back-arrow='{ disabled }'>
+    Back {{ disabled ? "(Disabled)" : '' }}
   </template>
-  <template v-slot:next-arrow>
-    Next
+
+  <template #next-arrow='{ disabled }'>
+    Next {{ disabled ? "(Disabled)" : '' }}
   </template>
 </ssr-carousel>
 ```
 
 ## Built-in dot pagination nav
 
-<ssr-carousel show-dots>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-</ssr-carousel>
+<demos-ui-dots></demos-ui-dots>
 
 ```vue
 <ssr-carousel show-dots>
@@ -67,18 +48,7 @@ title: 'UI Options'
 
 ## Per-slide pagination
 
-<ssr-carousel
-  show-arrows
-  show-dots
-  paginate-by-slide
-  :slides-per-page='2'>
-  <slide :index='1'></slide>
-  <slide :index='2'></slide>
-  <slide :index='3'></slide>
-  <slide :index='4'></slide>
-  <slide :index='5'></slide>
-  <slide :index='6'></slide>
-</ssr-carousel>
+<demos-ui-paginate-by-slide></demos-ui-paginate-by-slide>
 
 ```vue
 <ssr-carousel

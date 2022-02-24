@@ -30,10 +30,7 @@
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
-import SsrCarousel from '../../src/ssr-carousel'
 export default
-
-	components: { SsrCarousel }
 
 	data: -> events: []
 
