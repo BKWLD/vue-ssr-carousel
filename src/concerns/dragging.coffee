@@ -1,6 +1,7 @@
 ###
 Code related to handling dragging of the track
 ###
+passive = passive: true # For terser setting of this option
 export default
 
 	props:
@@ -34,10 +35,10 @@ export default
 
 	# Cleanup listeners
 	beforeDestroy: ->
-		window.removeEventListener 'mousemove', @onPointerMove, passive: true
-		window.removeEventListener 'mouseup', @onPointerUp, passive: true
-		window.removeEventListener 'touchmove', @onPointerMove, passive: true
-		window.removeEventListener 'touchend', @onPointerUp, passive: true
+		@$refs.mask.removeEventListener 'mousemove', @onPointerMove, passive
+		@$refs.mask.removeEventListener 'mouseup', @onPointerUp, passive
+		@$refs.mask.removeEventListener 'touchmove', @onPointerMove, passive
+		@$refs.mask.removeEventListener 'touchend', @onPointerUp, passive
 
 	computed:
 
@@ -113,9 +114,9 @@ export default
 
 			# Pointer is down, start watching for drags
 			if @pressing
-				window.addEventListener moveEvent, @onPointerMove, passive: true
-				window.addEventListener upEvent, @onPointerUp, passive: true
-				window.addEventListener 'contextmenu', @onPointerUp, passive: true
+				@$refs.mask.addEventListener moveEvent, @onPointerMove, passive
+				@$refs.mask.addEventListener upEvent, @onPointerUp, passive
+				@$refs.mask.addEventListener 'contextmenu', @onPointerUp, passive
 				@dragVelocity = 0 # Reset any previous velocity
 				@preventContentDrag()
 				@stopTweening()
@@ -135,9 +136,9 @@ export default
 				else @goto @dragIndex
 
 				# Cleanup vars and listeners
-				window.removeEventListener moveEvent, @onPointerMove, passive: true
-				window.removeEventListener upEvent, @onPointerUp, passive: true
-				window.removeEventListener 'contextmenu', @onPointerUp, passive: true
+				@$refs.mask.removeEventListener moveEvent, @onPointerMove, passive
+				@$refs.mask.removeEventListener upEvent, @onPointerUp, passive
+				@$refs.mask.removeEventListener 'contextmenu', @onPointerUp, passive
 				@dragging = false
 				@startPointer = @lastPointer = @dragDirectionRatio = null
 
