@@ -41,40 +41,60 @@ export default
 
 	computed:
 
-		# The current slide or page index. It rounds differently depedning on the
+		# The current slide or page index. It rounds differently depending on the
 		# direction of the velocity.  So that it eases to a stop in the direction
-		# the user was dragging
-		dragIndex: ->
-			fractionalIndex = Math.abs if @paginateBySlide
-			then @currentX / @slideWidth
-			else @currentX / @pageWidth
-			switch
+		# the user was dragging.
+		dragIndex: -> switch
 
-				# If there is very little velocity, go to the closet page
-				when Math.abs(@dragVelocity) <= 2 then Math.round fractionalIndex
+			# If there is very little velocity, go to the closet page
+			when Math.abs(@dragVelocity) <= 2 then Math.round @fractionalIndex
 
-				# User was moving forward
-				when @dragVelocity < 0 then Math.ceil fractionalIndex
+			# User was moving forward
+			when @dragVelocity < 0 then Math.ceil @fractionalIndex
 
-				# User was moving backward
-				else Math.floor fractionalIndex
+			# User was moving backward
+			else Math.floor @fractionalIndex
 
-		# Calculate the width of a slide
-		slideWidth: -> @pageWidth / @currentSlidesPerPage
+		# Determine the current index given the currentX as a fraction. For
+		# instance, when dragging forward, it will be like 0.1 and when you've
+		# dragged almost a full page, forward it would be 0.9.  This got
+		# complicated because the final page may not have a full compliment of
+		# slides like if we have 2 per page and 3 slides.  When you have tweened
+		# to the 2nd page, the fractionalIndex should be 2 even though you
+		# haven't traveled the same width as it took to get from 1 to 2.
+		fractionalIndex: ->
+			return 0 unless @trackWidth
 
-		# Calculate the width of the track
-		trackWidth: -> @slideWidth * @slidesCount
+			# Work in positive numbers
+			x = @currentX * -1
 
-		# The ending x value
-		endX: -> if @disabled then 0 else @pageWidth - @trackWidth
+			# Figure out what set we're in, like if, through looping, we've gone
+			# through all the pages multiple times.
+			setIndex = Math.floor x / @trackWidth
 
-		# Check if the drag is currently out bounds
-		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
+			# Figure out the index of last page of the set that has been fully
+			# scrolled into. Not using modulo for this because I got rounding errors.
+			widthDivisor = if @paginateBySlide then @slideWidth else @pageWidth
+			pageIndex = Math.floor (x - setIndex * @trackWidth) / widthDivisor
 
-		# Determine if the user is dragging vertically
-		isVerticalDrag: ->
-			return unless @dragDirectionRatio
-			@dragDirectionRatio < @verticalDragTreshold
+			# Figure out the progress into the current page
+			distanceIntoPage = x - setIndex * @trackWidth - pageIndex * widthDivisor
+
+			# Determine if we're on the last page. If we're not looping, an extra
+			# "page" of slides is treated as part of the last page because of how we
+			# end with the slides flush with the right edge.
+			slidesPerPage = @currentSlidesPerPage
+			remainingSlides = switch
+				when @loop then @slidesCount - pageIndex * slidesPerPage
+				else @slidesCount - (pageIndex + 1) * slidesPerPage
+			isLastPage = remainingSlides <= slidesPerPage
+
+			# Make a percentage of travel into the page
+			pageWidth = if isLastPage then @lastPageWidth else widthDivisor
+			pageProgressPercent = distanceIntoPage / pageWidth
+
+			# Return the final value by adding all the passed index values
+			return pageProgressPercent + setIndex * @pages + pageIndex
 
 	watch:
 
@@ -90,6 +110,7 @@ export default
 			if @pressing
 				window.addEventListener moveEvent, @onPointerMove, passive: true
 				window.addEventListener upEvent, @onPointerUp, passive: true
+				window.addEventListener 'contextmenu', @onPointerUp, passive: true
 				@dragVelocity = 0 # Reset any previous velocity
 				@preventContentDrag()
 				@stopTweening()
@@ -98,9 +119,9 @@ export default
 			else
 
 				# Tween so the track is in bounds if it was out
-				if @isOutOfBounds
-					@targetX = @applyXBoundaries @currentX
-					@startTweening()
+				if @isOutOfBounds and not @loop
+					if @currentX >= 0 then @goto 0
+					else @goto @pages - 1
 
 				# If user was vertically dragging, reset the index
 				else if @isVerticalDrag then @goto @index
@@ -111,6 +132,7 @@ export default
 				# Cleanup vars and listeners
 				window.removeEventListener moveEvent, @onPointerMove, passive: true
 				window.removeEventListener upEvent, @onPointerUp, passive: true
+				window.removeEventListener 'contextmenu', @onPointerUp, passive: true
 				@dragging = false
 				@startPointer = @lastPointer = @dragDirectionRatio = null
 
@@ -171,12 +193,15 @@ export default
 
 		# Prevent dragging from exceeding the min/max edges
 		applyBoundaryDampening: (x) -> switch
+			when @loop then x # Don't apply dampening
 			when x > 0 then Math.pow x, @boundaryDampening
 			when x < @endX then @endX - Math.pow @endX - x, @boundaryDampening
 			else @applyXBoundaries x
 
 		# Constraint the x value to the min and max values
-		applyXBoundaries: (x) -> Math.max @endX, Math.min 0, x
+		applyXBoundaries: (x) ->
+			if @loop then x # Don't apply boundaries
+			else Math.max @endX, Math.min 0, x
 
 		# Prevent the anchors and images from being draggable (like via their
 		# ghost outlines). Using this approach because the draggable html attribute

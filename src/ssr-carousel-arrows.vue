@@ -9,7 +9,7 @@
 		aria-label='Back'
 		:disabled='backDisabled'
 		@click='$emit("back")')
-			slot(v-if='$slots.back' name='back')
+			slot(v-if='$slots.back' name='back' :disabled='backDisabled')
 			span.ssr-carousel-back-icon(v-else)
 
 	//- Next arrow
@@ -17,7 +17,7 @@
 		aria-label='Next'
 		:disabled='nextDisabled'
 		@click='$emit("next")')
-			slot(v-if='$slots.next' name='next')
+			slot(v-if='$slots.next' name='next' :disabled='nextDisabled')
 			span.ssr-carousel-next-icon(v-else)
 
 </template>
@@ -30,12 +30,13 @@ export default
 	props:
 		index: Number
 		pages: Number
+		loop: Boolean
 
 	computed:
 
 		# Determine if button should be disabled because we're at the limits
-		backDisabled: -> @index == 0
-		nextDisabled: -> @index == @pages - 1
+		backDisabled: -> @index == 0 unless @loop
+		nextDisabled: -> @index == @pages - 1 unless @loop
 
 </script>
 
@@ -64,7 +65,6 @@ export default
 	// Make a circle shape
 	display inline-block
 	circle 42px, rgba(black, 0.5)
-	color white
 	flex-center()
 
 	// Show disabled state
@@ -81,20 +81,20 @@ export default
 		+active()
 			opacity 1
 
-	// Massage the icon centering
+	// Shared icon styles
 	&:before
-		display inline-block
+		content ''
 		position relative
-		top 2px
 
 // Make triangle icons in the buttons
 .ssr-carousel-back-icon
 	&:before
-		content '◀'
-		left -2px
+		triangle 12px, 18px, white, 'left'
+		left -2px // Massage center
+
 .ssr-carousel-next-icon
 	&:before
-		content '▶'
-		left 2px
+		triangle 12px, 18px, white, 'right'
+		left 2px // Massage center
 
 </style>

@@ -21,12 +21,14 @@ article
 <script lang='coffee'>
 import pageMixin from '@bkwld/cloak/mixins/page'
 import SsrCarousel from '../../src/ssr-carousel'
+import Visual from 'vue-visual'
+import 'vue-visual/index.css'
 
 export default
 	name: 'Page'
 	mixins: [ pageMixin ]
 
-	components: { SsrCarousel }
+	components: { SsrCarousel, Visual }
 
 	# Get Tower data
 	asyncData: ({ app, params, $content }) ->
@@ -78,8 +80,7 @@ h1
 
 // Seperate regions on a page
 h2
-	fluid-space margin-top, 'm'
-	fluid-space margin-bottom, 's'
+	fluid-space margin-top, 'l'
 	style-h2()
 
 // Syntax highlighting
@@ -87,9 +88,37 @@ h2
 	background darken(primary-background, 15%)
 	border 1px solid darken(primary-background, 30%)
 	basic-border-radius()
-	fluid-space margin-v, 's'
+	fluid-space margin-bottom, 's'
 >>> code
 	font-size 14px
 	line-height 1.2
+
+// Style body text, like notes
+p
+	line-height 1.5
+	color lighten(primary-background, 50%)
+
+	// Underline links
+	a
+		text-decoration underline
+
+	// Style inline code
+	code
+		border 1px solid lighten(primary-background, 15%)
+		border-radius 2px
+		padding-h .3em
+		background darken(primary-background, 10%)
+
+// Add constant margins around demos
+.ssr-carousel
+	fluid-space margin-v, 's'
+
+// Clear the effect of the page gutters
+.clear-page-gutters
+	fluid(margin-h,
+		gutter * -1,
+		gutter-mobile * -1,
+		max-break: desktop,
+		min-break: mobile)
 
 </style>

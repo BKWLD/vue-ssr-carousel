@@ -8,20 +8,21 @@ export default
 
 	props:
 		dragging: Boolean
-		currentX: Number
+		trackTranslateX: Number
+		slides: Array
 
 	computed:
 
 		# Styles that are used to position the track
-		styles: -> transform: "translateX(#{@currentX}px)"
+		styles: ->
+			transform: "translateX(#{@trackTranslateX}px)" if @trackTranslateX
 
 	# Render the track and slotted slides
 	render: (create) ->
 
 		# Wrap the slides in ssr-carousel-slide functional components
-		children = @$slots.default.map (child) ->
-			if child.text then child # Text nodes like newlines
-			else create SsrCarouselSlide, { parent: this }, [ child ]
+		children = @slides.map (child) ->
+			create SsrCarouselSlide, { parent: this }, [ child ]
 
 		# Create the track div
 		create 'div',
