@@ -1,7 +1,8 @@
 ###
 Code related to handling dragging of the track
 ###
-passive = passive: true # For terser setting of this option
+passive = passive: true
+notPassive = passive: false
 export default
 
 	props:
@@ -35,11 +36,11 @@ export default
 
 	# Cleanup listeners
 	beforeDestroy: ->
-		@$refs.mask.removeEventListener 'mousemove', @onPointerMove, passive
-		@$refs.mask.removeEventListener 'mouseup', @onPointerUp, passive
-		@$refs.mask.removeEventListener 'touchmove', @onPointerMove, passive
-		@$refs.mask.removeEventListener 'touchend', @onPointerUp, passive
-		window.removeEventListener 'touchmove', @onWinMove, passive: false
+		window.removeEventListener 'mousemove', @onPointerMove, passive
+		window.removeEventListener 'mouseup', @onPointerUp, passive
+		window.removeEventListener 'touchmove', @onPointerMove, passive
+		window.removeEventListener 'touchend', @onPointerUp, passive
+		window.removeEventListener 'touchmove', @onWinMove, notPassive
 
 	computed:
 
@@ -119,9 +120,9 @@ export default
 
 			# Pointer is down, start watching for drags
 			if @pressing
-				@$refs.mask.addEventListener moveEvent, @onPointerMove, passive
-				@$refs.mask.addEventListener upEvent, @onPointerUp, passive
-				@$refs.mask.addEventListener 'contextmenu', @onPointerUp, passive
+				window.addEventListener moveEvent, @onPointerMove, passive
+				window.addEventListener upEvent, @onPointerUp, passive
+				window.addEventListener 'contextmenu', @onPointerUp, passive
 				@dragVelocity = 0 # Reset any previous velocity
 				@preventContentDrag()
 				@stopTweening()
@@ -141,9 +142,9 @@ export default
 				else @goto @dragIndex
 
 				# Cleanup vars and listeners
-				@$refs.mask.removeEventListener moveEvent, @onPointerMove, passive
-				@$refs.mask.removeEventListener upEvent, @onPointerUp, passive
-				@$refs.mask.removeEventListener 'contextmenu', @onPointerUp, passive
+				window.removeEventListener moveEvent, @onPointerMove, passive
+				window.removeEventListener upEvent, @onPointerUp, passive
+				window.removeEventListener 'contextmenu', @onPointerUp, passive
 				@dragging = false
 				@startPointer = @lastPointer = @dragDirectionRatio = null
 
@@ -170,8 +171,8 @@ export default
 		# browsers set to true by default.
 		preventVerticalScroll: (shouldPrevent) ->
 			if shouldPrevent
-			then window.addEventListener 'touchmove', @stopEvent, passive: false
-			else window.removeEventListener 'touchmove', @stopEvent, passive: false
+			then window.addEventListener 'touchmove', @stopEvent, notPassive
+			else window.removeEventListener 'touchmove', @stopEvent, notPassive
 
 	methods:
 
