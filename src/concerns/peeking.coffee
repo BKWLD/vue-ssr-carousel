@@ -4,10 +4,6 @@ gutter space.
 ###
 export default
 
-	data: ->
-		leftPeekingSlide: null
-		rightPeekingSlide: null
-
 	props:
 
 		# Use gutter's as the peeking value
@@ -38,6 +34,12 @@ export default
 			default: -> @gutter
 
 	data: ->
+
+		# Store cloned slides
+		leftPeekingSlide: null
+		rightPeekingSlide: null
+
+		# Store computed peek values
 		peekLeftPx: 0
 		peekRightPx: 0
 
