@@ -81,15 +81,15 @@ export default
 
 		# Make the block of styles for a breakpoint
 		makeBreakpointStyles: (breakpoint) -> """
-			#{@makeBreakpointDisablingRules(breakpoint)}
+			#{@makeBreakpointDisablingRules(breakpoint) || ''}
 			#{@scopeSelector} .ssr-carousel-mask {
-				#{@makeBreakpointFeatheringStyle(breakpoint)}
+				#{@makeBreakpointFeatheringStyle(breakpoint) || ''}
 			}
 			#{@scopeSelector} .ssr-carousel-track {
-				#{@makeBreakpointTrackTransformStyle(breakpoint)}
+				#{@makeBreakpointTrackTransformStyle(breakpoint) || ''}
 			}
 			#{@scopeSelector} .ssr-carousel-slide {
-				#{@makeBreakpointWidthStyle(breakpoint)}
+				#{@makeBreakpointWidthStyle(breakpoint) || ''}
 			}
 			#{@scopeSelector} .ssr-carousel-slide:not(:last-child) {
 				#{@makeBreakpointMarginStyle(breakpoint) || ''}
