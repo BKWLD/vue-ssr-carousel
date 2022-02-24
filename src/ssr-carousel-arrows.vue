@@ -65,7 +65,6 @@ export default
 	// Make a circle shape
 	display inline-block
 	circle 42px, rgba(black, 0.5)
-	color white
 	flex-center()
 
 	// Show disabled state
@@ -82,20 +81,20 @@ export default
 		+active()
 			opacity 1
 
-	// Massage the icon centering
+	// Shared icon styles
 	&:before
-		display inline-block
+		content ''
 		position relative
-		top 2px
 
 // Make triangle icons in the buttons
 .ssr-carousel-back-icon
 	&:before
-		content '◀'
-		left -2px
+		triangle 12px, 18px, white, 'left'
+		left -2px // Massage center
+
 .ssr-carousel-next-icon
 	&:before
-		content '▶'
-		left 2px
+		triangle 12px, 18px, white, 'right'
+		left 2px // Massage center
 
 </style>
