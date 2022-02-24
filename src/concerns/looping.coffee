@@ -14,6 +14,8 @@ export default
 		# Put slides in order, applying rules related to looping
 		slides: ->
 
+			return @slottedSlides
+
 			# If not looping, don't show other slides during boundary dampening
 			return @slottedSlides unless @loop
 
@@ -51,6 +53,8 @@ export default
 			immediate: true
 			handler: ->
 				indexes = [...Array(@slidesCount).keys()]
-				prepended = indexes.slice @currentSlideIndex % @slidesCount
-				remainder = indexes.slice 0, @slidesCount - prepended.length
-				@slideOrder = [ ...prepended, ...remainder ]
+				insertion = indexes.length - @currentSlideIndex % indexes.length
+				@slideOrder = [
+					...indexes.slice insertion
+					...indexes.slice 0, insertion
+				]

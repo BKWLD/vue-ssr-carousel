@@ -1,14 +1,13 @@
-<!-- Wrapps a slotted slide to control things like style attributes -->
+<!-- Wraps a slotted slide to control things like style attributes -->
 
 <script lang='coffee'>
 export default
 	name: 'SsrCarouselSlide'
-	functional: true
 
-	render: (create, { children }) ->
+	render: (create) ->
 
 		# Get at the slide vnode
-		slide = children[0]
+		slide = @$slots.default[0]
 
 		# If the slide is a component, the data may need to be set in asyncMeta.
 		# Otherwise, it's set on the slide itself

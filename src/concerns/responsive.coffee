@@ -91,7 +91,7 @@ export default
 			#{@scopeSelector} .ssr-carousel-slide {
 				#{@makeBreakpointWidthStyle(breakpoint) || ''}
 			}
-			#{@scopeSelector} .ssr-carousel-slide:not(:last-child) {
+			#{@scopeSelector} .ssr-carousel-slide {
 				#{@makeBreakpointMarginStyle(breakpoint) || ''}
 			}
 		"""

@@ -10,6 +10,8 @@ export default
 		dragging: Boolean
 		trackTranslateX: Number
 		slides: Array
+		slideOrder: Array
+		clones: Array
 
 	computed:
 
@@ -20,9 +22,15 @@ export default
 	# Render the track and slotted slides
 	render: (create) ->
 
-		# Wrap the slides in ssr-carousel-slide functional components
-		children = @slides.map (child) ->
-			create SsrCarouselSlide, { parent: this }, [ child ]
+		# Wrap the slides in ssr-carousel-slide components. When I passed the order
+		# in as a prop and tried to set the style from within the component, it
+		# never updated. Thus, I'm setting the style here as part of the create().
+		children = @slides.map (child, index) =>
+			console.log 'loop', index, @slideOrder[index]
+			create SsrCarouselSlide, {
+				parent: this
+				style: order: @slideOrder[index]
+			}, [ child ]
 
 		# Create the track div
 		create 'div',
