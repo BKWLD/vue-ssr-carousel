@@ -1,4 +1,4 @@
-<!-- Wrapps a slotted slide to control things like style attributes -->
+<!-- Wraps a slotted slide to control things like style attributes -->
 
 <script lang='coffee'>
 export default

@@ -24,8 +24,10 @@
 			//- The container of the slides that animates
 			ssr-carousel-track(
 				ref='track'
-				:slides='slides'
-				v-bind='{ dragging, trackTranslateX }')
+				v-bind=`{
+					slides, dragging, trackTranslateX,
+					leftPeekingSlide, rightPeekingSlide
+				}`)
 
 		//- Back / Next navigation
 		ssr-carousel-arrows(

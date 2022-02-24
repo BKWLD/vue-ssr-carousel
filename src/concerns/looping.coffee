@@ -21,8 +21,8 @@ export default
 			slides = @slideOrder.map (index) => @slottedSlides[index]
 
 			# Add cloned, peeking slides to the periphery
-			slides = [ @leftPeekingSlide, ...slides, @rightPeekingSlide]
-			.filter (val) -> !!val # Remove empty peeking slides
+			# slides = [ @leftPeekingSlide, ...slides, @rightPeekingSlide]
+			# .filter (val) -> !!val # Remove empty peeking slides
 
 			# Return adjusted list of slides
 			return slides

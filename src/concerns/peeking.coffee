@@ -95,12 +95,14 @@ export default
 		# Clone peeking slides
 		clonePeekingSlides: ->
 			return unless @loop and @slidesCount > 1
-			if @peekLeft
-				firstSlide = @slottedSlides[@slideOrder[@slidesCount - 1]]
-				@leftPeekingSlide = @cloneVnode firstSlide
-			if @peekRight
-				lastSlide = @slottedSlides[@slideOrder[0]]
-				@rightPeekingSlide = @cloneVnode lastSlide
+
+			slideEls = @$refs.track.$el.querySelectorAll '.ssr-carousel-slide'
+
+			firstSlide = slideEls.item(0)
+			lastSlide = slideEls.item(slideEls.length - 1)
+
+			@leftPeekingSlide = lastSlide.cloneNode true
+			@rightPeekingSlide = firstSlide.cloneNode true
 
 		# Clone a vnode, based on
 		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89

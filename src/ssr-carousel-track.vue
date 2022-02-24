@@ -2,6 +2,8 @@
 
 <script lang='coffee'>
 import SsrCarouselSlide from './ssr-carousel-slide'
+import SsrCarouselPeekingSlide from './ssr-carousel-peeking-slide'
+import Vue from 'vue'
 export default
 
 	components: { SsrCarouselSlide }
@@ -10,6 +12,8 @@ export default
 		dragging: Boolean
 		trackTranslateX: Number
 		slides: Array
+		leftPeekingSlide: null # DOM Element
+		rightPeekingSlide: null # DOM Element
 
 	computed:
 
@@ -23,6 +27,14 @@ export default
 		# Wrap the slides in ssr-carousel-slide functional components
 		children = @slides.map (child) ->
 			create SsrCarouselSlide, { parent: this }, [ child ]
+
+		# Add the peeking slides
+		if @leftPeekingSlide
+		then children.unshift create SsrCarouselPeekingSlide,
+			props: clone: @leftPeekingSlide
+		if @rightPeekingSlide
+		then children.push create SsrCarouselPeekingSlide,
+			props: clone: @rightPeekingSlide
 
 		# Create the track div
 		create 'div',
