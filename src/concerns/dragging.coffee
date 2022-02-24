@@ -39,6 +39,7 @@ export default
 		@$refs.mask.removeEventListener 'mouseup', @onPointerUp, passive
 		@$refs.mask.removeEventListener 'touchmove', @onPointerMove, passive
 		@$refs.mask.removeEventListener 'touchend', @onPointerUp, passive
+		window.removeEventListener 'touchmove', @onWinMove, passive: false
 
 	computed:
 
@@ -102,6 +103,10 @@ export default
 			return unless @dragDirectionRatio
 			@dragDirectionRatio < @verticalDragTreshold
 
+		# If we're horiztonally swiping on a touch device, prevent vertical scroll
+		preventVerticalScroll: ->
+			@pressing and @isTouchDrag and not @isVerticalDrag
+
 	watch:
 
 		# Watch for mouse move changes when the user starts dragging
@@ -160,7 +165,18 @@ export default
 			return unless @isVerticalDrag and @isTouchDrag
 			@pressing = false
 
+		# Stop vertical scrolling by listening for touchmove events on the body
+		# and cancel them. Need to explicitly set pasive because some mobile
+		# browsers set to true by default.
+		preventVerticalScroll: (shouldPrevent) ->
+			if shouldPrevent
+			then window.addEventListener 'touchmove', @stopEvent, passive: false
+			else window.removeEventListener 'touchmove', @stopEvent, passive: false
+
 	methods:
+
+		# Cancel an Event
+		stopEvent: (e) -> e.preventDefault()
 
 		# Keep track of whether user is dragging
 		onPointerDown: (pointerEvent) ->
