@@ -27,3 +27,8 @@ module.exports = mergeConfig boilerplate,
 	content:
 		liveEdit: false
 		markdown: prism: theme: 'prism-themes/themes/prism-atom-dark.css'
+
+	# Enable dev tools in prod
+	vue: config:
+		productionTip: false
+		devtools: true
