@@ -27,12 +27,6 @@ export default
 			type: Number | String
 			default: -> @peek
 
-		# Add feathering effect at this min-width
-		featheringMinWidth: Number | String
-		featheringSize:
-			type: Number | String
-			default: -> @gutter
-
 	data: ->
 
 		# Store clones of the slides used for peeking
