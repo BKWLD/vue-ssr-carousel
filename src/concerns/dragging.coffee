@@ -120,8 +120,8 @@ export default
 
 				# Tween so the track is in bounds if it was out
 				if @isOutOfBounds and not @loop
-					@targetX = @applyXBoundaries @currentX
-					@startTweening()
+					if @currentX >= 0 then @goto 0
+					else @goto @pages - 1
 
 				# If user was vertically dragging, reset the index
 				else if @isVerticalDrag then @goto @index
