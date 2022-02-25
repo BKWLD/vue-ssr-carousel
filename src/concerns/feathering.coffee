@@ -18,7 +18,7 @@ export default
 			# Get feathering amount
 			feather = @getResponsiveValue 'feather', breakpoint
 			return if feather in [false, null]
-			feather = 20 unless feather
+			feather = 20 unless feather and typeof feather != 'boolean'
 			feather = @autoUnit feather
 
 			# Make the rule value
