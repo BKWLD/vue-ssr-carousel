@@ -319,9 +319,13 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
         },
       },
       [
-        _vm.$scopedSlots.back
-          ? _vm._t("back", null, { disabled: _vm.backDisabled })
-          : _c("span", { staticClass: "ssr-carousel-back-icon" }),
+        _vm._t(
+          "back",
+          function () {
+            return [_c("span", { staticClass: "ssr-carousel-back-icon" })]
+          },
+          { disabled: _vm.backDisabled }
+        ),
       ],
       2
     ),
@@ -337,9 +341,13 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
         },
       },
       [
-        _vm.$scopedSlots.next
-          ? _vm._t("next", null, { disabled: _vm.nextDisabled })
-          : _c("span", { staticClass: "ssr-carousel-next-icon" }),
+        _vm._t(
+          "next",
+          function () {
+            return [_c("span", { staticClass: "ssr-carousel-next-icon" })]
+          },
+          { disabled: _vm.nextDisabled }
+        ),
       ],
       2
     ),
@@ -523,9 +531,13 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function ()
           },
         },
         [
-          _vm.$scopedSlots.dot
-            ? _vm._t("dot", null, { index: i, disabled: _vm.isDisabled(i) })
-            : _c("span", { staticClass: "ssr-carousel-dot-icon" }),
+          _vm._t(
+            "dot",
+            function () {
+              return [_c("span", { staticClass: "ssr-carousel-dot-icon" })]
+            },
+            { index: i, disabled: _vm.isDisabled(i) }
+          ),
         ],
         2
       )
@@ -1688,10 +1700,10 @@ Code related to changing the slides per page at different viewport widths
     }
   },
   computed: {
-    // Make the scopeId from the based on hashing the props. If the props are
-    // the same for two instances, it's fine for them to have the same scopeId.
+    // Make the css scopeId from things that can influence the styles, like the
+    // slides count and props.
     scopeId: function () {
-      return this.hashString(JSON.stringify(this.$props));
+      return this.hashString(this.slidesCount + '|' + JSON.stringify(this.$props));
     },
     // Massage media queries into the responsive prop
     responsiveRules: function () {
@@ -1771,7 +1783,7 @@ Code related to changing the slides per page at different viewport widths
     },
     // Make the block of styles for a breakpoint
     makeBreakpointStyles: function (breakpoint) {
-      return this.makeBreakpointDisablingRules(breakpoint) + this.makeBreakpointFeatheringStyle(breakpoint) + this.makeBreakpointTrackTransformStyle(breakpoint) + this.makeBreakpointWidthStyle(breakpoint) + this.makeBreakpointSlideGutterStyle(breakpoint);
+      return [this.makeBreakpointDisablingRules(breakpoint), this.makeBreakpointFeatheringStyle(breakpoint), this.makeBreakpointTrackTransformStyle(breakpoint), this.makeBreakpointWidthStyle(breakpoint), this.makeBreakpointSlideGutterStyle(breakpoint)].join(' ');
     },
     // Apply disabling styles via breakpoint when there are not enough slides
     // for the slidesPerPage
