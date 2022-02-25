@@ -109,6 +109,11 @@ export default
 				#{@scopeSelector} .ssr-carousel-dots { display: flex; }
 				"""
 
+		# Check if carousel disabled at the breakpoint
+		isDisabledAtBreakpoint: (breakpoint) ->
+			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
+			return @slidesCount <= slidesPerPage
+
 		# Check if a breakpoint would apply currently. Not using window.matchQuery
 		# so I can consume via a compued property
 		isBreakpointActive: (breakpoint) -> switch
