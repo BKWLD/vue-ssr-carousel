@@ -1,0 +1,12 @@
+# Mac
+.DS_Store
+
+# Dependency directory
+node_modules
+
+# Logs
+logs
+*.log
+
+# DEmo site not needed
+demo
