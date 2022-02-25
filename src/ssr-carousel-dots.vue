@@ -9,7 +9,7 @@
 		:disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
 
-		//- CUstom dot
+		//- Custom dot
 		slot(
 			name='dot'
 			:index='i'
