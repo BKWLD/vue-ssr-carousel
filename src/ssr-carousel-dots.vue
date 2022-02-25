@@ -9,15 +9,14 @@
 		:disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
 
-			//- Custom dot
-			slot(
-				v-if='$scopedSlots.dot'
-				name='dot'
-				:index='i'
-				:disabled='isDisabled(i)')
+		//- CUstom dot
+		slot(
+			name='dot'
+			:index='i'
+			:disabled='isDisabled(i)')
 
-			//- Default dot UI
-			span.ssr-carousel-dot-icon(v-else)
+			//- Fallback
+			span.ssr-carousel-dot-icon
 
 </template>
 
