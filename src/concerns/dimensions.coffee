@@ -48,10 +48,13 @@ export default
 			width = slidesOnLastPage * @slideWidth
 			return width
 
-		# The ending x value, only used when not looping
+		# The ending x value, only used when not looping. The peeking values in
+		# here result in the final page using the left peeking value and the
+		# actualy peeking appearing to apply to the left. The +1 is to fix subpixel
+		# rounding issues.
 		endX: ->
 			if @disabled then 0
-			else @pageWidth - @trackWidth + @peekRightPx
+			else @pageWidth - @trackWidth - @peekLeftPx + @peekRightPx + 1
 
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX

@@ -130,3 +130,36 @@ body
   fluid --fluid-gutter, 40, 20
 </style>
 ```
+
+This also works well without looping. Note how the peeking card switches to the left edge on the final page but the gutter on the right edge is perseved.
+
+<demos-peeking-loopless-gutter></demos-peeking-loopless-gutter>
+
+```vue
+<ssr-carousel
+  :slides-per-page='3'
+  paginate-by-slide
+  peek-left='var(--fluid-gutter)'
+  peek-right='calc(var(--fluid-gutter) + 30px)'
+  gutter='var(--fluid-gutter)'
+  :responsive='[
+    {
+      minWidth: 1440,
+      feather: "calc(var(--fluid-gutter) * 0.5)",
+    },
+    {
+      maxWidth: 768,
+      slidesPerPage: 2,
+    },
+    {
+      maxWidth: 500,
+      slidesPerPage: 1,
+    },
+  ]'>
+  <slide :index='1'></slide>
+  <slide :index='2'></slide>
+  <slide :index='3'></slide>
+  <slide :index='4'></slide>
+  <slide :index='5'></slide>
+</ssr-carousel>
+```
