@@ -15,7 +15,7 @@ export default
 		# Add feathering styles via breakpoint
 		makeBreakpointFeatheringStyle: (breakpoint) ->
 
-			# Disbale feathering if not enough slides
+			# Disable feathering if not enough slides
 			return if @isDisabledAtBreakpoint breakpoint
 
 			# Get feathering amount

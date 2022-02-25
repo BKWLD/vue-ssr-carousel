@@ -46,6 +46,10 @@ title: 'Responsive Options'
   :responsive='[
     {
       minWidth: 768,
+      slidesPerPage: 2,
+    },
+    {
+      minWidth: 1024,
       slidesPerPage: 3,
     }
   ]'>

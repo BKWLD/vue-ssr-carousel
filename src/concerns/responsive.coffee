@@ -131,23 +131,31 @@ export default
 			# If no responsive rules, use default
 			return @[property] unless @responsiveRules.length
 
-			# Otherwise, look up this breakpoint in the list...
-			breakpointIndex = @responsiveRules.findIndex ({ maxWidth }) ->
-				maxWidth == breakpoint.maxWidth
-			unless breakpointIndex >= 0
-			then throw "Breakpoint missing for #{property} in
-				#{JSON.stringify(breakpoint)}"
+			# Check responsive rules to see if any of them contain a value for the
+			# property
+			ruleMatch = @responsiveRules.find (rule) ->
 
-			# ... if it _wasn't_ the first entry, check if any preceeding breakpoints
-			# have this value set
-			if breakpointIndex > 0
-				if match = @responsiveRules
-				.slice(0, breakpointIndex).reverse()
-				.find (breakpoint) -> breakpoint[property]
-				then return match[property]
+				# Rule must contain this property
+				return unless rule[property]
 
-			# ... else, return the defaults
-			return @[property]
+				# Match if rule's min-width is less than the target max-width
+				return true if breakpoint.maxWidth && rule.minWidth &&
+				rule.minWidth < breakpoint.maxWidth
+
+				# Match if rule's max-width is less than the target max-width
+				return true if breakpoint.maxWidth && rule.maxWidth &&
+				rule.maxWidth < breakpoint.maxWidth
+
+				# Match if rule's min-width is greater than the target min-width
+				return true if breakpoint.minWidth && rule.minWidth &&
+				rule.minWidth > breakpoint.minWidth
+
+				# Match if rule's max-width is greater than the target min-width
+				return true if breakpoint.minWidth && rule.maxWidth &&
+				rule.minWidth > breakpoint.minWidth
+
+			# Return matching property or fallback to the main component prop
+			return if ruleMatch then ruleMatch[property] else @[property]
 
 		# Make a hash from a string, adapted from:
 		# https://stackoverflow.com/a/33647870/59160
