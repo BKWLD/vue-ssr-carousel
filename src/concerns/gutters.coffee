@@ -19,7 +19,6 @@ export default
 			# If carousel would be disabled for not having enough slides, then remove
 			# gutter from last slide.
 			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
-			console.log @slidesCount, slidesPerPage
 			notLastSlide = if @slidesCount > slidesPerPage
 			then '' else ':not(:last-child)'
 
