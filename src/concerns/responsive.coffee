@@ -80,12 +80,13 @@ export default
 			return rules.join ' and '
 
 		# Make the block of styles for a breakpoint
-		makeBreakpointStyles: (breakpoint) ->
-			@makeBreakpointDisablingRules(breakpoint) +
-			@makeBreakpointFeatheringStyle(breakpoint) +
-			@makeBreakpointTrackTransformStyle(breakpoint) +
-			@makeBreakpointWidthStyle(breakpoint) +
+		makeBreakpointStyles: (breakpoint) -> [
+			@makeBreakpointDisablingRules(breakpoint)
+			@makeBreakpointFeatheringStyle(breakpoint)
+			@makeBreakpointTrackTransformStyle(breakpoint)
+			@makeBreakpointWidthStyle(breakpoint)
 			@makeBreakpointSlideGutterStyle(breakpoint)
+		].join ' '
 
 		# Apply disabling styles via breakpoint when there are not enough slides
 		# for the slidesPerPage
