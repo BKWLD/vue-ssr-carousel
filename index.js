@@ -887,12 +887,15 @@ Code related to measuring the size of the carousel after mounting
       width = slidesOnLastPage * this.slideWidth;
       return width;
     },
-    // The ending x value, only used when not looping
+    // The ending x value, only used when not looping. The peeking values in
+    // here result in the final page using the left peeking value and the
+    // actualy peeking appearing to apply to the left. The +1 is to fix subpixel
+    // rounding issues.
     endX: function () {
       if (this.disabled) {
         return 0;
       } else {
-        return this.pageWidth - this.trackWidth + this.peekRightPx;
+        return this.pageWidth - this.trackWidth - this.peekLeftPx + this.peekRightPx + 1;
       }
     },
     // Check if the drag is currently out bounds
@@ -1253,7 +1256,12 @@ Code related to implementing feathering effect.
   methods: {
     // Add feathering styles via breakpoint
     makeBreakpointFeatheringStyle: function (breakpoint) {
-      var cssValue, feather; // Get feathering amount
+      var cssValue, feather; // Disable feathering if not enough slides
+
+      if (this.isDisabledAtBreakpoint(breakpoint)) {
+        return;
+      } // Get feathering amount
+
 
       feather = this.getResponsiveValue('feather', breakpoint);
 
@@ -1261,7 +1269,7 @@ Code related to implementing feathering effect.
         return;
       }
 
-      if (!feather) {
+      if (!(feather && typeof feather !== 'boolean')) {
         feather = 20;
       }
 
@@ -1338,9 +1346,13 @@ Code related to the gutters between slides
   methods: {
     // Apply gutters between slides via margins
     makeBreakpointSlideGutterStyle: function (breakpoint) {
-      var gutter;
-      gutter = this.getResponsiveValue('gutter', breakpoint);
-      return `${this.scopeSelector} .ssr-carousel-slide {
+      var gutter, notLastSlide;
+      gutter = this.getResponsiveValue('gutter', breakpoint); // If carousel would be disabled for not having enough slides, then remove
+      // gutter from last slide.
+
+      notLastSlide = this.isDisabledAtBreakpoint(breakpoint) ? ':not(:last-child)' : ''; // Render styles
+
+      return `${this.scopeSelector} .ssr-carousel-slide${notLastSlide} {
 	margin-right: ${this.autoUnit(gutter)};
 }`;
     }
@@ -1802,6 +1814,12 @@ ${this.scopeSelector} .ssr-carousel-arrows { display: block; }
 ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
       }
     },
+    // Check if carousel disabled at the breakpoint
+    isDisabledAtBreakpoint: function (breakpoint) {
+      var slidesPerPage;
+      slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint);
+      return this.slidesCount <= slidesPerPage;
+    },
     // Check if a breakpoint would apply currently. Not using window.matchQuery
     // so I can consume via a compued property
     isBreakpointActive: function (breakpoint) {
@@ -1823,7 +1841,7 @@ ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
     },
     // Find the first breakpoint with a property set
     getResponsiveValue: function (property, breakpoint) {
-      var breakpointIndex, match, val;
+      var ruleMatch, val;
 
       if ((val = breakpoint[property]) != null) {
         // If this breakpoint has a value, use it
@@ -1833,31 +1851,42 @@ ${this.scopeSelector} .ssr-carousel-dots { display: flex; }`;
       if (!this.responsiveRules.length) {
         // If no responsive rules, use default
         return this[property];
-      } // Otherwise, look up this breakpoint in the list...
+      } // Check responsive rules to see if any of them contain a value for the
+      // property
 
 
-      breakpointIndex = this.responsiveRules.findIndex(function ({
-        maxWidth
-      }) {
-        return maxWidth === breakpoint.maxWidth;
-      });
-
-      if (!(breakpointIndex >= 0)) {
-        throw `Breakpoint missing for ${property} in ${JSON.stringify(breakpoint)}`;
-      } // ... if it _wasn't_ the first entry, check if any preceeding breakpoints
-      // have this value set
-
-
-      if (breakpointIndex > 0) {
-        if (match = this.responsiveRules.slice(0, breakpointIndex).reverse().find(function (breakpoint) {
-          return breakpoint[property];
-        })) {
-          return match[property];
+      ruleMatch = this.responsiveRules.find(function (rule) {
+        // Rule must contain this property
+        if (!rule[property]) {
+          return;
         }
-      } // ... else, return the defaults
 
+        if (breakpoint.maxWidth && rule.minWidth && rule.minWidth < breakpoint.maxWidth) {
+          // Match if rule's min-width is less than the target max-width
+          return true;
+        }
 
-      return this[property];
+        if (breakpoint.maxWidth && rule.maxWidth && rule.maxWidth < breakpoint.maxWidth) {
+          // Match if rule's max-width is less than the target max-width
+          return true;
+        }
+
+        if (breakpoint.minWidth && rule.minWidth && rule.minWidth > breakpoint.minWidth) {
+          // Match if rule's min-width is greater than the target min-width
+          return true;
+        }
+
+        if (breakpoint.minWidth && rule.maxWidth && rule.minWidth > breakpoint.minWidth) {
+          // Match if rule's max-width is greater than the target min-width
+          return true;
+        }
+      }); // Return matching property or fallback to the main component prop
+
+      if (ruleMatch) {
+        return ruleMatch[property];
+      } else {
+        return this[property];
+      }
     },
     // Make a hash from a string, adapted from:
     // https://stackoverflow.com/a/33647870/59160
