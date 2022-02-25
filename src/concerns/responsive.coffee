@@ -18,9 +18,9 @@ export default
 
 	computed:
 
-		# Make the scopeId from the based on hashing the props. If the props are
-		# the same for two instances, it's fine for them to have the same scopeId.
-		scopeId: -> @hashString JSON.stringify @$props
+		# Make the css scopeId from things that can influence the styles, like the
+		# slides count and props.
+		scopeId: -> @hashString @slidesCount + '|' + JSON.stringify @$props
 
 		# Massage media queries into the responsive prop
 		responsiveRules: -> @responsive.map (breakpoint) => {
