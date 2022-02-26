@@ -27,6 +27,14 @@ export default
 			type: Number | String
 			default: -> @peek
 
+		# When true, the peekLeft is used for the peekRight if the carousel is
+		# disabled.  This behavior is expecting that there may be a different
+		# peekRight (to hint at additional slides) but when there aren't more slide
+		# to peek in, the peek value should functional like padding.
+		matchPeekWhenDisabled:
+			type: Boolean
+			default: true
+
 	data: ->
 
 		# Store clones of the slides used for peeking
@@ -75,6 +83,7 @@ export default
 		# make `trackLoopOffset` using CSS only so there is now reflow when JS
 		# hydrates.  This gets overridden by the track's inline translateX style.
 		makeBreakpointTrackTransformStyle: (breakpoint) ->
+			return if @isDisabledAtBreakpoint breakpoint
 			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
 
 			# If no peeking slide, just add the offset

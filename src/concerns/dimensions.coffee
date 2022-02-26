@@ -86,10 +86,18 @@ export default
 		# style this produces should have an equal value to the `slideWidth`
 		# computed property which is client side JS dependent.
 		makeSlideWidthCalc: (breakpoint) ->
+			isDisabled = @isDisabledAtBreakpoint breakpoint
 			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
 			gutter = @getResponsiveValue 'gutter', breakpoint
+
+			# A common use case when not looping is to have a larger peek on just the
+			# right.  But when disabled, this looks strange.  So this balances out
+			# the peeking in the disbaled state.
 			peekLeft = @getResponsiveValue 'peekLeft', breakpoint
-			peekRight = @getResponsiveValue 'peekRight', breakpoint
+			if @matchPeekWhenDisabled and isDisabled then peekRight = peekLeft
+			else peekRight = @getResponsiveValue 'peekRight', breakpoint
+
+			# Render the styles
 			"calc(
 				#{100 / slidesPerPage}% -
 				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -
