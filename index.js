@@ -935,11 +935,22 @@ Code related to measuring the size of the carousel after mounting
     // style this produces should have an equal value to the `slideWidth`
     // computed property which is client side JS dependent.
     makeSlideWidthCalc: function (breakpoint) {
-      var gutter, peekLeft, peekRight, slidesPerPage;
+      var gutter, isDisabled, peekLeft, peekRight, slidesPerPage;
+      isDisabled = this.isDisabledAtBreakpoint(breakpoint);
       slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint);
-      gutter = this.getResponsiveValue('gutter', breakpoint);
+      gutter = this.getResponsiveValue('gutter', breakpoint); // A common use case when not looping is to have a larger peek on just the
+      // right.  But when disabled, this looks strange.  So this balances out
+      // the peeking in the disbaled state.
+
       peekLeft = this.getResponsiveValue('peekLeft', breakpoint);
-      peekRight = this.getResponsiveValue('peekRight', breakpoint);
+
+      if (this.matchPeekWhenDisabled && isDisabled) {
+        peekRight = peekLeft;
+      } else {
+        peekRight = this.getResponsiveValue('peekRight', breakpoint);
+      } // Render the styles
+
+
       return `calc( ${100 / slidesPerPage}% - (${this.autoUnit(peekLeft)} + ${this.autoUnit(peekRight)}) / ${slidesPerPage} - (${this.autoUnit(gutter)} * ${slidesPerPage - 1}) / ${slidesPerPage} )`;
     }
   }
@@ -1589,6 +1600,14 @@ gutter space.
       default: function () {
         return this.peek;
       }
+    },
+    // When true, the peekLeft is used for the peekRight if the carousel is
+    // disabled.  This behavior is expecting that there may be a different
+    // peekRight (to hint at additional slides) but when there aren't more slide
+    // to peek in, the peek value should functional like padding.
+    matchPeekWhenDisabled: {
+      type: Boolean,
+      default: true
     }
   },
   data: function () {
@@ -1666,6 +1685,11 @@ gutter space.
     // hydrates.  This gets overridden by the track's inline translateX style.
     makeBreakpointTrackTransformStyle: function (breakpoint) {
       var gutter, peekLeft, rule;
+
+      if (this.isDisabledAtBreakpoint(breakpoint)) {
+        return;
+      }
+
       peekLeft = this.getResponsiveValue('peekLeft', breakpoint); // If no peeking slide, just add the offset
 
       rule = !this.hasLeftPeekClone ? `transform: translateX(${// Otherwise, offset by one slide width (including it's gutter)
