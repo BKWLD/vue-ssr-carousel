@@ -16,6 +16,9 @@ export default
 			type: Array
 			default: -> []
 
+		# Place the first slide in the center of the layout
+		center: Boolean
+
 	computed:
 
 		# Make the css scopeId from things that can influence the styles, like the

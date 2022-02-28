@@ -51,7 +51,8 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
   - `peek-left` - Set peek value on just the left edge.
   - `peek-right` - Set peek value on just the right edge.
   - `peek-gutter` - Set peek value on to the `gutter` value.
-- `feather` (`false`) - Fades out the left and right edges using a CSS `mask-image` gradient.  Set to `true` to use the default `20px` value or as number or any CSS resolvable string to set an explicit width. This is designed to be used with `peek` properties. See https://vue-ssr-carousel.netlify.app/peeking
+- `feather` (`false`) - Fades out the left and right edges using a CSS `mask-image` gradient.  Set to `true` to use the default `20px` value or as number or any CSS resolvable string to set an explicit width. This is designed to be used with `peek` properties. See https://vue-ssr-carousel.netlify.app/peeking.
+- `center` (`false`) - Render the first slide in the middle of the carousel.  Should only be used with odd numbers of `slides-per-page`. See https://vue-ssr-carousel.netlify.app/responsive.
 - `show-arrows` (`false`) - Whether to show back/forward arrows. See https://vue-ssr-carousel.netlify.app/ui.
 - `show-dots` (`false`) - Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
 - `responsive` (`[]`) - Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
