@@ -10,10 +10,21 @@ Check out the demo: https://vue-ssr-carousel.netlify.app.
 yarn add vue-ssr-carousel
 ```
 
+### Default
+
 ```js
 import SsrCarousel from 'vue-ssr-carousel'
 import ssrCarouselCss from 'vue-ssr-carousel/index.css'
 Vue.component 'ssr-carousel', SsrCarousel
+```
+
+### Nuxt
+
+```js
+// nuxt.config.js
+export default {
+  buildModules: [ 'vue-ssr-carousel/nuxt' ]
+}
 ```
 
 ## Usage
