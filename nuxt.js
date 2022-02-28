@@ -4,7 +4,8 @@ export default function() {
 	// Allow components to be auto-imported by Nuxt
 	this.nuxt.hook('components:dirs', dirs => {
 		dirs.push({
-			path: join(__dirname, 'src')
+			path: join(__dirname),
+			prefix: 'vue-ssr-carousel',
 		})
 	})
 
