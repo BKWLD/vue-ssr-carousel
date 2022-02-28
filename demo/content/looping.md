@@ -30,6 +30,21 @@ Note how the incomplete 2nd page is handled.  The 3rd and 1st slide are shown si
 </ssr-carousel>
 ```
 
+## Looping with centering
+
+This is an example of `center` used with `loop`, a useful pattern for focusing on a featured slide, like in a product carousel.
+
+<demos-looping-center></demos-looping-center>
+
+```vue
+<ssr-carousel :slides-per-page='3' loop center show-dots show-arrows>
+  <slide :index='1'></slide>
+  <slide :index='2'></slide>
+  <slide :index='3'></slide>
+  <slide :index='4'></slide>
+</ssr-carousel>
+```
+
 ## Cloned slides can contain components
 
 In this case, we're using [vue-visual](https://github.com/BKWLD/vue-visual) components to render image assets.  Note how lazy loading prevents the loading of the second image until you advance forward.

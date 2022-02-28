@@ -16,6 +16,8 @@ export default
 			type: Array
 			default: -> []
 
+
+
 	computed:
 
 		# Make the css scopeId from things that can influence the styles, like the
@@ -84,8 +86,9 @@ export default
 			@makeBreakpointDisablingRules(breakpoint)
 			@makeBreakpointFeatheringStyle(breakpoint)
 			@makeBreakpointTrackTransformStyle(breakpoint)
-			@makeBreakpointWidthStyle(breakpoint)
+			@makeBreakpointSlideWidthStyle(breakpoint)
 			@makeBreakpointSlideGutterStyle(breakpoint)
+			@makeBreakpointSlideOrderStyle(breakpoint)
 		].join ' '
 
 		# Apply disabling styles via breakpoint when there are not enough slides
