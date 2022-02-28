@@ -925,7 +925,7 @@ Code related to measuring the size of the carousel after mounting
     },
     // Make the width style that gives a slide it's width given
     // slidesPerPage. Reduce this width by the gutter if present
-    makeBreakpointWidthStyle: function (breakpoint) {
+    makeBreakpointSlideWidthStyle: function (breakpoint) {
       return `${this.scopeSelector} .ssr-carousel-slide {
 	width: ${this.makeSlideWidthCalc(breakpoint)};
 }`;
@@ -1374,9 +1374,11 @@ Code related to the gutters between slides
 Code related to looping / infinite scroll
 */
 /* harmony default export */ var looping_coffee = ({
-  // Add prop to enable looping
   props: {
-    loop: Boolean
+    // Add prop to enable looping
+    loop: Boolean,
+    // Place the first slide in the center of the layout
+    center: Boolean
   },
   // Store the slide order indexes
   data: function () {
@@ -1423,22 +1425,64 @@ Code related to looping / infinite scroll
   watch: {
     // This represents the current (as in while scrolling / animating) left most
     // slide index. This is used in looping calculation so that the reordering
-    // of slides isn't affected by paginatePerSlide setting. Calculating via
-    // watcher to prevent unnecesary recalculations (I noticed a bunch of calls
-    // when this was done via a computed property)
-    currentSlideIndex: {
-      immediate: true,
-      handler: function () {
-        var indexes, insertion;
-        indexes = [...Array(this.slidesCount).keys()];
+    // of slides isn't affected by paginatePerSlide setting.
+    currentSlideIndex: function () {
+      return this.setSlideOrder();
+    },
+    // Also update the slide order when the slides per page changes
+    currentSlidesPerPage: function () {
+      return this.setSlideOrder();
+    }
+  },
+  methods: {
+    // Calculating via watcher to prevent unnecesary recalculations (I noticed a
+    // bunch of calls when this was done via a computed property)
+    setSlideOrder: function () {
+      var count, indices, split; // Make an array as long as the slides count with incrementing values
 
-        if (!this.loop) {
-          return indexes;
+      indices = [...Array(this.slidesCount).keys()];
+      count = indices.length; // Shift the order to applying centering effect
+
+      if (this.center) {
+        split = Math.floor(this.currentSlidesPerPage / 2);
+        indices = [...indices.slice(split), ...indices.slice(0, split)];
+      } // Re-order while looping
+
+
+      if (this.loop) {
+        split = count - this.currentSlideIndex % count;
+        indices = [...indices.slice(split), ...indices.slice(0, split)];
+      } // Set the new index order
+
+
+      return this.slideOrder = indices;
+    },
+    // Reorder the initial slide state using CSS because the order is dependent
+    // on the slides per page which isn't known via JS until hydrating
+    makeBreakpointSlideOrderStyle: function (breakpoint) {
+      var i, rules, slidesPerPage, split;
+
+      if (!this.center) {
+        return;
+      }
+
+      slidesPerPage = this.getResponsiveValue('slidesPerPage', breakpoint);
+      split = Math.floor(slidesPerPage / 2);
+
+      rules = function () {
+        var j, ref, results;
+        results = [];
+
+        for (i = j = 0, ref = this.slidesCount; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
+          results.push(`${this.scopeSelector} .ssr-carousel-slide:nth-child(${i + 1}) {
+	order: ${(i + split) % this.slidesCount};
+}`);
         }
 
-        insertion = indexes.length - this.currentSlideIndex % indexes.length;
-        return this.slideOrder = [...indexes.slice(insertion), ...indexes.slice(0, insertion)];
-      }
+        return results;
+      }.call(this);
+
+      return rules.join('');
     }
   }
 });
@@ -1819,7 +1863,7 @@ Code related to changing the slides per page at different viewport widths
     },
     // Make the block of styles for a breakpoint
     makeBreakpointStyles: function (breakpoint) {
-      return [this.makeBreakpointDisablingRules(breakpoint), this.makeBreakpointFeatheringStyle(breakpoint), this.makeBreakpointTrackTransformStyle(breakpoint), this.makeBreakpointWidthStyle(breakpoint), this.makeBreakpointSlideGutterStyle(breakpoint)].join(' ');
+      return [this.makeBreakpointDisablingRules(breakpoint), this.makeBreakpointFeatheringStyle(breakpoint), this.makeBreakpointTrackTransformStyle(breakpoint), this.makeBreakpointSlideWidthStyle(breakpoint), this.makeBreakpointSlideGutterStyle(breakpoint), this.makeBreakpointSlideOrderStyle(breakpoint)].join(' ');
     },
     // Apply disabling styles via breakpoint when there are not enough slides
     // for the slidesPerPage
