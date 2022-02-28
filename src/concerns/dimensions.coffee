@@ -74,7 +74,7 @@ export default
 
 		# Make the width style that gives a slide it's width given
 		# slidesPerPage. Reduce this width by the gutter if present
-		makeBreakpointWidthStyle: (breakpoint) ->
+		makeBreakpointSlideWidthStyle: (breakpoint) ->
 			"""
 			#{@scopeSelector} .ssr-carousel-slide {
 				width: #{@makeSlideWidthCalc(breakpoint)};

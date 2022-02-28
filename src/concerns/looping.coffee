@@ -3,8 +3,13 @@ Code related to looping / infinite scroll
 ###
 export default
 
-	# Add prop to enable looping
-	props: loop: Boolean
+	props:
+
+		# Add prop to enable looping
+		loop: Boolean
+
+		# Place the first slide in the center of the layout
+		center: Boolean
 
 	# Store the slide order indexes
 	data: -> slideOrder: []
@@ -67,3 +72,17 @@ export default
 
 			# Set the new index order
 			@slideOrder = indices
+
+		# Reorder the initial slide state using CSS because the order is dependent
+		# on the slides per page which isn't known via JS until hydrating
+		makeBreakpointSlideOrderStyle: (breakpoint) ->
+			return unless @center
+			slidesPerPage = @getResponsiveValue 'slidesPerPage', breakpoint
+			split = Math.floor slidesPerPage / 2
+			rules = for i in [0..@slidesCount]
+				"""
+				#{@scopeSelector} .ssr-carousel-slide:nth-child(#{i + 1}) {
+					order: #{(i + split) % @slidesCount};
+				}
+				"""
+			return rules.join ''

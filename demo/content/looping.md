@@ -30,6 +30,8 @@ Note how the incomplete 2nd page is handled.  The 3rd and 1st slide are shown si
 </ssr-carousel>
 ```
 
+## Looping with centering
+
 This is an example of `center` used with `loop`, a useful pattern for focusing on a featured slide, like in a product carousel.
 
 <demos-looping-center></demos-looping-center>

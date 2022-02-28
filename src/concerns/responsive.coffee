@@ -16,8 +16,7 @@ export default
 			type: Array
 			default: -> []
 
-		# Place the first slide in the center of the layout
-		center: Boolean
+
 
 	computed:
 
@@ -87,8 +86,9 @@ export default
 			@makeBreakpointDisablingRules(breakpoint)
 			@makeBreakpointFeatheringStyle(breakpoint)
 			@makeBreakpointTrackTransformStyle(breakpoint)
-			@makeBreakpointWidthStyle(breakpoint)
+			@makeBreakpointSlideWidthStyle(breakpoint)
 			@makeBreakpointSlideGutterStyle(breakpoint)
+			@makeBreakpointSlideOrderStyle(breakpoint)
 		].join ' '
 
 		# Apply disabling styles via breakpoint when there are not enough slides
