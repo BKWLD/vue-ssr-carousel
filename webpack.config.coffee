@@ -1,5 +1,6 @@
 webpack = require 'webpack'
 VueLoaderPlugin = require 'vue-loader/lib/plugin'
+MiniCssExtractPlugin = require 'mini-css-extract-plugin'
 nodeExternals = require 'webpack-node-externals'
 
 module.exports = (env, argv) ->
@@ -18,8 +19,8 @@ module.exports = (env, argv) ->
 		{ test: /\.pug$/, loader: 'pug-plain-loader' }
 		{ test: /\.vue$/, loader: 'vue-loader' }
 		{ test: /\.styl(us)?$/, use: [
-			'vue-style-loader'
-			'css-loader'
+			MiniCssExtractPlugin.loader,
+			'css-loader',
 			'postcss-loader'
 			'stylus-loader'
 		]}
@@ -27,6 +28,7 @@ module.exports = (env, argv) ->
 
 	plugins: [
 		new VueLoaderPlugin
+		new MiniCssExtractPlugin filename: 'index.css'
 	]
 
 	output:
