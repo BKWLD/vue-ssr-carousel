@@ -5,7 +5,8 @@ export default function() {
 	this.nuxt.hook('components:dirs', dirs => {
 		dirs.push({
 			path: join(__dirname),
-			prefix: 'vue-ssr-carousel',
+			pattern: 'index.js',
+			prefix: 'ssr-carousel',
 		})
 	})
 
