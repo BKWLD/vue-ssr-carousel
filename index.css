@@ -134,19 +134,18 @@
   opacity: 1;
 }
 
-.ssr-carousel-slide {
-  flex-shrink: 0;
-}
-
-.ssr-carousel-track[data-v-6cccbed2] {
+.ssr-carousel-track {
   display: flex;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
-.ssr-carousel-track.dragging[data-v-6cccbed2] {
+.ssr-carousel-track.dragging {
   pointer-events: none;
+}
+.ssr-carousel-slide {
+  flex-shrink: 0;
 }
 
 .ssr-carousel {

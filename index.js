@@ -82,7 +82,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -111,18 +111,12 @@ module.exports =
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("lodash/throttle");
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -132,7 +126,7 @@ module.exports = require("lodash/throttle");
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -142,37 +136,27 @@ module.exports = require("lodash/throttle");
 
 
 /***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_track_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_track_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_track_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
+
+/***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_slide_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_slide_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_slide_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_track_vue_vue_type_style_index_0_id_6cccbed2_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_track_vue_vue_type_style_index_0_id_6cccbed2_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_track_vue_vue_type_style_index_0_id_6cccbed2_lang_stylus_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
 /* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_node_modules_stylus_loader_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ssr_carousel_vue_vue_type_style_index_0_lang_stylus___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
 
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -215,14 +199,36 @@ var render = function () {
               _c(
                 "ssr-carousel-track",
                 _vm._b(
-                  { ref: "track" },
+                  {
+                    ref: "track",
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [_vm._t("default")]
+                          },
+                          proxy: true,
+                        },
+                        _vm.hasPeekClones
+                          ? {
+                              key: "clones",
+                              fn: function () {
+                                return [_vm._t("default")]
+                              },
+                              proxy: true,
+                            }
+                          : null,
+                      ],
+                      null,
+                      true
+                    ),
+                  },
                   "ssr-carousel-track",
                   {
                     dragging: _vm.dragging,
                     trackTranslateX: _vm.trackTranslateX,
-                    slides: _vm.slides,
                     slideOrder: _vm.slideOrder,
-                    clones: _vm.clones,
                     leftPeekingSlideIndex: _vm.leftPeekingSlideIndex,
                     rightPeekingSlideIndex: _vm.rightPeekingSlideIndex,
                   },
@@ -383,7 +389,7 @@ ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render._withStripped =
 // CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_arrowsvue_type_script_lang_coffee_ = (ssr_carousel_arrowsvue_type_script_lang_coffee_); 
 // EXTERNAL MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&lang=stylus&
-var ssr_carousel_arrowsvue_type_style_index_0_lang_stylus_ = __webpack_require__(6);
+var ssr_carousel_arrowsvue_type_style_index_0_lang_stylus_ = __webpack_require__(5);
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -567,7 +573,7 @@ ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render._withStripped = t
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_dotsvue_type_script_lang_coffee_ = (ssr_carousel_dotsvue_type_script_lang_coffee_); 
 // EXTERNAL MODULE: ./src/ssr-carousel-dots.vue?vue&type=style&index=0&lang=stylus&
-var ssr_carousel_dotsvue_type_style_index_0_lang_stylus_ = __webpack_require__(7);
+var ssr_carousel_dotsvue_type_style_index_0_lang_stylus_ = __webpack_require__(6);
 
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue
 
@@ -593,83 +599,12 @@ var ssr_carousel_dots_component = normalizeComponent(
 if (false) { var ssr_carousel_dots_api; }
 ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
 /* harmony default export */ var ssr_carousel_dots = (ssr_carousel_dots_component.exports);
-// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-slide.vue?vue&type=script&lang=coffee&
-// Not a functional component so style values can be set by track
-var addStaticClass;
-/* harmony default export */ var ssr_carousel_slidevue_type_script_lang_coffee_ = ({
-  name: 'SsrCarouselSlide',
-  render: function (create) {
-    var slide; // Get at the slide vnode
-
-    slide = this.$slots.default[0]; // If the slide is a component, the data may need to be set in asyncMeta.
-    // Otherwise, it's set on the slide itself
-
-    if (slide.asyncMeta) {
-      addStaticClass(slide.asyncMeta, 'ssr-carousel-slide');
-    } else {
-      addStaticClass(slide, 'ssr-carousel-slide');
-    } // Return the slotted slide
-
-
-    return slide;
-  }
-}); // Add a static class to an object, mutating it
-
-addStaticClass = function (obj, klass) {
-  if (!obj.data) {
-    obj.data = {};
-  }
-
-  if (!obj.data.staticClass) {
-    obj.data.staticClass = '';
-  }
-
-  if (obj.data.staticClass.indexOf(klass) === -1) {
-    obj.data.staticClass += ' ' + klass;
-    return obj.data.staticClass = obj.data.staticClass.trim();
-  }
-};
-// CONCATENATED MODULE: ./src/ssr-carousel-slide.vue?vue&type=script&lang=coffee&
- /* harmony default export */ var src_ssr_carousel_slidevue_type_script_lang_coffee_ = (ssr_carousel_slidevue_type_script_lang_coffee_); 
-// EXTERNAL MODULE: ./src/ssr-carousel-slide.vue?vue&type=style&index=0&lang=stylus&
-var ssr_carousel_slidevue_type_style_index_0_lang_stylus_ = __webpack_require__(8);
-
-// CONCATENATED MODULE: ./src/ssr-carousel-slide.vue
-var ssr_carousel_slide_render, ssr_carousel_slide_staticRenderFns
-
-
-
-
-
-/* normalize component */
-
-var ssr_carousel_slide_component = normalizeComponent(
-  src_ssr_carousel_slidevue_type_script_lang_coffee_,
-  ssr_carousel_slide_render,
-  ssr_carousel_slide_staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var ssr_carousel_slide_api; }
-ssr_carousel_slide_component.options.__file = "src/ssr-carousel-slide.vue"
-/* harmony default export */ var ssr_carousel_slide = (ssr_carousel_slide_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
-
 /* harmony default export */ var ssr_carousel_trackvue_type_script_lang_coffee_ = ({
-  components: {
-    SsrCarouselSlide: ssr_carousel_slide
-  },
   props: {
     dragging: Boolean,
     trackTranslateX: Number,
-    slides: Array,
     slideOrder: Array,
-    clones: Array,
     leftPeekingSlideIndex: Number,
     rightPeekingSlideIndex: Number
   },
@@ -683,54 +618,91 @@ ssr_carousel_slide_component.options.__file = "src/ssr-carousel-slide.vue"
       }
     }
   },
-  // Render the track and slotted slides
-  render: function (create) {
-    var children; // Wrap the slides in ssr-carousel-slide components. When I passed the order
-    // in as a prop and tried to set the style from within the component, it
-    // never updated. Thus, I'm setting the style here as part of the create().
+  methods: {
+    // Make the slide of slides to render into the track
+    makeSlides: function () {
+      return this.getSlideComponents().map((vnode, index) => {
+        var isPeekingClone, peekingIndex, slideCount;
+        vnode = this.makeReactiveVnode(vnode); // This is a peeking clone if it's index is greater than the slide count
 
-    children = this.slides.map((child, index) => {
-      return create(ssr_carousel_slide, {
-        parent: this,
-        style: {
-          order: this.slideOrder[index]
-        }
-      }, [child]);
-    }); // Append all clones and set their styles.  See above comment for why this
-    // is done here rather than in SsrCarouselSlide.
+        slideCount = this.slideOrder.length;
+        isPeekingClone = index >= slideCount;
+        peekingIndex = index - slideCount; // Add the slide class
 
-    children = children.concat(this.clones.map((child, index) => {
-      return create(ssr_carousel_slide, {
-        parent: this,
-        style: {
-          // Put left and right peeking slides at the end of the list
-          order: function () {
+        vnode.data.class.push('ssr-carousel-slide'); // Order the slide, like for looping
+
+        if (!isPeekingClone) {
+          vnode.data.style.order = this.slideOrder[index] || 0;
+        } else {
+          // Or put at the beginning / end if peeking
+          vnode.data.style.order = function () {
             switch (false) {
-              case index !== this.leftPeekingSlideIndex:
+              case peekingIndex !== this.leftPeekingSlideIndex:
                 return '-1';
 
-              case index !== this.rightPeekingSlideIndex:
-                return this.slides.length;
+              case peekingIndex !== this.rightPeekingSlideIndex:
+                return this.slideOrder.length;
             }
-          }.call(this),
-          // Hide all clones that aren't peeking
-          display: index !== this.leftPeekingSlideIndex && index !== this.rightPeekingSlideIndex ? 'none' : void 0
-        }
-      }, [child]);
-    })); // Create the track div
+          }.call(this);
+        } // Hide cloned slides that aren't involved in peeking
 
+
+        if (isPeekingClone && peekingIndex !== this.leftPeekingSlideIndex && peekingIndex !== this.rightPeekingSlideIndex) {
+          vnode.data.style.display = 'none';
+        } // Return modified vnode
+
+
+        return vnode;
+      });
+    },
+    // Get the list of non-text slides, including peeking clones
+    getSlideComponents: function () {
+      return [...this.$slots.default, ...(this.$slots.clones || [])].filter(function (vnode) {
+        return !vnode.text;
+      });
+    },
+    // Makes a clone of the vnode properties we'll be updating so the changes
+    // get rendered. Based on:
+    // https://github.com/vuejs/vue/issues/6052#issuecomment-313705168
+    makeReactiveVnode: function (vnode) {
+      var newVnode; // Make the new vnode and data
+
+      newVnode = { ...vnode
+      };
+      newVnode.data = { ...vnode.data
+      }; // Clone style property. String styles will be on staticStyle so we can
+      // ignore them.
+
+      newVnode.data.style = { ...vnode.data.style
+      }; // Clone the class property, which may be an array or object. String
+      // classes will be stored on staticClass and can be ignored. Converting
+      // object instances to an array for convenience
+
+      if (vnode.data.class && typeof vnode.data.class === 'object') {
+        newVnode.data.class = [{ ...vnode.data.class
+        }];
+      } else {
+        newVnode.data.class = [...(vnode.data.class || [])];
+      } // Return the clone
+
+
+      return newVnode;
+    }
+  },
+  // Render the track and slotted slides
+  render: function (create) {
     return create('div', {
       class: ['ssr-carousel-track', {
         dragging: this.dragging
       }],
       style: this.styles
-    }, children);
+    }, this.makeSlides());
   }
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_trackvue_type_script_lang_coffee_ = (ssr_carousel_trackvue_type_script_lang_coffee_); 
-// EXTERNAL MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=6cccbed2&lang=stylus&scoped=true&
-var ssr_carousel_trackvue_type_style_index_0_id_6cccbed2_lang_stylus_scoped_true_ = __webpack_require__(9);
+// EXTERNAL MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&lang=stylus&
+var ssr_carousel_trackvue_type_style_index_0_lang_stylus_ = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue
 var ssr_carousel_track_render, ssr_carousel_track_staticRenderFns
@@ -747,7 +719,7 @@ var ssr_carousel_track_component = normalizeComponent(
   ssr_carousel_track_staticRenderFns,
   false,
   null,
-  "6cccbed2",
+  null,
   null
   
 )
@@ -824,7 +796,7 @@ Code related to auotplay features of the carousel
   }
 });
 // EXTERNAL MODULE: external "lodash/throttle"
-var throttle_ = __webpack_require__(5);
+var throttle_ = __webpack_require__(4);
 var throttle_default = /*#__PURE__*/__webpack_require__.n(throttle_);
 
 // CONCATENATED MODULE: ./src/concerns/dimensions.coffee
@@ -1426,8 +1398,11 @@ Code related to looping / infinite scroll
     // This represents the current (as in while scrolling / animating) left most
     // slide index. This is used in looping calculation so that the reordering
     // of slides isn't affected by paginatePerSlide setting.
-    currentSlideIndex: function () {
-      return this.setSlideOrder();
+    currentSlideIndex: {
+      immediate: true,
+      handler: function () {
+        return this.setSlideOrder();
+      }
     },
     // Also update the slide order when the slides per page changes
     currentSlidesPerPage: function () {
@@ -1450,7 +1425,7 @@ Code related to looping / infinite scroll
 
 
       if (this.loop) {
-        split = count - this.currentSlideIndex % count;
+        split = (count - this.currentSlideIndex) % count;
         indices = [...indices.slice(split), ...indices.slice(0, split)];
       } // Set the new index order
 
@@ -1663,12 +1638,6 @@ gutter space.
       peekRightPx: 0
     };
   },
-  // Clone all of the slides for use in peeking
-  created: function () {
-    if (this.hasPeekClones) {
-      return this.clones = this.slides.map(this.cloneVnode);
-    }
-  },
   computed: {
     // Determine if clones should be created
     hasPeekClones: function () {
@@ -1740,22 +1709,6 @@ gutter space.
       this.autoUnit(peekLeft)});` : (gutter = this.getResponsiveValue('gutter', breakpoint), `transform: translateX(calc( ${this.autoUnit(peekLeft)} - (${this.makeSlideWidthCalc(breakpoint)} + ${this.autoUnit(gutter)}) ));`); // Wrap rule in selector
 
       return `${this.scopeSelector} .ssr-carousel-track { ${rule} }`;
-    },
-    // Clone a vnode, based on
-    // https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89
-    cloneVnode: function (vnode) {
-      var cloned;
-      cloned = new vnode.constructor(vnode.tag, vnode.data, vnode.children && vnode.children.slice(), vnode.text, vnode.elm, vnode.context, vnode.componentOptions, vnode.asyncFactory);
-      cloned.ns = vnode.ns;
-      cloned.isStatic = vnode.isStatic;
-      cloned.key = vnode.key;
-      cloned.isComment = vnode.isComment;
-      cloned.fnContext = vnode.fnContext;
-      cloned.fnOptions = vnode.fnOptions;
-      cloned.fnScopeId = vnode.fnScopeId;
-      cloned.asyncMeta = vnode.asyncMeta;
-      cloned.isCloned = true;
-      return cloned;
     }
   }
 });
@@ -2126,7 +2079,7 @@ Code related to tweening the position of the track
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
 // EXTERNAL MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&lang=stylus&
-var ssr_carouselvue_type_style_index_0_lang_stylus_ = __webpack_require__(10);
+var ssr_carouselvue_type_style_index_0_lang_stylus_ = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 
