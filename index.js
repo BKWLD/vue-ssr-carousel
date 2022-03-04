@@ -674,16 +674,26 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
       // ignore them.
 
       newVnode.data.style = { ...vnode.data.style
-      }; // Clone the class property, which may be an array or object. String
-      // classes will be stored on staticClass and can be ignored. Converting
-      // object instances to an array for convenience
+      }; // Clone the class property, which may be an array or object. Converting
+      // everything array for convenience.
 
-      if (vnode.data.class && typeof vnode.data.class === 'object') {
-        newVnode.data.class = [{ ...vnode.data.class
-        }];
-      } else {
-        newVnode.data.class = [...(vnode.data.class || [])];
-      } // Return the clone
+      newVnode.data.class = function () {
+        if (!vnode.data.class) {
+          return [];
+        } else {
+          switch (typeof vnode.data.class) {
+            case 'string':
+              return [vnode.data.class];
+
+            case 'object':
+              return [{ ...vnode.data.class
+              }];
+
+            case 'array':
+              return [...vnode.data.class];
+          }
+        }
+      }(); // Return the clone
 
 
       return newVnode;
