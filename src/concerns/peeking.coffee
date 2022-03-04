@@ -44,9 +44,6 @@ export default
 		peekLeftPx: 0
 		peekRightPx: 0
 
-	# Clone all of the slides for use in peeking
-	created: -> @clones = @slides.map @cloneVnode if @hasPeekClones
-
 	computed:
 
 		# Determine if clones should be created
@@ -100,27 +97,3 @@ export default
 
 			# Wrap rule in selector
 			"#{@scopeSelector} .ssr-carousel-track { #{rule} }"
-
-		# Clone a vnode, based on
-		# https://github.com/vuejs/vue/blob/23760b5c7a350484ef1eee18f8c615027a8a8ad9/src/core/vdom/vnode.js#L89
-		cloneVnode: (vnode) ->
-			cloned = new vnode.constructor(
-				vnode.tag,
-				vnode.data,
-				vnode.children && vnode.children.slice(),
-				vnode.text,
-				vnode.elm,
-				vnode.context,
-				vnode.componentOptions,
-				vnode.asyncFactory
-			)
-			cloned.ns = vnode.ns
-			cloned.isStatic = vnode.isStatic
-			cloned.key = vnode.key
-			cloned.isComment = vnode.isComment
-			cloned.fnContext = vnode.fnContext
-			cloned.fnOptions = vnode.fnOptions
-			cloned.fnScopeId = vnode.fnScopeId
-			cloned.asyncMeta = vnode.asyncMeta
-			cloned.isCloned = true
-			return cloned
