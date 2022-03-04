@@ -28,12 +28,16 @@
 				v-bind=`{
 					dragging,
 					trackTranslateX,
-					slides,
 					slideOrder,
-					clones,
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
 				}`)
+
+				//- Render the slotted slides
+				template(#default): slot
+
+				//- Make clones if peeking
+				template(v-if='hasPeekClones' #clones): slot
 
 		//- Back / Next navigation
 		ssr-carousel-arrows(

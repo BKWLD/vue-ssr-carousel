@@ -24,6 +24,8 @@ title: 'Miscellaneous'
 
 ## Slide images and anchors can be dragged
 
+This is a challenge for some carousels, dragging on an image or anchor results in dragging a ghost image of the element rather than the slide.
+
 <demos-misc-drag-children></demos-misc-drag-children>
 
 ```vue
@@ -55,4 +57,41 @@ Autoplay is typically used in conjunction with `loop`.
   <slide :index='2'></slide>
   <slide :index='3'></slide>
 </ssr-carousel>
+```
+
+## Slide components stay reactive
+
+Slide properties, like `class`, stay externally reactive as you'd expect. This includes slides cloned for peeking.
+
+<demos-misc-reactivity></demos-misc-reactivity>
+
+```vue
+<template>
+
+<div>
+	<ssr-carousel :slides-per-page='2' loop peek='40px'>
+		<slide :index='1' :class='{ invert }'>
+			<button @click='invert = !invert'>Invert the slides</button>
+		</slide>
+		<slide :index='2' :class='{ invert }'></slide>
+		<slide :index='3' :class='{ invert }'></slide>
+	</ssr-carousel>
+</div>
+
+</template>
+
+<script>
+export default {
+  data() {
+    return { invert: false };
+  },
+};
+</script>
+
+<style scoped>
+.invert {
+  filter: invert(100%);
+}
+</style>
+
 ```

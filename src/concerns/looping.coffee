@@ -39,7 +39,9 @@ export default
 		# This represents the current (as in while scrolling / animating) left most
 		# slide index. This is used in looping calculation so that the reordering
 		# of slides isn't affected by paginatePerSlide setting.
-		currentSlideIndex: -> @setSlideOrder()
+		currentSlideIndex:
+			immediate: true
+			handler: -> @setSlideOrder()
 
 		# Also update the slide order when the slides per page changes
 		currentSlidesPerPage: -> @setSlideOrder()
@@ -64,7 +66,7 @@ export default
 
 			# Re-order while looping
 			if @loop
-				split = count - @currentSlideIndex % count
+				split = (count - @currentSlideIndex) % count
 				indices = [
 					...indices.slice split
 					...indices.slice 0, split
