@@ -47,7 +47,7 @@ export default
 	watch:
 
 		# Emit events on index change
-		boundedIndex: -> @$emit 'change', { @boundedIndex }
+		boundedIndex: -> @$emit 'change', index: @boundedIndex
 
 	methods:
 
