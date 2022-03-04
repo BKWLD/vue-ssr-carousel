@@ -1523,7 +1523,7 @@ Code related to dealing with advancing between pages
     // Emit events on index change
     boundedIndex: function () {
       return this.$emit('change', {
-        boundedIndex: this.boundedIndex
+        index: this.boundedIndex
       });
     }
   },
