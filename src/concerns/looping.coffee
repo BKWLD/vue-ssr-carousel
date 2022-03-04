@@ -66,7 +66,7 @@ export default
 
 			# Re-order while looping
 			if @loop
-				split = count - @currentSlideIndex % count
+				split = (count - @currentSlideIndex) % count
 				indices = [
 					...indices.slice split
 					...indices.slice 0, split
