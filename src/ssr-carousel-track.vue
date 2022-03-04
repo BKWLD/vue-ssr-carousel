@@ -67,12 +67,13 @@ export default
 			# ignore them.
 			newVnode.data.style = { ...vnode.data.style }
 
-			# Clone the class property, which may be an array or object. String
-			# classes will be stored on staticClass and can be ignored. Converting
-			# object instances to an array for convenience
-			if vnode.data.class and typeof vnode.data.class == 'object'
-			then newVnode.data.class = [ { ...vnode.data.class } ]
-			else newVnode.data.class = [ ...(vnode.data.class || []) ]
+			# Clone the class property, which may be an array or object. Converting
+			# everything array for convenience.
+			newVnode.data.class = if !vnode.data.class then []
+			else switch typeof vnode.data.class
+				when 'string' then [ vnode.data.class ]
+				when 'object' then [ { ...vnode.data.class } ]
+				when 'array' then [ ...vnode.data.class ]
 
 			# Return the clone
 			return newVnode
