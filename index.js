@@ -619,17 +619,24 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
     }
   },
   methods: {
-    // Make the slide of slides to render into the track
+    // Make the slides to render into the track
     makeSlides: function () {
       return this.getSlideComponents().map((vnode, index) => {
-        var isPeekingClone, peekingIndex, slideCount;
+        var cssClass, isPeekingClone, peekingIndex, slideCount;
         vnode = this.makeReactiveVnode(vnode); // This is a peeking clone if it's index is greater than the slide count
 
         slideCount = this.slideOrder.length;
         isPeekingClone = index >= slideCount;
-        peekingIndex = index - slideCount; // Add the slide class
+        peekingIndex = index - slideCount; // Add the slide class using staticClass since it isn't reactive to data
 
-        vnode.data.class.push('ssr-carousel-slide'); // Order the slide, like for looping
+        cssClass = 'ssr-carousel-slide';
+
+        if (vnode.data.staticClass) {
+          vnode.data.staticClass += ` ${cssClass}`;
+        } else {
+          vnode.data.staticClass = cssClass;
+        } // Order the slide, like for looping
+
 
         if (!isPeekingClone) {
           vnode.data.style.order = this.slideOrder[index] || 0;
@@ -674,27 +681,7 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
       // ignore them.
 
       newVnode.data.style = { ...vnode.data.style
-      }; // Clone the class property, which may be an array or object. Converting
-      // everything array for convenience.
-
-      newVnode.data.class = function () {
-        if (!vnode.data.class) {
-          return [];
-        } else {
-          switch (typeof vnode.data.class) {
-            case 'string':
-              return [vnode.data.class];
-
-            case 'object':
-              return [{ ...vnode.data.class
-              }];
-
-            case 'array':
-              return [...vnode.data.class];
-          }
-        }
-      }(); // Return the clone
-
+      }; // Return the clone
 
       return newVnode;
     }
