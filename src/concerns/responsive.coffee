@@ -16,8 +16,6 @@ export default
 			type: Array
 			default: -> []
 
-
-
 	computed:
 
 		# Make the css scopeId from things that can influence the styles, like the
