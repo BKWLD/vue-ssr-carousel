@@ -18,7 +18,7 @@ export default
 
 	methods:
 
-		# Make the slide of slides to render into the track
+		# Make the slides to render into the track
 		makeSlides: -> @getSlideComponents().map (vnode, index) =>
 			vnode = @makeReactiveVnode vnode
 
@@ -27,8 +27,11 @@ export default
 			isPeekingClone = index >= slideCount
 			peekingIndex = index - slideCount
 
-			# Add the slide class
-			vnode.data.class.push 'ssr-carousel-slide'
+			# Add the slide class using staticClass since it isn't reactive to data
+			cssClass = 'ssr-carousel-slide'
+			if vnode.data.staticClass
+			then vnode.data.staticClass += " #{cssClass}"
+			else vnode.data.staticClass = cssClass
 
 			# Order the slide, like for looping
 			unless isPeekingClone
@@ -66,14 +69,6 @@ export default
 			# Clone style property. String styles will be on staticStyle so we can
 			# ignore them.
 			newVnode.data.style = { ...vnode.data.style }
-
-			# Clone the class property, which may be an array or object. Converting
-			# everything array for convenience.
-			newVnode.data.class = if !vnode.data.class then []
-			else switch typeof vnode.data.class
-				when 'string' then [ vnode.data.class ]
-				when 'object' then [ { ...vnode.data.class } ]
-				when 'array' then [ ...vnode.data.class ]
 
 			# Return the clone
 			return newVnode
