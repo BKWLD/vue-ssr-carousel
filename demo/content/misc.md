@@ -24,6 +24,8 @@ title: 'Miscellaneous'
 
 ## Slide images and anchors can be dragged
 
+This is a challenge for some carousels, dragging on an image or anchor results in dragging a ghost image of the element rather than the slide.
+
 <demos-misc-drag-children></demos-misc-drag-children>
 
 ```vue
