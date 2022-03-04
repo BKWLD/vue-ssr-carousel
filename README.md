@@ -78,7 +78,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 
 See https://vue-ssr-carousel.netlify.app/events
 
-- `change({ index })` - Fired when the internal index counter changes
+- `change({ boundedIndex })` - Fired when the internal index counter changes
 - `press` - Fired on mouse or touch down
 - `release` - Fired on mouse or touch up
 - `drag:start` - Fired on start of dragging
