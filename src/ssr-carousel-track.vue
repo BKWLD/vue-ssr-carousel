@@ -49,6 +49,9 @@ export default
 				]
 			then vnode.data.style.display = 'none'
 
+			# Make peeking clones all aria-hidden
+			if isPeekingClone then vnode.data.attrs['aria-hidden'] = 'true'
+
 			# Return modified vnode
 			return vnode
 
@@ -69,6 +72,9 @@ export default
 			# Clone style property. String styles will be on staticStyle so we can
 			# ignore them.
 			newVnode.data.style = { ...vnode.data.style }
+
+			# Clone attrs property
+			newVnode.data.attrs = { ...vnode.data.attrs }
 
 			# Return the clone
 			return newVnode
