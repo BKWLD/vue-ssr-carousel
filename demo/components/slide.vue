@@ -2,10 +2,16 @@
 
 <template lang='pug'>
 
-.slide: div
-	.tint(v-if='tint' :style='{ background: tint }')
-	.title(v-if='index') Slide {{ index }}
-	slot
+//- Optionally render the slide as a link, common with cards
+.slide(
+	:is='to ? "a" : "div"'
+	:href='to || undefined')
+
+	//- Slide contents
+	.contents
+		.tint(v-if='tint' :style='{ background: tint }')
+		.title(v-if='index') Slide {{ index }}
+		slot
 
 </template>
 
@@ -16,6 +22,7 @@ export default
 	props:
 		index: Number
 		tint: String
+		to: String # Optional wrapping link
 
 </script>
 
@@ -45,6 +52,17 @@ export default
 	position relative
 	overflow hidden
 
+	// Customize the focus effect
+	transition box-shadow .1s
+	a&
+		outline none
+		&:hover
+			box-shadow inset 0 0 3px 3px secondary-color,
+				inset 0 0 30px 5px lighten(secondary-color, 15%)
+		&:focus-visible
+			box-shadow inset 0 0 3px 3px primary-color,
+				inset 0 0 30px 5px primary-color
+
 // Optional tint layer, for easier tracking of cloning
 .tint
 	expand()
@@ -56,6 +74,7 @@ export default
 	font-weight 200
 	text-shadow 0 0 5px rgba(primary-color, .2),
 		0 0 20px primary-color
+	text-decoration none !important
 
 img
 	circle 50px
@@ -64,7 +83,7 @@ img
 p
 	margin-v 0
 
-a
+.contents >>> a
 	text-decoration underline
 
 </style>
