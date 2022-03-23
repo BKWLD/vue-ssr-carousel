@@ -110,13 +110,15 @@ export default
 			# Return the clone
 			return newVnode
 
-		# Set the tabindex
+		# Prevent tabbing to interactive elements in slides with the passed in
+		# index values
 		denyTabindex: (indices) -> @setTabindex indices, -1
 
-		# Allow tabindex on interactive elements
+		# Allow tabindex on interactive elements in slides with the passed in
+		# index values
 		allowTabindex: (indices) -> @setTabindex indices, 0
 
-		# Set tabindex rules on slides.
+		# Set tabindex value on interactive elements in slides
 		setTabindex: (slideIndices, tabindexValue) ->
 			for el in @getSlideElementsByIndices slideIndices
 
