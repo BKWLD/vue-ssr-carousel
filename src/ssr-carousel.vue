@@ -56,6 +56,10 @@
 		@goto='gotoDot')
 		template(#dot='props'): slot(name='dot' v-bind='props')
 
+	//- Live region, for announcing the current slide position
+	.ssr-carousel-visually-hidden(aria-live='polite' aria-atomic='true')
+		| {{ currentSlideMessage }}
+
 </template>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -169,5 +173,19 @@ export default
 		cursor grab
 		&.pressing
 			cursor grabbing
+
+// Hide content only intended for screen readers
+// From https://www.w3.org/WAI/tutorials/carousels/working-example/
+.ssr-carousel-visually-hidden
+	border: 0
+	clip rect(0 0 0 0)
+	clip-path inset(50%)
+	height: 1px
+	margin: -1px
+	overflow hidden
+	padding 0
+	position absolute
+	width 1px
+	white-space nowrap
 
 </style>
