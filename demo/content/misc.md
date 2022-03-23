@@ -2,20 +2,6 @@
 title: 'Miscellaneous'
 ---
 
-## Accesibility
-
-When tabbing through the carousel, the focus moves from slide 1 to slide 2, then to the arrows, and finally to the dots.  It never reaches slide 3 unless the user interacts with one of the navigation UI elements.
-
-<demos-misc-accessibility></demos-misc-accessibility>
-
-```vue
-<ssr-carousel :slides-per-page='2' show-dots show-arrows loop>
-  <slide :index='1' to='#'></slide>
-  <slide :index='2' to='#'></slide>
-  <slide :index='3' to='#'></slide>
-</ssr-carousel>
-```
-
 ## Carousel is disabled when less slides than viewport
 
 Note how this carousel is enabled on mobile viewports but automatically disables on wider viewports.
