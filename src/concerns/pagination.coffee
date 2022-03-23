@@ -44,6 +44,32 @@ export default
 		# The current incomplete page offset
 		currentIncompletePageOffset: -> @makeIncompletePageOffset @index
 
+		# Get an array of slide offsets of the slides that are 100% in the
+		# viewport. Aka, the count will be equal the currentSlidesPerPage per page.
+		activeSlides: ->
+
+			# Get the offset of the leftmost slide in the current viewport
+			start = if @paginateBySlide then @boundedIndex
+			else @boundedIndex * @currentSlidesPerPage
+
+			# Adjust the start if not looping and on the last page of slides and there
+			# aren't enough slides to make a full page
+			if not @loop then start -= @boundedIndex % @currentSlidesPerPage
+
+			# Make an array of the offsets of the slide between the start and the
+			# slides per page
+			[start...(start + @currentSlidesPerPage)].reduce (slides, offset) =>
+
+				# When looping, use modulo to loop back around
+				if @loop then slides.push offset % @slidesCount
+
+				# Else, cap the offset to the last slide
+				else if offset < @slidesCount then slides.push offset
+
+				# Return updated slides
+				return slides
+			, []
+
 	watch:
 
 		# Emit events on index change

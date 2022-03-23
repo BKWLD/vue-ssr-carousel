@@ -7,6 +7,7 @@ export default
 		dragging: Boolean
 		trackTranslateX: Number
 		slideOrder: Array
+		activeSlides: Array
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
 

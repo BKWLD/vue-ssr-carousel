@@ -29,6 +29,7 @@
 					dragging,
 					trackTranslateX,
 					slideOrder,
+					activeSlides,
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
 				}`)
