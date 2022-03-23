@@ -29,3 +29,17 @@ The `loop` feature isn't friendly to keyboard navigation and is disabled once th
   <slide :index='3' to='#3'></slide>
 </ssr-carousel>
 ```
+
+## Automatic pausing of autoplay
+
+Autoplay functionality is automatically disabled when using keyboard navigation.
+
+<demos-accessibility-autoplay-disabling></demos-accessibility-autoplay-disabling>
+
+```vue
+<ssr-carousel :slides-per-page='2' show-arrows :autoplay-delay='3'>
+  <slide :index='1' to='#1'></slide>
+  <slide :index='2' to='#2'></slide>
+  <slide :index='3' to='#3'></slide>
+</ssr-carousel>
+```
