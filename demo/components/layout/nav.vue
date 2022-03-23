@@ -19,9 +19,9 @@ export default
 		{ title: 'Responsive', path: '/responsive' }
 		{ title: 'Gutters', path: '/gutters' }
 		{ title: 'UI', path: '/ui' }
-		{ title: 'Accessibility', path: '/accessibility' }
 		{ title: 'Looping', path: '/looping' }
 		{ title: 'Peeking', path: '/peeking' }
+		{ title: 'Accessibility', path: '/accessibility' }
 		{ title: 'Miscellaneous', path: '/misc' }
 	]
 
