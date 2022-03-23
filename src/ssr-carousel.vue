@@ -2,7 +2,7 @@
 
 <template lang='pug'>
 
-.ssr-carousel(:data-ssrc-id='scopeId')
+.ssr-carousel(:data-ssrc-id='scopeId' @keyup.tab='onTab')
 
 	//- Render generated styles
 	component(is='style' v-html='instanceStyles')
@@ -68,6 +68,7 @@ import SsrCarouselDots from './ssr-carousel-dots'
 import SsrCarouselTrack from './ssr-carousel-track'
 
 # Concerns
+import accessibility from './concerns/accessibility'
 import autoplay from './concerns/autoplay'
 import dimensions from './concerns/dimensions'
 import dragging from './concerns/dragging'
@@ -86,6 +87,7 @@ export default
 
 	# Load concerns
 	mixins: [
+		accessibility
 		autoplay
 		dimensions
 		dragging

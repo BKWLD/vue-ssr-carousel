@@ -37,6 +37,6 @@ export default
 
 		# Advance to the next slide
 		autoplayNext: ->
-			if @loop or @index < @pages - 1
+			if @shouldLoop or @index < @pages - 1
 			then @next()
 			else @goto 0 # Reset because loop wasn't enabled

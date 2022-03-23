@@ -35,8 +35,8 @@ export default
 	computed:
 
 		# Determine if button should be disabled because we're at the limits
-		backDisabled: -> @index == 0 unless @loop
-		nextDisabled: -> @index == @pages - 1 unless @loop
+		backDisabled: -> @index == 0 unless @shouldLoop
+		nextDisabled: -> @index == @pages - 1 unless @shouldLoop
 
 </script>
 

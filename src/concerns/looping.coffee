@@ -16,6 +16,9 @@ export default
 
 	computed:
 
+		# Disable looping when the user is using keyboard navigation
+		shouldLoop: -> @loop and not @usingKeyboard
+
 		# This represents the current (as in while scrolling / animating) left most
 		# slide index. This is used in looping calculation so that the reordering
 		# of slides isn't affected by paginatePerSlide setting.
@@ -24,7 +27,7 @@ export default
 		# When looping, slides get re-ordered. This value is added to the
 		# track transform so that the slides don't feel like they were re-ordered.
 		trackLoopOffset: ->
-			return 0 unless @loop
+			return 0 unless @shouldLoop
 			offsetSlideCount = @currentSlideIndex
 			offsetSlideCount -= 1 if @hasLeftPeekClone
 			return offsetSlideCount * @slideWidth
@@ -65,7 +68,7 @@ export default
 				]
 
 			# Re-order while looping
-			if @loop
+			if @shouldLoop
 				split = (count - @currentSlideIndex) % count
 				indices = [
 					...indices.slice split
