@@ -773,32 +773,34 @@ interactiveSelector = 'a, button, input, textarea, select';
 
       return newVnode;
     },
-    // Set the tabindex
+    // Prevent tabbing to interactive elements in slides with the passed in
+    // index values
     denyTabindex: function (indices) {
       return this.setTabindex(indices, -1);
     },
-    // Allow tabindex on interactive elements
+    // Allow tabindex on interactive elements in slides with the passed in
+    // index values
     allowTabindex: function (indices) {
       return this.setTabindex(indices, 0);
     },
-    // Set tabindex rules on slides.
+    // Set tabindex value on interactive elements in slides
     setTabindex: function (slideIndices, tabindexValue) {
       var el, j, len, ref, results;
       ref = this.getSlideElementsByIndices(slideIndices);
       results = [];
 
       for (j = 0, len = ref.length; j < len; j++) {
-        el = ref[j]; // If the slide is interactive, we can stop there since you shouldn't
-        // be nesting interactive elements
+        el = ref[j]; // Set tabindex value on the slide, like in the case that the slide is
+        // an <a>
 
         if (el.matches(interactiveSelector)) {
-          results.push(el.tabIndex = tabindexValue);
-        } else {
-          // Set tabindex values on all interactive children
-          results.push(el.querySelectorAll(interactiveSelector).forEach(function (el) {
-            return el.tabIndex = tabindexValue;
-          }));
-        }
+          el.tabIndex = tabindexValue;
+        } // Set tabindex values on all interactive children
+
+
+        results.push(el.querySelectorAll(interactiveSelector).forEach(function (el) {
+          return el.tabIndex = tabindexValue;
+        }));
       }
 
       return results;

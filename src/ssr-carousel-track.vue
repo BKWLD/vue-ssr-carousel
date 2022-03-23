@@ -122,13 +122,12 @@ export default
 		setTabindex: (slideIndices, tabindexValue) ->
 			for el in @getSlideElementsByIndices slideIndices
 
-				# If the slide is interactive, we can stop there since you shouldn't
-				# be nesting interactive elements
-				if el.matches interactiveSelector
-				then el.tabIndex = tabindexValue
+				# Set tabindex value on the slide, like in the case that the slide is
+				# an <a>
+				if el.matches interactiveSelector then el.tabIndex = tabindexValue
 
 				# Set tabindex values on all interactive children
-				else el.querySelectorAll(interactiveSelector).forEach (el) ->
+				el.querySelectorAll(interactiveSelector).forEach (el) ->
 					el.tabIndex = tabindexValue
 
 		# Get the slide elements that match the array of indices
