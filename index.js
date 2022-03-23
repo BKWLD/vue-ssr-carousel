@@ -170,7 +170,21 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "ssr-carousel", attrs: { "data-ssrc-id": _vm.scopeId } },
+    {
+      staticClass: "ssr-carousel",
+      attrs: { "data-ssrc-id": _vm.scopeId },
+      on: {
+        keyup: function ($event) {
+          if (
+            !$event.type.indexOf("key") &&
+            _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
+          ) {
+            return null
+          }
+          return _vm.onTab.apply(null, arguments)
+        },
+      },
+    },
     [
       _c("style", {
         tag: "component",
@@ -229,6 +243,7 @@ var render = function () {
                     dragging: _vm.dragging,
                     trackTranslateX: _vm.trackTranslateX,
                     slideOrder: _vm.slideOrder,
+                    activeSlides: _vm.activeSlides,
                     leftPeekingSlideIndex: _vm.leftPeekingSlideIndex,
                     rightPeekingSlideIndex: _vm.rightPeekingSlideIndex,
                   },
@@ -297,6 +312,14 @@ var render = function () {
             )
           )
         : _vm._e(),
+      _c(
+        "div",
+        {
+          staticClass: "ssr-carousel-visually-hidden",
+          attrs: { "aria-live": "polite", "aria-atomic": "true" },
+        },
+        [_vm._v(_vm._s(_vm.currentSlideMessage))]
+      ),
     ],
     1
   )
@@ -375,12 +398,12 @@ ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render._withStripped =
   computed: {
     // Determine if button should be disabled because we're at the limits
     backDisabled: function () {
-      if (!this.loop) {
+      if (!this.shouldLoop) {
         return this.index === 0;
       }
     },
     nextDisabled: function () {
-      if (!this.loop) {
+      if (!this.shouldLoop) {
         return this.index === this.pages - 1;
       }
     }
@@ -600,15 +623,64 @@ if (false) { var ssr_carousel_dots_api; }
 ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
 /* harmony default export */ var ssr_carousel_dots = (ssr_carousel_dots_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
+var interactiveSelector,
+    indexOf = [].indexOf;
+interactiveSelector = 'a, button, input, textarea, select';
 /* harmony default export */ var ssr_carousel_trackvue_type_script_lang_coffee_ = ({
   props: {
     dragging: Boolean,
     trackTranslateX: Number,
     slideOrder: Array,
+    activeSlides: Array,
     leftPeekingSlideIndex: Number,
     rightPeekingSlideIndex: Number
   },
+  // Set tabindex of inactive slides on mount
+  mounted: function () {
+    this.denyTabindex(this.inactiveSlides);
+    return this.denyTabindex(this.clonedSlides);
+  },
   computed: {
+    // Get the count of non-cloned slides
+    uniqueSlidesCount: function () {
+      return this.slideOrder.length;
+    },
+    // Get the total slides count, including clones
+    allSlidesCount: function () {
+      return this.getSlideComponents().length;
+    },
+    // Check if there are cloned slides
+    hasClonedSlides: function () {
+      return this.allSlidesCount > this.uniqueSlidesCount;
+    },
+    // Make an array of inactive slide indices
+    inactiveSlides: function () {
+      var ref;
+      return function () {
+        var results = [];
+
+        for (var j = 0, ref = this.uniqueSlidesCount; 0 <= ref ? j < ref : j > ref; 0 <= ref ? j++ : j--) {
+          results.push(j);
+        }
+
+        return results;
+      }.apply(this).filter(index => {
+        return indexOf.call(this.activeSlides, index) < 0;
+      });
+    },
+    // An array of the cloned slides indices
+    clonedSlides: function () {
+      var ref, ref1;
+      return function () {
+        var results = [];
+
+        for (var j = ref = this.uniqueSlidesCount, ref1 = this.allSlidesCount; ref <= ref1 ? j < ref1 : j > ref1; ref <= ref1 ? j++ : j--) {
+          results.push(j);
+        }
+
+        return results;
+      }.apply(this);
+    },
     // Styles that are used to position the track
     styles: function () {
       if (this.trackTranslateX) {
@@ -618,6 +690,13 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
       }
     }
   },
+  // Update the tabindex of interactive elements when slides change
+  watch: {
+    activeSlides: function () {
+      this.allowTabindex(this.activeSlides);
+      return this.denyTabindex(this.inactiveSlides);
+    }
+  },
   methods: {
     // Make the slides to render into the track
     makeSlides: function () {
@@ -625,7 +704,7 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
         var cssClass, isPeekingClone, peekingIndex, slideCount;
         vnode = this.makeReactiveVnode(vnode); // This is a peeking clone if it's index is greater than the slide count
 
-        slideCount = this.slideOrder.length;
+        slideCount = this.uniqueSlidesCount;
         isPeekingClone = index >= slideCount;
         peekingIndex = index - slideCount; // Add the slide class using staticClass since it isn't reactive to data
 
@@ -656,13 +735,19 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
 
         if (isPeekingClone && peekingIndex !== this.leftPeekingSlideIndex && peekingIndex !== this.rightPeekingSlideIndex) {
           vnode.data.style.display = 'none';
+        } // Make peeking clones and slides not in viewport as aria-hidden
+
+
+        if (isPeekingClone || indexOf.call(this.activeSlides, index) < 0) {
+          vnode.data.attrs['aria-hidden'] = 'true';
         } // Return modified vnode
 
 
         return vnode;
       });
     },
-    // Get the list of non-text slides, including peeking clones
+    // Get the list of non-text slides, including peeking clones.  This doesn't
+    // work as a computed function
     getSlideComponents: function () {
       return [...this.$slots.default, ...(this.$slots.clones || [])].filter(function (vnode) {
         return !vnode.text;
@@ -681,9 +766,48 @@ ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
       // ignore them.
 
       newVnode.data.style = { ...vnode.data.style
+      }; // Clone attrs property
+
+      newVnode.data.attrs = { ...vnode.data.attrs
       }; // Return the clone
 
       return newVnode;
+    },
+    // Set the tabindex
+    denyTabindex: function (indices) {
+      return this.setTabindex(indices, -1);
+    },
+    // Allow tabindex on interactive elements
+    allowTabindex: function (indices) {
+      return this.setTabindex(indices, 0);
+    },
+    // Set tabindex rules on slides.
+    setTabindex: function (slideIndices, tabindexValue) {
+      var el, j, len, ref, results;
+      ref = this.getSlideElementsByIndices(slideIndices);
+      results = [];
+
+      for (j = 0, len = ref.length; j < len; j++) {
+        el = ref[j]; // If the slide is interactive, we can stop there since you shouldn't
+        // be nesting interactive elements
+
+        if (el.matches(interactiveSelector)) {
+          results.push(el.tabIndex = tabindexValue);
+        } else {
+          // Set tabindex values on all interactive children
+          results.push(el.querySelectorAll(interactiveSelector).forEach(function (el) {
+            return el.tabIndex = tabindexValue;
+          }));
+        }
+      }
+
+      return results;
+    },
+    // Get the slide elements that match the array of indices
+    getSlideElementsByIndices: function (slideIndices) {
+      return Array.from(this.$el.children).filter(function (el, i) {
+        return indexOf.call(slideIndices, i) >= 0;
+      });
     }
   },
   // Render the track and slotted slides
@@ -725,6 +849,42 @@ var ssr_carousel_track_component = normalizeComponent(
 if (false) { var ssr_carousel_track_api; }
 ssr_carousel_track_component.options.__file = "src/ssr-carousel-track.vue"
 /* harmony default export */ var ssr_carousel_track = (ssr_carousel_track_component.exports);
+// CONCATENATED MODULE: ./src/concerns/accessibility.coffee
+/*
+Code related to supporting keyboard interaction and screen readers
+*/
+/* harmony default export */ var accessibility_coffee = ({
+  // Store whether the user appears to be using keyboard to navigate
+  data: function () {
+    return {
+      usingKeyboard: false
+    };
+  },
+  computed: {
+    // Make the current slide message
+    // https://www.w3.org/WAI/tutorials/carousels/functionality/#announce-the-current-item
+    currentSlideMessage: function () {
+      return `Item ${this.boundedIndex + 1} of ${this.pages}`;
+    }
+  },
+  watch: {
+    // When switching to keyboard navigation, I could never reproduce a scenario
+    // where the focused elements wasn't the first slide, so I'm resetting the
+    // active page to the first slide
+    usingKeyboard: function () {
+      if (this.usingKeyboard) {
+        return this.goto(0);
+      }
+    }
+  },
+  methods: {
+    // Once a user uses tab on the carousel, mark them as using their keyboard.
+    // This is cleared by the onPointerDown method.
+    onTab: function () {
+      return this.usingKeyboard = true;
+    }
+  }
+});
 // CONCATENATED MODULE: ./src/concerns/autoplay.coffee
 /*
 Code related to auotplay features of the carousel
@@ -736,20 +896,35 @@ Code related to auotplay features of the carousel
       type: Number,
       default: 0
     },
+    // Should we pause on hover
     pauseOnFocus: {
       type: Boolean,
       default: true
     }
   },
+  // Start autolaying on mount
+  mounted: function () {
+    return this.autoplayStart();
+  },
+  beforeDestroy: function () {
+    return this.autoplayStop();
+  },
   computed: {
-    // Stop animation if window is hidden or if carousel is focused
+    // Conditions that result in pausing autoplay
     autoplayPaused: function () {
-      if (this.pauseOnFocus) {
-        return this.windowHidden || this.isFocused;
+      switch (false) {
+        // Always pause when using keyboard navigation
+        case !this.usingKeyboard:
+          return true;
+        // Stop animation if window is hidden or if carousel is focused
+
+        case !this.pauseOnFocus:
+          return this.windowHidden || this.isFocused;
       }
     }
   },
   watch: {
+    // Respond to conditions that may automatically pause autoplaying
     autoplayPaused: function (paused) {
       if (paused) {
         return this.autoplayStop();
@@ -758,33 +933,31 @@ Code related to auotplay features of the carousel
       }
     }
   },
-  mounted: function () {
-    return this.autoplayStart();
-  },
-  beforeDestroy: function () {
-    return this.autoplayStop();
-  },
   methods: {
     autoplayStart: function () {
-      // Don't loop if we only have one page
-      if (this.pages <= 0) {
+      // Require a delay amount
+      if (!this.autoplayDelay) {
         return;
-      }
+      } // Don't loop if we only have one page
 
-      if (this.autoplayDelay) {
-        return this.autoPlayInterval = setInterval(() => {
-          if (!this.autoplayPaused) {
-            return this.autoplayNext();
-          }
-        }, this.autoplayDelay * 1000);
-      }
+
+      if (!this.pages) {
+        return;
+      } // Start autoplaying
+
+
+      return this.autoPlayInterval = setInterval(() => {
+        if (!this.autoplayPaused) {
+          return this.autoplayNext();
+        }
+      }, this.autoplayDelay * 1000);
     },
     autoplayStop: function () {
       return clearInterval(this.autoPlayInterval);
     },
     // Advance to the next slide
     autoplayNext: function () {
-      if (this.loop || this.index < this.pages - 1) {
+      if (this.shouldLoop || this.index < this.pages - 1) {
         return this.next();
       } else {
         return this.goto(0); // Reset because loop wasn't enabled
@@ -1033,7 +1206,7 @@ notPassive = {
 
       remainingSlides = function () {
         switch (false) {
-          case !this.loop:
+          case !this.shouldLoop:
             return this.slidesCount - pageIndex * slidesPerPage;
 
           default:
@@ -1079,7 +1252,7 @@ notPassive = {
       } else {
         // Tween so the track is in bounds if it was out
         // The pointer is up, so tween to final position
-        if (this.isOutOfBounds && !this.loop) {
+        if (this.isOutOfBounds && !this.shouldLoop) {
           if (this.currentX >= 0) {
             this.goto(0);
           } else {
@@ -1146,7 +1319,8 @@ notPassive = {
     onPointerDown: function (pointerEvent) {
       this.isTouchDrag = typeof TouchEvent !== "undefined" && TouchEvent !== null && pointerEvent instanceof TouchEvent;
       this.startPointer = this.lastPointer = this.getPointerCoords(pointerEvent);
-      return this.pressing = true;
+      this.pressing = true;
+      return this.usingKeyboard = false;
     },
     // Keep track of release of press
     onPointerUp: function () {
@@ -1182,7 +1356,7 @@ notPassive = {
     // Prevent dragging from exceeding the min/max edges
     applyBoundaryDampening: function (x) {
       switch (false) {
-        case !this.loop:
+        case !this.shouldLoop:
           return x;
         // Don't apply dampening
 
@@ -1198,7 +1372,7 @@ notPassive = {
     },
     // Constraint the x value to the min and max values
     applyXBoundaries: function (x) {
-      if (this.loop) {
+      if (this.shouldLoop) {
         return x; // Don't apply boundaries
       } else {
         return Math.max(this.endX, Math.min(0, x));
@@ -1356,6 +1530,10 @@ Code related to looping / infinite scroll
     };
   },
   computed: {
+    // Disable looping when the user is using keyboard navigation
+    shouldLoop: function () {
+      return this.loop && !this.usingKeyboard;
+    },
     // This represents the current (as in while scrolling / animating) left most
     // slide index. This is used in looping calculation so that the reordering
     // of slides isn't affected by paginatePerSlide setting.
@@ -1367,7 +1545,7 @@ Code related to looping / infinite scroll
     trackLoopOffset: function () {
       var offsetSlideCount;
 
-      if (!this.loop) {
+      if (!this.shouldLoop) {
         return 0;
       }
 
@@ -1421,7 +1599,7 @@ Code related to looping / infinite scroll
       } // Re-order while looping
 
 
-      if (this.loop) {
+      if (this.shouldLoop) {
         split = (count - this.currentSlideIndex) % count;
         indices = [...indices.slice(split), ...indices.slice(0, split)];
       } // Set the new index order
@@ -1482,7 +1660,7 @@ Code related to dealing with advancing between pages
     pages: function () {
       switch (false) {
         // When looping and paginating per slide, make a dot per slide
-        case !(this.paginateBySlide && this.loop):
+        case !(this.paginateBySlide && this.shouldLoop):
           return this.slidesCount;
         // Else, restrict pages so you the last slide is flush with right edge
 
@@ -1517,6 +1695,38 @@ Code related to dealing with advancing between pages
     // The current incomplete page offset
     currentIncompletePageOffset: function () {
       return this.makeIncompletePageOffset(this.index);
+    },
+    // Get an array of slide offsets of the slides that are 100% in the
+    // viewport. Aka, the count will be equal the currentSlidesPerPage per page.
+    activeSlides: function () {
+      var ref, start; // Get the offset of the leftmost slide in the current viewport
+
+      start = this.paginateBySlide ? this.boundedIndex : this.boundedIndex * this.currentSlidesPerPage; // Adjust the start if not looping and on the last page of slides and there
+      // aren't enough slides to make a full page
+
+      if (!this.shouldLoop) {
+        start -= this.boundedIndex % this.currentSlidesPerPage;
+      }
+
+      return function () {
+        var results = [];
+
+        for (var i = start, ref = start + this.currentSlidesPerPage; start <= ref ? i < ref : i > ref; start <= ref ? i++ : i--) {
+          results.push(i);
+        }
+
+        return results;
+      }.apply(this).reduce((slides, offset) => {
+        // When looping, use modulo to loop back around
+        if (this.shouldLoop) {
+          slides.push(offset % this.slidesCount); // Else, cap the offset to the last slide
+        } else if (offset < this.slidesCount) {
+          slides.push(offset);
+        } // Return updated slides
+
+
+        return slides;
+      }, []);
     }
   },
   watch: {
@@ -1565,7 +1775,7 @@ Code related to dealing with advancing between pages
     makeIncompletePageOffset: function (index) {
       var incompleteWidth;
 
-      if (!(this.loop && !this.paginateBySlide)) {
+      if (!(this.shouldLoop && !this.paginateBySlide)) {
         return 0;
       }
 
@@ -1574,7 +1784,7 @@ Code related to dealing with advancing between pages
     },
     // Apply boundaries to the index
     applyIndexBoundaries: function (index) {
-      if (this.loop) {
+      if (this.shouldLoop) {
         return index;
       } else {
         return Math.max(0, Math.min(this.pages - 1, index));
@@ -1641,7 +1851,7 @@ gutter space.
       return this.hasLeftPeekClone || this.hasRightPeekClone;
     },
     hasPeekPrerequisites: function () {
-      return this.loop && this.slidesCount > 1;
+      return this.shouldLoop && this.slidesCount > 1;
     },
     hasLeftPeekClone: function () {
       return this.hasPeekPrerequisites && this.peekLeft;
@@ -2025,11 +2235,12 @@ Code related to tweening the position of the track
 
 
 
+
 /* harmony default export */ var ssr_carouselvue_type_script_lang_coffee_ = ({
   // Component definition
   name: 'SsrCarousel',
   // Load concerns
-  mixins: [autoplay_coffee, dimensions_coffee, dragging_coffee, feathering_coffee, focus_coffee, gutters_coffee, looping_coffee, pagination_coffee, responsive_coffee, peeking_coffee, // After `responsive` so prop can access `gutter` prop
+  mixins: [accessibility_coffee, autoplay_coffee, dimensions_coffee, dragging_coffee, feathering_coffee, focus_coffee, gutters_coffee, looping_coffee, pagination_coffee, responsive_coffee, peeking_coffee, // After `responsive` so prop can access `gutter` prop
   tweening_coffee],
   components: {
     SsrCarouselArrows: ssr_carousel_arrows,
