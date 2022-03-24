@@ -21,6 +21,7 @@ export default
 		{ title: 'UI', path: '/ui' }
 		{ title: 'Looping', path: '/looping' }
 		{ title: 'Peeking', path: '/peeking' }
+		{ title: 'Accessibility', path: '/accessibility' }
 		{ title: 'Miscellaneous', path: '/misc' }
 	]
 

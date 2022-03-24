@@ -1,20 +1,49 @@
 <!-- The track that hosts the slides -->
 
 <script lang='coffee'>
+interactiveSelector = 'a, button, input, textarea, select'
 export default
 
 	props:
 		dragging: Boolean
 		trackTranslateX: Number
 		slideOrder: Array
+		activeSlides: Array
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
 
+	# Set tabindex of inactive slides on mount
+	mounted: ->
+		@denyTabindex @inactiveSlides
+		@denyTabindex @clonedSlides
+
 	computed:
+
+		# Get the count of non-cloned slides
+		uniqueSlidesCount: -> @slideOrder.length
+
+		# Get the total slides count, including clones
+		allSlidesCount: -> @getSlideComponents().length
+
+		# Check if there are cloned slides
+		hasClonedSlides: -> @allSlidesCount > @uniqueSlidesCount
+
+		# Make an array of inactive slide indices
+		inactiveSlides: ->
+			[0...@uniqueSlidesCount]
+			.filter (index) => index not in @activeSlides
+
+		# An array of the cloned slides indices
+		clonedSlides: -> [@uniqueSlidesCount...@allSlidesCount]
 
 		# Styles that are used to position the track
 		styles: ->
 			transform: "translateX(#{@trackTranslateX}px)" if @trackTranslateX
+
+	# Update the tabindex of interactive elements when slides change
+	watch: activeSlides: ->
+		@allowTabindex @activeSlides
+		@denyTabindex @inactiveSlides
 
 	methods:
 
@@ -23,7 +52,7 @@ export default
 			vnode = @makeReactiveVnode vnode
 
 			# This is a peeking clone if it's index is greater than the slide count
-			slideCount = @slideOrder.length
+			slideCount = @uniqueSlidesCount
 			isPeekingClone = index >= slideCount
 			peekingIndex = index - slideCount
 
@@ -49,10 +78,15 @@ export default
 				]
 			then vnode.data.style.display = 'none'
 
+			# Make peeking clones and slides not in viewport as aria-hidden
+			if isPeekingClone or index not in @activeSlides
+			then vnode.data.attrs['aria-hidden'] = 'true'
+
 			# Return modified vnode
 			return vnode
 
-		# Get the list of non-text slides, including peeking clones
+		# Get the list of non-text slides, including peeking clones.  This doesn't
+		# work as a computed function
 		getSlideComponents: ->
 			[...@$slots.default, ...(@$slots.clones || [])]
 			.filter (vnode) -> !vnode.text
@@ -70,8 +104,35 @@ export default
 			# ignore them.
 			newVnode.data.style = { ...vnode.data.style }
 
+			# Clone attrs property
+			newVnode.data.attrs = { ...vnode.data.attrs }
+
 			# Return the clone
 			return newVnode
+
+		# Prevent tabbing to interactive elements in slides with the passed in
+		# index values
+		denyTabindex: (indices) -> @setTabindex indices, -1
+
+		# Allow tabindex on interactive elements in slides with the passed in
+		# index values
+		allowTabindex: (indices) -> @setTabindex indices, 0
+
+		# Set tabindex value on interactive elements in slides
+		setTabindex: (slideIndices, tabindexValue) ->
+			for el in @getSlideElementsByIndices slideIndices
+
+				# Set tabindex value on the slide, like in the case that the slide is
+				# an <a>
+				if el.matches interactiveSelector then el.tabIndex = tabindexValue
+
+				# Set tabindex values on all interactive children
+				el.querySelectorAll(interactiveSelector).forEach (el) ->
+					el.tabIndex = tabindexValue
+
+		# Get the slide elements that match the array of indices
+		getSlideElementsByIndices: (slideIndices) ->
+			Array.from(@$el.children).filter (el, i) -> i in slideIndices
 
 	# Render the track and slotted slides
 	render: (create) ->

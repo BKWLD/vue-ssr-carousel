@@ -4,6 +4,8 @@ title: 'Miscellaneous'
 
 ## Carousel is disabled when less slides than viewport
 
+Note how this carousel is enabled on mobile viewports but automatically disables on wider viewports.
+
 <demos-misc-disabling></demos-misc-disabling>
 
 ```vue

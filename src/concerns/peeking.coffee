@@ -48,7 +48,7 @@ export default
 
 		# Determine if clones should be created
 		hasPeekClones: -> @hasLeftPeekClone or @hasRightPeekClone
-		hasPeekPrerequisites: -> @loop and @slidesCount > 1
+		hasPeekPrerequisites: -> @shouldLoop and @slidesCount > 1
 		hasLeftPeekClone: -> @hasPeekPrerequisites and @peekLeft
 		hasRightPeekClone: -> @hasPeekPrerequisites and @peekRight
 

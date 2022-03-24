@@ -88,7 +88,7 @@ export default
 			# end with the slides flush with the right edge.
 			slidesPerPage = @currentSlidesPerPage
 			remainingSlides = switch
-				when @loop then @slidesCount - pageIndex * slidesPerPage
+				when @shouldLoop then @slidesCount - pageIndex * slidesPerPage
 				else @slidesCount - (pageIndex + 1) * slidesPerPage
 			isLastPage = remainingSlides <= slidesPerPage
 
@@ -131,7 +131,7 @@ export default
 			else
 
 				# Tween so the track is in bounds if it was out
-				if @isOutOfBounds and not @loop
+				if @isOutOfBounds and not @shouldLoop
 					if @currentX >= 0 then @goto 0
 					else @goto @pages - 1
 
@@ -184,6 +184,7 @@ export default
 			@isTouchDrag = TouchEvent? and pointerEvent instanceof TouchEvent
 			@startPointer = @lastPointer = @getPointerCoords pointerEvent
 			@pressing = true
+			@usingKeyboard = false
 
 		# Keep track of release of press
 		onPointerUp: -> @pressing = false
@@ -216,14 +217,14 @@ export default
 
 		# Prevent dragging from exceeding the min/max edges
 		applyBoundaryDampening: (x) -> switch
-			when @loop then x # Don't apply dampening
+			when @shouldLoop then x # Don't apply dampening
 			when x > 0 then Math.pow x, @boundaryDampening
 			when x < @endX then @endX - Math.pow @endX - x, @boundaryDampening
 			else @applyXBoundaries x
 
 		# Constraint the x value to the min and max values
 		applyXBoundaries: (x) ->
-			if @loop then x # Don't apply boundaries
+			if @shouldLoop then x # Don't apply boundaries
 			else Math.max @endX, Math.min 0, x
 
 		# Prevent the anchors and images from being draggable (like via their

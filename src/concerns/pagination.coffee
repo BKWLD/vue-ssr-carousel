@@ -19,7 +19,7 @@ export default
 		pages: -> switch
 
 			# When looping and paginating per slide, make a dot per slide
-			when @paginateBySlide and @loop then @slidesCount
+			when @paginateBySlide and @shouldLoop then @slidesCount
 
 			# Else, restrict pages so you the last slide is flush with right edge
 			when @paginateBySlide then @slidesCount - @currentSlidesPerPage + 1
@@ -43,6 +43,32 @@ export default
 
 		# The current incomplete page offset
 		currentIncompletePageOffset: -> @makeIncompletePageOffset @index
+
+		# Get an array of slide offsets of the slides that are 100% in the
+		# viewport. Aka, the count will be equal the currentSlidesPerPage per page.
+		activeSlides: ->
+
+			# Get the offset of the leftmost slide in the current viewport
+			start = if @paginateBySlide then @boundedIndex
+			else @boundedIndex * @currentSlidesPerPage
+
+			# Adjust the start if not looping and on the last page of slides and there
+			# aren't enough slides to make a full page
+			if not @shouldLoop then start -= @boundedIndex % @currentSlidesPerPage
+
+			# Make an array of the offsets of the slide between the start and the
+			# slides per page
+			[start...(start + @currentSlidesPerPage)].reduce (slides, offset) =>
+
+				# When looping, use modulo to loop back around
+				if @shouldLoop then slides.push offset % @slidesCount
+
+				# Else, cap the offset to the last slide
+				else if offset < @slidesCount then slides.push offset
+
+				# Return updated slides
+				return slides
+			, []
 
 	watch:
 
@@ -86,11 +112,11 @@ export default
 		# over to the 2nd page index of 0. The track needs to be shifted to the
 		# left by one slideWidth in this case.
 		makeIncompletePageOffset: (index) ->
-			return 0 unless @loop and not @paginateBySlide
+			return 0 unless @shouldLoop and not @paginateBySlide
 			incompleteWidth = @pageWidth - @lastPageWidth
 			Math.floor(index / @pages) * incompleteWidth
 
 		# Apply boundaries to the index
 		applyIndexBoundaries: (index) ->
-			if @loop then index
+			if @shouldLoop then index
 			else Math.max 0, Math.min @pages - 1, index

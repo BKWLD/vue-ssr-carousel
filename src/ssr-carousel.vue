@@ -2,7 +2,7 @@
 
 <template lang='pug'>
 
-.ssr-carousel(:data-ssrc-id='scopeId')
+.ssr-carousel(:data-ssrc-id='scopeId' @keyup.tab='onTab')
 
 	//- Render generated styles
 	component(is='style' v-html='instanceStyles')
@@ -29,6 +29,7 @@
 					dragging,
 					trackTranslateX,
 					slideOrder,
+					activeSlides,
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
 				}`)
@@ -55,6 +56,10 @@
 		@goto='gotoDot')
 		template(#dot='props'): slot(name='dot' v-bind='props')
 
+	//- Live region, for announcing the current slide position
+	.ssr-carousel-visually-hidden(aria-live='polite' aria-atomic='true')
+		| {{ currentSlideMessage }}
+
 </template>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -67,6 +72,7 @@ import SsrCarouselDots from './ssr-carousel-dots'
 import SsrCarouselTrack from './ssr-carousel-track'
 
 # Concerns
+import accessibility from './concerns/accessibility'
 import autoplay from './concerns/autoplay'
 import dimensions from './concerns/dimensions'
 import dragging from './concerns/dragging'
@@ -85,6 +91,7 @@ export default
 
 	# Load concerns
 	mixins: [
+		accessibility
 		autoplay
 		dimensions
 		dragging
@@ -166,5 +173,19 @@ export default
 		cursor grab
 		&.pressing
 			cursor grabbing
+
+// Hide content only intended for screen readers
+// From https://www.w3.org/WAI/tutorials/carousels/working-example/
+.ssr-carousel-visually-hidden
+	border: 0
+	clip rect(0 0 0 0)
+	clip-path inset(50%)
+	height: 1px
+	margin: -1px
+	overflow hidden
+	padding 0
+	position absolute
+	width 1px
+	white-space nowrap
 
 </style>
