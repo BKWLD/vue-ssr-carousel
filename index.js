@@ -168,109 +168,139 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "ssr-carousel",
-      attrs: { "data-ssrc-id": _vm.scopeId },
-      on: {
-        keyup: function ($event) {
-          if (
-            !$event.type.indexOf("key") &&
-            _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
-          ) {
-            return null
-          }
-          return _vm.onTab.apply(null, arguments)
-        },
-      },
-    },
-    [
-      _c("style", {
-        tag: "component",
-        domProps: { innerHTML: _vm._s(_vm.instanceStyles) },
-      }),
-      _c(
+  return _vm.$slots.default && _vm.$slots.default.length
+    ? _c(
         "div",
-        { staticClass: "ssr-carousel-slides" },
+        {
+          key: _vm.$slots.default.length,
+          staticClass: "ssr-carousel",
+          attrs: { "data-ssrc-id": _vm.scopeId },
+          on: {
+            keyup: function ($event) {
+              if (
+                !$event.type.indexOf("key") &&
+                _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
+              ) {
+                return null
+              }
+              return _vm.onTab.apply(null, arguments)
+            },
+          },
+        },
         [
-          _c("div", {
-            ref: "peekValues",
-            staticClass: "ssr-peek-values",
-            style: _vm.peekStyles,
+          _c("style", {
+            tag: "component",
+            domProps: { innerHTML: _vm._s(_vm.instanceStyles) },
           }),
           _c(
             "div",
-            _vm._g(
-              {
-                ref: "mask",
-                staticClass: "ssr-carousel-mask",
-                class: { pressing: _vm.pressing, disabled: _vm.disabled },
-              },
-              _vm.maskListeners
-            ),
+            { staticClass: "ssr-carousel-slides" },
             [
+              _c("div", {
+                ref: "peekValues",
+                staticClass: "ssr-peek-values",
+                style: _vm.peekStyles,
+              }),
               _c(
-                "ssr-carousel-track",
-                _vm._b(
+                "div",
+                _vm._g(
                   {
-                    ref: "track",
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "default",
-                          fn: function () {
-                            return [_vm._t("default")]
-                          },
-                          proxy: true,
-                        },
-                        _vm.hasPeekClones
-                          ? {
-                              key: "clones",
+                    ref: "mask",
+                    staticClass: "ssr-carousel-mask",
+                    class: { pressing: _vm.pressing, disabled: _vm.disabled },
+                  },
+                  _vm.maskListeners
+                ),
+                [
+                  _c(
+                    "ssr-carousel-track",
+                    _vm._b(
+                      {
+                        ref: "track",
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "default",
                               fn: function () {
                                 return [_vm._t("default")]
                               },
                               proxy: true,
-                            }
-                          : null,
-                      ],
-                      null,
-                      true
-                    ),
-                  },
-                  "ssr-carousel-track",
-                  {
-                    dragging: _vm.dragging,
-                    trackTranslateX: _vm.trackTranslateX,
-                    slideOrder: _vm.slideOrder,
-                    activeSlides: _vm.activeSlides,
-                    leftPeekingSlideIndex: _vm.leftPeekingSlideIndex,
-                    rightPeekingSlideIndex: _vm.rightPeekingSlideIndex,
-                  },
-                  false
-                )
+                            },
+                            _vm.hasPeekClones
+                              ? {
+                                  key: "clones",
+                                  fn: function () {
+                                    return [_vm._t("default")]
+                                  },
+                                  proxy: true,
+                                }
+                              : null,
+                          ],
+                          null,
+                          true
+                        ),
+                      },
+                      "ssr-carousel-track",
+                      {
+                        dragging: _vm.dragging,
+                        trackTranslateX: _vm.trackTranslateX,
+                        slideOrder: _vm.slideOrder,
+                        activeSlides: _vm.activeSlides,
+                        leftPeekingSlideIndex: _vm.leftPeekingSlideIndex,
+                        rightPeekingSlideIndex: _vm.rightPeekingSlideIndex,
+                      },
+                      false
+                    )
+                  ),
+                ],
+                1
               ),
+              _vm.showArrows
+                ? _c(
+                    "ssr-carousel-arrows",
+                    _vm._b(
+                      {
+                        on: { back: _vm.back, next: _vm.next },
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "back",
+                              fn: function (props) {
+                                return [_vm._t("back-arrow", null, null, props)]
+                              },
+                            },
+                            {
+                              key: "next",
+                              fn: function (props) {
+                                return [_vm._t("next-arrow", null, null, props)]
+                              },
+                            },
+                          ],
+                          null,
+                          true
+                        ),
+                      },
+                      "ssr-carousel-arrows",
+                      { index: _vm.index, pages: _vm.pages, loop: _vm.loop },
+                      false
+                    )
+                  )
+                : _vm._e(),
             ],
             1
           ),
-          _vm.showArrows
+          _vm.showDots
             ? _c(
-                "ssr-carousel-arrows",
+                "ssr-carousel-dots",
                 _vm._b(
                   {
-                    on: { back: _vm.back, next: _vm.next },
+                    on: { goto: _vm.gotoDot },
                     scopedSlots: _vm._u(
                       [
                         {
-                          key: "back",
+                          key: "dot",
                           fn: function (props) {
-                            return [_vm._t("back-arrow", null, null, props)]
-                          },
-                        },
-                        {
-                          key: "next",
-                          fn: function (props) {
-                            return [_vm._t("next-arrow", null, null, props)]
+                            return [_vm._t("dot", null, null, props)]
                           },
                         },
                       ],
@@ -278,51 +308,24 @@ var render = function () {
                       true
                     ),
                   },
-                  "ssr-carousel-arrows",
-                  { index: _vm.index, pages: _vm.pages, loop: _vm.loop },
+                  "ssr-carousel-dots",
+                  { boundedIndex: _vm.boundedIndex, pages: _vm.pages },
                   false
                 )
               )
             : _vm._e(),
+          _c(
+            "div",
+            {
+              staticClass: "ssr-carousel-visually-hidden",
+              attrs: { "aria-live": "polite", "aria-atomic": "true" },
+            },
+            [_vm._v(_vm._s(_vm.currentSlideMessage))]
+          ),
         ],
         1
-      ),
-      _vm.showDots
-        ? _c(
-            "ssr-carousel-dots",
-            _vm._b(
-              {
-                on: { goto: _vm.gotoDot },
-                scopedSlots: _vm._u(
-                  [
-                    {
-                      key: "dot",
-                      fn: function (props) {
-                        return [_vm._t("dot", null, null, props)]
-                      },
-                    },
-                  ],
-                  null,
-                  true
-                ),
-              },
-              "ssr-carousel-dots",
-              { boundedIndex: _vm.boundedIndex, pages: _vm.pages },
-              false
-            )
-          )
-        : _vm._e(),
-      _c(
-        "div",
-        {
-          staticClass: "ssr-carousel-visually-hidden",
-          attrs: { "aria-live": "polite", "aria-atomic": "true" },
-        },
-        [_vm._v(_vm._s(_vm.currentSlideMessage))]
-      ),
-    ],
-    1
-  )
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -749,7 +752,7 @@ interactiveSelector = 'a, button, input, textarea, select';
     // Get the list of non-text slides, including peeking clones.  This doesn't
     // work as a computed function
     getSlideComponents: function () {
-      return [...this.$slots.default, ...(this.$slots.clones || [])].filter(function (vnode) {
+      return [...(this.$slots.default || []), ...(this.$slots.clones || [])].filter(function (vnode) {
         return !vnode.text;
       });
     },

@@ -69,17 +69,15 @@ Slide properties, like `class`, stay externally reactive as you'd expect. This i
 
 ```vue
 <template>
-
 <div>
-	<ssr-carousel :slides-per-page='2' loop peek='40px'>
-		<slide :index='1' :class='{ invert }'>
-			<button @click='invert = !invert'>Invert the slides</button>
-		</slide>
-		<slide :index='2' :class='{ invert }'></slide>
-		<slide :index='3' :class='{ invert }'></slide>
-	</ssr-carousel>
+  <ssr-carousel :slides-per-page='2' loop peek='40px'>
+    <slide :index='1' :class='{ invert }'>
+      <button @click='invert = !invert'>Invert the slides</button>
+    </slide>
+    <slide :index='2' :class='{ invert }'></slide>
+    <slide :index='3' :class='{ invert }'></slide>
+  </ssr-carousel>
 </div>
-
 </template>
 
 <script>
@@ -96,4 +94,40 @@ export default {
 }
 </style>
 
+```
+
+## Carousel doesn't render until there are slides
+
+When you add slides, a `:key` on the root element will cause `vue-ssr-carousel` render a new instance.  In other words, your pagination page will be lost and any animations in slides will restart.  Generally, you should strive to have all slides ready for render on the intial `create` to benefit from the SSR features of the component.
+
+<demos-misc-await-slides></demos-misc-await-slides>
+
+```vue
+<template>
+<div>
+  <ssr-carousel show-dots>
+    <slide
+      v-for='slide in slides'
+      :key='slide'
+      :index='slide'
+    ></slide>
+  </ssr-carousel>
+  <button @click='addSlide'>Add a slide</button>
+</div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      slides: [],
+    };
+  },
+  methods: {
+    addSlide() {
+      this.slides.push(this.slides.length + 1);
+    },
+  },
+};
+</script>
 ```
