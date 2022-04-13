@@ -2,7 +2,11 @@
 
 <template lang='pug'>
 
-.ssr-carousel(:data-ssrc-id='scopeId' @keyup.tab='onTab')
+.ssr-carousel(
+	v-if='$slots.default && $slots.default.length'
+	:key='$slots.default.length'
+	:data-ssrc-id='scopeId'
+	@keyup.tab='onTab')
 
 	//- Render generated styles
 	component(is='style' v-html='instanceStyles')
