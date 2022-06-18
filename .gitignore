@@ -106,8 +106,5 @@ dist
 # MacOS
 .DS_Store
 
-# Node
-/yarn.lock
-
 # Service worker
 sw.*
