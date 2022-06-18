@@ -32,6 +32,9 @@ export default
 	# Get Tower data
 	asyncData: ({ app, params, $content }) ->
 
+		# Ignored routes
+		return app.$notFound() if params.page in ['__coverage__']
+
 		# Get data
 		page = await $content(params.page || 'intro').fetch()
 		return app.$notFound() unless page

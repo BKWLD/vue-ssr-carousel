@@ -21,6 +21,7 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
+instrumented/
 
 # nyc test coverage
 .nyc_output
@@ -108,3 +109,7 @@ dist
 
 # Service worker
 sw.*
+
+# Cypress
+cypress/screenshots
+cypress/videos

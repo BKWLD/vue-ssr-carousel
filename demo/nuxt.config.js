@@ -11,7 +11,9 @@ export default {
 
 	// Plugins
 	plugins: [
-		'~/plugins/register-self'
+		process.env.NODE_ENV == 'test' ?
+			'~/plugins/register-instrumented' :
+			'~/plugins/register-src',
 	],
 
 	// Enable crawler to find dynamic pages

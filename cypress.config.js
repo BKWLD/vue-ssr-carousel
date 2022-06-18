@@ -9,5 +9,12 @@ module.exports = defineConfig({
 		// Support coffeescript
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx,coffee}',
 
+		// Configuration for code coverage
+		// https://docs.cypress.io/guides/tooling/code-coverage
+		setupNodeEvents(on, config) {
+			require('@cypress/code-coverage/task')(on, config)
+			return config
+		}
+
 	},
 });

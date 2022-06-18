@@ -1,3 +1,6 @@
+// Import plugins
+import '@cypress/code-coverage/support'
+
 // Import commands
 import './commands/interactions'
 import './commands/navigation'
