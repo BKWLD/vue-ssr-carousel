@@ -1,0 +1,17 @@
+name: Cypress E2E Tests
+on: [push]
+
+# Based on https://docs.cypress.io/guides/continuous-integration/github-actions
+job:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          build: yarn build --cwd=demo
+          start: yarn start --cwd=demo
