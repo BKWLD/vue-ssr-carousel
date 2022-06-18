@@ -1,6 +1,7 @@
 <template>
 
 <ssr-carousel
+  data-cy='min-width'
   :slides-per-page='1'
   :responsive='[
     {

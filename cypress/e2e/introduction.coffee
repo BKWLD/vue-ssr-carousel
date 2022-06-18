@@ -1,7 +1,6 @@
 describe 'introduction', ->
 
-	beforeEach ->
-		cy.visit '/'
+	beforeEach -> cy.visit '/'
 
 	it 'can be dragged left until last slide reached', ->
 
