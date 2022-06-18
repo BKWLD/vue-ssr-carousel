@@ -3,7 +3,8 @@ on: [push]
 
 # Based on https://docs.cypress.io/guides/continuous-integration/github-actions
 jobs:
-  "Run Cypress Tests":
+ test:
+    name: Run Cypress Tests
     runs-on: ubuntu-latest
     steps:
 
