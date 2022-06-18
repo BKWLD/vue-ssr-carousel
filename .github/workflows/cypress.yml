@@ -2,8 +2,8 @@ name: Cypress E2E Tests
 on: [push]
 
 # Based on https://docs.cypress.io/guides/continuous-integration/github-actions
-job:
-  run:
+jobs:
+  run-tests:
     runs-on: ubuntu-latest
     steps:
 
