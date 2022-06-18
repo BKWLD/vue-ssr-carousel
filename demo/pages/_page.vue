@@ -19,16 +19,6 @@ article
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
 <script lang='coffee'>
-import Vue from 'vue'
-import pageMixin from '@bkwld/cloak/mixins/page'
-import SsrCarousel from '../../src/ssr-carousel'
-import Visual from 'vue-visual'
-import 'vue-visual/index.css'
-
-# Register globally so demo components can easily use it
-Vue.component 'ssr-carousel', SsrCarousel
-Vue.component 'visual', Visual
-
 # Include the slide in this chunk so it doens't require client side JS to inject
 # styles. Since there aren't any other references to this component besides
 # within the content *.md files, I think Nuxt can only client side mount this
@@ -38,7 +28,6 @@ import Slide from '~/components/slide'
 
 export default
 	name: 'Page'
-	mixins: [ pageMixin ]
 
 	# Get Tower data
 	asyncData: ({ app, params, $content }) ->
