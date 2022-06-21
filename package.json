@@ -4,8 +4,14 @@
 	"description": "A performance focused Vue carousel designed for SSR/SSG environments.",
 	"main": "index.js",
 	"scripts": {
-		"build": "webpack",
-		"version": "npm run build && git add -A",
+		"dev": "nuxt dev demo",
+		"build": "nuxt build demo",
+		"build:cypress": "yarn instrument && NODE_ENV=test nuxt build demo",
+		"start": "nuxt start demo",
+		"generate": "nuxt generate demo --fail-on-error --target=static",
+		"package": "webpack",
+		"instrument": "yarn package && nyc instrument index.js instrumented",
+		"version": "npm run package && git add -A",
 		"postversion": "git push --follow-tags"
 	},
 	"repository": {
@@ -23,27 +29,21 @@
 		"lodash": "3 - 4"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.4.3",
-		"@babel/preset-env": "^7.4.3",
-		"autoprefixer": "^9.7.5",
-		"babel-loader": "^8.0.5",
-		"babel-preset-vue": "^2.0.2",
-		"coffee-loader": "^0.9.0",
-		"coffeescript": "^2.4.0",
-		"css-loader": "^2.1.1",
-		"mini-css-extract-plugin": "^0.5.0",
-		"postcss-loader": "^3.0.0",
-		"pug": "^3.0.1",
-		"pug-plain-loader": "^1.0.0",
-		"style-loader": "^0.13.1",
-		"stylus": "^0.54.5",
-		"stylus-loader": "^3.0.2",
-		"vue": "^2.6.10",
-		"vue-loader": "^15.7.0",
-		"vue-style-loader": "^4.1.2",
-		"vue-template-compiler": "^2.6.10",
-		"webpack": "^4.29.6",
-		"webpack-cli": "^3.3.0",
-		"webpack-node-externals": "^1.7.2"
+		"@cloak-app/boilerplate": "^1.0.8",
+		"@cypress/code-coverage": "^3.10.0",
+		"@nuxt/content": "1.14.0",
+		"babel-plugin-istanbul": "^6.1.1",
+		"cypress": "^10.1.0",
+		"mini-css-extract-plugin": "^1.0.0",
+		"nuxt": "^2.15.7",
+		"prism-themes": "^1.9.0",
+		"vue-visual": "^2.6.0",
+		"webpack-cli": "^4.10.0"
+	},
+	"nyc": {
+		"exclude": [
+			"**/demo/**/*"
+		],
+		"excludeAfterRemap": true
 	}
 }

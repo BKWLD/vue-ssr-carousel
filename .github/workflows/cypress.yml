@@ -1,0 +1,39 @@
+name: Cypress E2E Tests
+on: [push]
+
+# Based on https://docs.cypress.io/guides/continuous-integration/github-actions
+jobs:
+ test:
+    name: Run Cypress Tests
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress Run
+        uses: cypress-io/github-action@v4
+        with:
+          install-command: yarn --frozen-lockfile --silent
+          build: yarn build:cypress
+          start: yarn start --cwd=demo
+
+      - name: Report Coverage
+        run: |
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          yarn run --silent nyc report --reporter=text-summary >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Capture Cypress Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Cypress Media
+          path: |
+            cypress/screenshots
+            cypress/videos
+
+      - name: Capture Coverage Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: Coverage
+          path: coverage
