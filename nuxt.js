@@ -11,5 +11,5 @@ export default function() {
 	})
 
 	// Add the extracted CSS globally
-	// this.options.css.push('vue-ssr-carousel/index.css')
+	this.options.css.push('vue-ssr-carousel/index.css')
 }
