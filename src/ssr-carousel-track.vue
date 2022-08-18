@@ -98,14 +98,14 @@ export default
 
 			# Make the new vnode and data
 			newVnode = { ...vnode }
-			newVnode.data = { ...vnode.data}
+			newVnode.data = { ...vnode.data }
 
 			# Clone style property. String styles will be on staticStyle so we can
 			# ignore them.
-			newVnode.data.style = { ...vnode.data.style }
+			newVnode.data.style = { ...vnode.data?.style }
 
 			# Clone attrs property
-			newVnode.data.attrs = { ...vnode.data.attrs }
+			newVnode.data.attrs = { ...vnode.data?.attrs }
 
 			# Return the clone
 			return newVnode
