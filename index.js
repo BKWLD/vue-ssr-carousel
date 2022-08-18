@@ -700,7 +700,7 @@ interactiveSelector = 'a, button, input, textarea, select';
     // get rendered. Based on:
     // https://github.com/vuejs/vue/issues/6052#issuecomment-313705168
     makeReactiveVnode: function (vnode) {
-      var newVnode; // Make the new vnode and data
+      var newVnode, ref, ref1; // Make the new vnode and data
 
       newVnode = { ...vnode
       };
@@ -708,10 +708,10 @@ interactiveSelector = 'a, button, input, textarea, select';
       }; // Clone style property. String styles will be on staticStyle so we can
       // ignore them.
 
-      newVnode.data.style = { ...vnode.data.style
+      newVnode.data.style = { ...((ref = vnode.data) != null ? ref.style : void 0)
       }; // Clone attrs property
 
-      newVnode.data.attrs = { ...vnode.data.attrs
+      newVnode.data.attrs = { ...((ref1 = vnode.data) != null ? ref1.attrs : void 0)
       }; // Return the clone
 
       return newVnode;
