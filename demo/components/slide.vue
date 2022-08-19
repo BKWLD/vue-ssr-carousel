@@ -83,7 +83,7 @@ img
 p
 	margin-v 0
 
-.contents >>> a
+.contents :deep(a)
 	text-decoration underline
 
 </style>

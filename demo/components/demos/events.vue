@@ -48,7 +48,7 @@ export default
 
 .event
 	display block
-	>>> strong
+	:deep(strong)
 		opacity 0.5
 
 .name
