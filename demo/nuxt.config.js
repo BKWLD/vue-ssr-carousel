@@ -18,7 +18,6 @@ export default {
 
 	// Enable crawler to find dynamic pages
 	generate: {
-		crawler: true,
 		routes: () => ['/'],
 	},
 
@@ -26,6 +25,9 @@ export default {
 	cloak: {
 		boilerplate: {
 			siteName: 'vue-ssr-carousel demo',
+			excludedModules: [
+				'generate', // Excluded because it disables the crawler
+			],
 		},
 	},
 
