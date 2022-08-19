@@ -99,11 +99,10 @@ module.exports = require("lodash/throttle");
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=b31a94d8&lang=pug&
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=b32b4bc6&lang=pug&
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c
   return _vm.$slots.default && _vm.$slots.default.length
     ? _c(
         "div",
@@ -116,9 +115,8 @@ var render = function () {
               if (
                 !$event.type.indexOf("key") &&
                 _vm._k($event.keyCode, "tab", 9, $event.key, "Tab")
-              ) {
+              )
                 return null
-              }
               return _vm.onTab.apply(null, arguments)
             },
           },
@@ -267,13 +265,12 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=b31a94d8&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=b32b4bc6&lang=pug&
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=f7877eda&lang=pug&
-var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=e3537874&lang=pug&
+var ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render = function render() {
+  var _vm = this,
+    _c = _vm._self._c
   return _c("div", { staticClass: "ssr-carousel-arrows" }, [
     _c(
       "button",
@@ -321,11 +318,11 @@ var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render = function 
     ),
   ])
 }
-var ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_staticRenderFns = []
-ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render._withStripped = true
+var ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_staticRenderFns = []
+ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=template&id=f7877eda&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=template&id=e3537874&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
 /* harmony default export */ var ssr_carousel_arrowsvue_type_script_lang_coffee_ = ({
@@ -350,10 +347,10 @@ ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render._withStripped =
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_arrowsvue_type_script_lang_coffee_ = (ssr_carousel_arrowsvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=e3537874&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=e3537874&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -362,20 +359,19 @@ ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render._withStripped =
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-function normalizeComponent (
+function normalizeComponent(
   scriptExports,
   render,
   staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier, /* server only */
+  moduleIdentifier /* server only */,
   shadowMode /* vue-cli only */
 ) {
   // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
+  var options =
+    typeof scriptExports === 'function' ? scriptExports.options : scriptExports
 
   // render functions
   if (render) {
@@ -395,7 +391,8 @@ function normalizeComponent (
   }
 
   var hook
-  if (moduleIdentifier) { // server build
+  if (moduleIdentifier) {
+    // server build
     hook = function (context) {
       // 2.3 injection
       context =
@@ -421,11 +418,11 @@ function normalizeComponent (
   } else if (injectStyles) {
     hook = shadowMode
       ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
+          injectStyles.call(
+            this,
+            (options.functional ? this.parent : this).$root.$options.shadowRoot
+          )
+        }
       : injectStyles
   }
 
@@ -436,16 +433,14 @@ function normalizeComponent (
       options._injectStyles = hook
       // register for functional component in vue file
       var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
+      options.render = function renderWithStyleInjection(h, context) {
         hook.call(context)
         return originalRender(h, context)
       }
     } else {
       // inject component registration as beforeCreate hook
       var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook]
     }
   }
 
@@ -466,8 +461,8 @@ function normalizeComponent (
 
 var component = normalizeComponent(
   src_ssr_carousel_arrowsvue_type_script_lang_coffee_,
-  ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_render,
-  ssr_carousel_arrowsvue_type_template_id_f7877eda_lang_pug_staticRenderFns,
+  ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render,
+  ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_staticRenderFns,
   false,
   null,
   null,
@@ -475,15 +470,11 @@ var component = normalizeComponent(
   
 )
 
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "src/ssr-carousel-arrows.vue"
 /* harmony default export */ var ssr_carousel_arrows = (component.exports);
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=template&id=6b089f93&lang=pug&
-var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=template&id=f5cb500a&lang=pug&
+var ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render = function render() {
+  var _vm = this,
+    _c = _vm._self._c
   return _c(
     "div",
     { staticClass: "ssr-carousel-dots" },
@@ -493,7 +484,7 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function ()
         {
           key: i,
           staticClass: "ssr-carousel-dot-button",
-          attrs: { "aria-label": "Page " + i, disabled: _vm.isDisabled(i) },
+          attrs: { "aria-label": `Page ${i}`, disabled: _vm.isDisabled(i) },
           on: {
             click: function ($event) {
               return _vm.$emit("goto", i - 1)
@@ -515,11 +506,11 @@ var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render = function ()
     0
   )
 }
-var ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_staticRenderFns = []
-ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render._withStripped = true
+var ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_staticRenderFns = []
+ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=template&id=6b089f93&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=template&id=f5cb500a&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
 /* harmony default export */ var ssr_carousel_dotsvue_type_script_lang_coffee_ = ({
@@ -536,10 +527,10 @@ ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render._withStripped = t
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_dotsvue_type_script_lang_coffee_ = (ssr_carousel_dotsvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=style&index=0&id=f5cb500a&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=style&index=0&id=f5cb500a&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue
 
@@ -552,8 +543,8 @@ ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render._withStripped = t
 
 var ssr_carousel_dots_component = normalizeComponent(
   src_ssr_carousel_dotsvue_type_script_lang_coffee_,
-  ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_render,
-  ssr_carousel_dotsvue_type_template_id_6b089f93_lang_pug_staticRenderFns,
+  ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render,
+  ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_staticRenderFns,
   false,
   null,
   null,
@@ -561,9 +552,6 @@ var ssr_carousel_dots_component = normalizeComponent(
   
 )
 
-/* hot reload */
-if (false) { var ssr_carousel_dots_api; }
-ssr_carousel_dots_component.options.__file = "src/ssr-carousel-dots.vue"
 /* harmony default export */ var ssr_carousel_dots = (ssr_carousel_dots_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
 var interactiveSelector,
@@ -689,7 +677,7 @@ interactiveSelector = 'a, button, input, textarea, select';
         return vnode;
       });
     },
-    // Get the list of non-text slides, including peeking clones.  This doesn't
+    // Get the list of non-text slides, including peeking clones. This doesn't
     // work as a computed function
     getSlideComponents: function () {
       return [...(this.$slots.default || []), ...(this.$slots.clones || [])].filter(function (vnode) {
@@ -700,7 +688,14 @@ interactiveSelector = 'a, button, input, textarea, select';
     // get rendered. Based on:
     // https://github.com/vuejs/vue/issues/6052#issuecomment-313705168
     makeReactiveVnode: function (vnode) {
-      var newVnode, ref, ref1; // Make the new vnode and data
+      var newVnode;
+
+      if (!vnode.data) {
+        // Expect a data object.  When it doesn't exist, it's a sign this this
+        // vnode can't be manipulated vue-ssr-carousel.
+        console.error("vnode has no data", vnode);
+      } // Make the new vnode and data
+
 
       newVnode = { ...vnode
       };
@@ -708,10 +703,10 @@ interactiveSelector = 'a, button, input, textarea, select';
       }; // Clone style property. String styles will be on staticStyle so we can
       // ignore them.
 
-      newVnode.data.style = { ...((ref = vnode.data) != null ? ref.style : void 0)
+      newVnode.data.style = { ...vnode.data.style
       }; // Clone attrs property
 
-      newVnode.data.attrs = { ...((ref1 = vnode.data) != null ? ref1.attrs : void 0)
+      newVnode.data.attrs = { ...vnode.data.attrs
       }; // Return the clone
 
       return newVnode;
@@ -767,10 +762,10 @@ interactiveSelector = 'a, button, input, textarea, select';
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_trackvue_type_script_lang_coffee_ = (ssr_carousel_trackvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=d4be1c2a&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=d4be1c2a&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue
 var ssr_carousel_track_render, ssr_carousel_track_staticRenderFns
@@ -792,9 +787,6 @@ var ssr_carousel_track_component = normalizeComponent(
   
 )
 
-/* hot reload */
-if (false) { var ssr_carousel_track_api; }
-ssr_carousel_track_component.options.__file = "src/ssr-carousel-track.vue"
 /* harmony default export */ var ssr_carousel_track = (ssr_carousel_track_component.exports);
 // CONCATENATED MODULE: ./src/concerns/accessibility.coffee
 /*
@@ -2233,10 +2225,10 @@ Code related to tweening the position of the track
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=b32b4bc6&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=b32b4bc6&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 
@@ -2258,9 +2250,6 @@ var ssr_carousel_component = normalizeComponent(
   
 )
 
-/* hot reload */
-if (false) { var ssr_carousel_api; }
-ssr_carousel_component.options.__file = "src/ssr-carousel.vue"
 /* harmony default export */ var ssr_carousel = __webpack_exports__["default"] = (ssr_carousel_component.exports);
 
 /***/ })
