@@ -85,7 +85,7 @@ export default
 			# Return modified vnode
 			return vnode
 
-		# Get the list of non-text slides, including peeking clones.  This doesn't
+		# Get the list of non-text slides, including peeking clones. This doesn't
 		# work as a computed function
 		getSlideComponents: ->
 			[...(@$slots.default || []), ...(@$slots.clones || [])]
@@ -96,16 +96,20 @@ export default
 		# https://github.com/vuejs/vue/issues/6052#issuecomment-313705168
 		makeReactiveVnode: (vnode) ->
 
+			# Expect a data object.  When it doesn't exist, it's a sign this this
+			# vnode can't be manipulated vue-ssr-carousel.
+			console.error "vnode has no data", vnode unless vnode.data
+
 			# Make the new vnode and data
 			newVnode = { ...vnode }
 			newVnode.data = { ...vnode.data }
 
 			# Clone style property. String styles will be on staticStyle so we can
 			# ignore them.
-			newVnode.data.style = { ...vnode.data?.style }
+			newVnode.data.style = { ...vnode.data.style }
 
 			# Clone attrs property
-			newVnode.data.attrs = { ...vnode.data?.attrs }
+			newVnode.data.attrs = { ...vnode.data.attrs }
 
 			# Return the clone
 			return newVnode

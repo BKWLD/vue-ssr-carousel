@@ -86,12 +86,12 @@ h2
 	style-h2()
 
 // Syntax highlighting
->>> pre
+:deep(pre)
 	background darken(primary-background, 15%)
 	border 1px solid darken(primary-background, 30%)
 	basic-border-radius()
 	fluid-space margin-bottom, 's'
->>> code
+:deep(code)
 	font-size 14px
 	line-height 1.2
 
@@ -112,7 +112,7 @@ p
 		background darken(primary-background, 10%)
 
 // Add constant margins around demos
->>> .ssr-carousel
+:deep(.ssr-carousel)
 	fluid-space margin-v, 's'
 
 // Clear the effect of the page gutters
