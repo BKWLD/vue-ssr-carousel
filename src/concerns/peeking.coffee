@@ -65,6 +65,15 @@ export default
 			left: @autoUnit @getResponsiveValue 'peekLeft', breakpoint
 			right: @autoUnit @getResponsiveValue 'peekRight', breakpoint
 
+	watch:
+
+		# Recapture peeking values if the source props change
+		peekLeft: -> @capturePeekingMeasurements()
+		peekRight: -> @capturePeekingMeasurements()
+		peek: -> @capturePeekingMeasurements()
+		peekGutter: -> @capturePeekingMeasurements()
+		responsive: -> @capturePeekingMeasurements() # Easier to respond to all
+
 	methods:
 
 		# Capture measurements of peeking values

@@ -27,6 +27,14 @@ export default
 			...breakpoint
 			mediaQuery: @makeMediaQuery breakpoint
 			active: @isBreakpointActive breakpoint
+
+			# Unpack shorthands
+			peekLeft: breakpoint.peekLeft ||
+				breakpoint.peek ||
+				(breakpoint.gutter if breakpoint.peekGutter)
+			peekRight: breakpoint.peekRight ||
+				breakpoint.peek ||
+				(breakpoint.gutter if breakpoint.peekGutter)
 		}
 
 		# Get current responsive values
@@ -41,8 +49,8 @@ export default
 			else { # Defaults
 				@slidesPerPage
 				@gutter
-				@peekLeft
-				@peekRight
+				peekLeft: @peekLeft || @peek || (@gutter if @peekGutter)
+				peekRight: @peekRight || @peek || (@gutter if @peekGutter)
 				@feather
 			}
 
