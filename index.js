@@ -1823,6 +1823,24 @@ gutter space.
       };
     }
   },
+  watch: {
+    // Recapture peeking values if the source props change
+    peekLeft: function () {
+      return this.capturePeekingMeasurements();
+    },
+    peekRight: function () {
+      return this.capturePeekingMeasurements();
+    },
+    peek: function () {
+      return this.capturePeekingMeasurements();
+    },
+    peekGutter: function () {
+      return this.capturePeekingMeasurements();
+    },
+    responsive: function () {
+      return this.capturePeekingMeasurements(); // Easier to respond to all
+    }
+  },
   methods: {
     // Capture measurements of peeking values
     capturePeekingMeasurements: function () {
@@ -1889,7 +1907,10 @@ Code related to changing the slides per page at different viewport widths
       return this.responsive.map(breakpoint => {
         return { ...breakpoint,
           mediaQuery: this.makeMediaQuery(breakpoint),
-          active: this.isBreakpointActive(breakpoint)
+          active: this.isBreakpointActive(breakpoint),
+          // Unpack shorthands
+          peekLeft: breakpoint.peekLeft || breakpoint.peek || (breakpoint.peekGutter ? breakpoint.gutter : void 0),
+          peekRight: breakpoint.peekRight || breakpoint.peek || (breakpoint.peekGutter ? breakpoint.gutter : void 0)
         };
       });
     },
@@ -1913,8 +1934,8 @@ Code related to changing the slides per page at different viewport widths
         return {
           slidesPerPage: this.slidesPerPage,
           gutter: this.gutter,
-          peekLeft: this.peekLeft,
-          peekRight: this.peekRight,
+          peekLeft: this.peekLeft || this.peek || (this.peekGutter ? this.gutter : void 0),
+          peekRight: this.peekRight || this.peek || (this.peekGutter ? this.gutter : void 0),
           feather: this.feather
         };
       }
