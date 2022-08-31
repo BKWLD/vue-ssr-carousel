@@ -41,10 +41,12 @@ Note how there is only one more slide than the amount we're showing per page. Th
 
 ```vue
 <ssr-carousel loop :slides-per-page='3' :peek='40' show-arrows>
-  <slide :index='1' tint='red'></slide>
-  <slide :index='2' tint='orange'></slide>
-  <slide :index='3' tint='yellow'></slide>
-  <slide :index='4' tint='green'></slide>
+  <slide
+    v-for="color, index in ['red', 'orange', 'yellow', 'green']"
+    :key='color'
+    :index='index + 1'
+    :tint='color'>
+  </slide>
 </ssr-carousel>
 
 <ssr-carousel loop :slides-per-page='2' :peek='80' paginate-by-slide show-arrows>
