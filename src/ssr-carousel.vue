@@ -23,7 +23,7 @@
 		//- The overflow mask and drag target
 		.ssr-carousel-mask(
 			ref='mask'
-			:class='{ pressing, disabled }'
+			:class='{ pressing, disabled, "no-mask": overflowVisible }'
 			v-on='maskListeners')
 
 			//- The container of the slides that animates
@@ -167,7 +167,10 @@ export default
 
 // Mask around slides
 .ssr-carousel-mask
-	overflow hidden
+
+	// Support disabling the masking
+	&:not(.no-mask)
+		overflow hidden
 
 	// Support absolute positioning of arrows
 	position relative

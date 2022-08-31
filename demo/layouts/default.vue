@@ -22,3 +22,11 @@ export default
 	fluid-space padding-bottom, 'l'
 
 </style>
+
+<style lang='stylus'>
+
+// Prevent horizontal scrolling when using overflow-visible
+#__layout
+	overflow: hidden
+
+</style>

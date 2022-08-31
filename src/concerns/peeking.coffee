@@ -35,6 +35,9 @@ export default
 			type: Boolean
 			default: true
 
+		# Disable the overflow:hidden on the mask
+		overflowVisible: Boolean
+
 	data: ->
 
 		# Store clones of the slides used for peeking

@@ -55,6 +55,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 | `peek-right`        | `0`         | Set peek value on just the right edge.
 | `peek-gutter`       | `false`     | Set peek value equal to `gutter` value.
 | `feather`           | `false`     | Fades out the left and right edges using a CSS `mask-image` gradient.  Set to `true` to use the default `20px` value or as number or any CSS resolvable string to set an explicit width. This is designed to be used with `peek` properties. See https://vue-ssr-carousel.netlify.app/peeking.
+| `overflow-visible`  | `false`     | Disables the `overflow:hidden` that wraps the slide track.  You would do this if you want to handle that masking in an ancestor element.  See https://vue-ssr-carousel.netlify.app/peeking.
 | `show-arrows`       | `false`     | Whether to show back/forward arrows. See https://vue-ssr-carousel.netlify.app/ui.
 | `show-dots`         | `false`     | Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
 | `responsive`        | `[]`        | Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
