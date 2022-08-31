@@ -47,7 +47,7 @@
 		//- Back / Next navigation
 		ssr-carousel-arrows(
 			v-if='showArrows'
-			v-bind='{ index, pages, loop }'
+			v-bind='{ index, pages, shouldLoop }'
 			@back='back'
 			@next='next')
 			template(#back='props'): slot(name='back-arrow' v-bind='props')
