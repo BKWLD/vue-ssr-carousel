@@ -30,7 +30,7 @@ export default
 	props:
 		index: Number
 		pages: Number
-		loop: Boolean
+		shouldLoop: Boolean
 
 	computed:
 
