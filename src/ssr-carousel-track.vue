@@ -82,6 +82,10 @@ export default
 			if isPeekingClone or index not in @activeSlides
 			then vnode.data.attrs['aria-hidden'] = 'true'
 
+			# Prevent duplicate keys on clones
+			if isPeekingClone and vnode.key
+			then vnode.key += '-clone-' + index
+
 			# Return modified vnode
 			return vnode
 
