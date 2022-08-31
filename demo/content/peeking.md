@@ -10,11 +10,11 @@ This is an example of implementing peeking on the right side only, which is usef
 
 ```vue
 <ssr-carousel :slides-per-page='2' :peek-right='40'>
-	<slide :index='1'></slide>
-	<slide :index='2'></slide>
-	<slide :index='3'></slide>
-	<slide :index='4'></slide>
-	<slide :index='5'></slide>
+  <slide :index='1'></slide>
+  <slide :index='2'></slide>
+  <slide :index='3'></slide>
+  <slide :index='4'></slide>
+  <slide :index='5'></slide>
 </ssr-carousel>
 ```
 
@@ -50,21 +50,21 @@ Note how there is only one more slide than the amount we're showing per page. Th
 </ssr-carousel>
 
 <ssr-carousel loop :slides-per-page='2' :peek='80' paginate-by-slide show-arrows>
-	<visual
-		image='https://via.placeholder.com/1920x1080/91169C/FFFFFF?text=Slide+1'
-		lazyload
-		:aspect='16/9'>
-	</visual>
-	<visual
-		image='https://via.placeholder.com/1920x1080/681596/FFFFFF?text=Slide+2'
-		lazyload
-		:aspect='16/9'>
-	</visual>
-	<visual
-		image='https://via.placeholder.com/1920x1080/3E1880/FFFFFF?text=Slide+3'
-		lazyload
-		:aspect='16/9'>
-	</visual>
+  <visual
+    image='https://via.placeholder.com/1920x1080/91169C/FFFFFF?text=Slide+1'
+    lazyload
+    :aspect='16/9'>
+  </visual>
+  <visual
+    image='https://via.placeholder.com/1920x1080/681596/FFFFFF?text=Slide+2'
+    lazyload
+    :aspect='16/9'>
+  </visual>
+  <visual
+    image='https://via.placeholder.com/1920x1080/3E1880/FFFFFF?text=Slide+3'
+    lazyload
+    :aspect='16/9'>
+  </visual>
 </ssr-carousel>
 ```
 
@@ -164,4 +164,35 @@ This also works well without looping. Note how the peeking card switches to the 
   <slide :index='4'></slide>
   <slide :index='5'></slide>
 </ssr-carousel>
+```
+
+## Supply your own overflow:hidden
+
+Add the `overflow-visible` prop to supply your own `overflow: hidden`, for cases where you want to prevent the width of the carousel from expanding but do want the carousel to extend to the edges of the page.  It makes the most sense with a big `peek-right` that hints at other slides.
+
+<demos-peeking-overflow-visible></demos-peeking-overflow-visible>
+
+```vue
+<div style="overflow: hidden">
+  <ssr-carousel
+    :slides-per-page='2'
+    paginate-by-slide
+    gutter='20'
+    peek-left='var(--fluid-gutter)'
+    peek-right='20%'
+    overflow-visible
+    :responsive='[
+      {
+        maxWidth: 768,
+        slidesPerPage: 1,
+        gutter: 10,
+      }
+    ]'>
+    <slide :index='1'></slide>
+    <slide :index='2'></slide>
+    <slide :index='3'></slide>
+    <slide :index='4'></slide>
+    <slide :index='5'></slide>
+  </ssr-carousel>
+</div>
 ```
