@@ -99,7 +99,7 @@ module.exports = require("lodash/throttle");
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=b32b4bc6&lang=pug&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=32374ac2&lang=pug&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c
@@ -141,7 +141,11 @@ var render = function render() {
                   {
                     ref: "mask",
                     staticClass: "ssr-carousel-mask",
-                    class: { pressing: _vm.pressing, disabled: _vm.disabled },
+                    class: {
+                      pressing: _vm.pressing,
+                      disabled: _vm.disabled,
+                      "no-mask": _vm.overflowVisible,
+                    },
                   },
                   _vm.maskListeners
                 ),
@@ -215,7 +219,11 @@ var render = function render() {
                         ),
                       },
                       "ssr-carousel-arrows",
-                      { index: _vm.index, pages: _vm.pages, loop: _vm.loop },
+                      {
+                        index: _vm.index,
+                        pages: _vm.pages,
+                        shouldLoop: _vm.shouldLoop,
+                      },
                       false
                     )
                   )
@@ -265,10 +273,10 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=b32b4bc6&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=32374ac2&lang=pug&
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=e3537874&lang=pug&
-var ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render = function render() {
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
+var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function render() {
   var _vm = this,
     _c = _vm._self._c
   return _c("div", { staticClass: "ssr-carousel-arrows" }, [
@@ -318,18 +326,18 @@ var ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render = function 
     ),
   ])
 }
-var ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_staticRenderFns = []
-ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render._withStripped = true
+var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_staticRenderFns = []
+ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=template&id=e3537874&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
 /* harmony default export */ var ssr_carousel_arrowsvue_type_script_lang_coffee_ = ({
   props: {
     index: Number,
     pages: Number,
-    loop: Boolean
+    shouldLoop: Boolean
   },
   computed: {
     // Determine if button should be disabled because we're at the limits
@@ -347,10 +355,10 @@ ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render._withStripped =
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_arrowsvue_type_script_lang_coffee_ = (ssr_carousel_arrowsvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=e3537874&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=433a0819&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=e3537874&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=433a0819&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -461,8 +469,8 @@ function normalizeComponent(
 
 var component = normalizeComponent(
   src_ssr_carousel_arrowsvue_type_script_lang_coffee_,
-  ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_render,
-  ssr_carousel_arrowsvue_type_template_id_e3537874_lang_pug_staticRenderFns,
+  ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render,
+  ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_staticRenderFns,
   false,
   null,
   null,
@@ -1778,7 +1786,9 @@ gutter space.
     matchPeekWhenDisabled: {
       type: Boolean,
       default: true
-    }
+    },
+    // Disable the overflow:hidden on the mask
+    overflowVisible: Boolean
   },
   data: function () {
     return {
@@ -2251,10 +2261,10 @@ Code related to tweening the position of the track
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=b32b4bc6&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=32374ac2&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=b32b4bc6&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=32374ac2&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 

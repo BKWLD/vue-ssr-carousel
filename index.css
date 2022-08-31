@@ -155,8 +155,10 @@
   position: absolute;
 }
 .ssr-carousel-mask {
-  overflow: hidden;
   position: relative;
+}
+.ssr-carousel-mask:not(.no-mask) {
+  overflow: hidden;
 }
 .ssr-carousel-mask:not(.disabled) {
   cursor: -webkit-grab;
