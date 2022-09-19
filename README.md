@@ -1,4 +1,4 @@
-# vue-ssr-carousel
+# vue-ssr-carousel [![Cypress E2E Tests](https://github.com/BKWLD/vue-ssr-carousel/actions/workflows/cypress.yml/badge.svg)](https://github.com/BKWLD/vue-ssr-carousel/actions/workflows/cypress.yml)
 
 A performance focused Vue carousel designed for SSR/SSG environments.
 
