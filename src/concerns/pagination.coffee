@@ -87,13 +87,14 @@ export default
 		gotoDot: (dotIndex) -> @goto dotIndex - @boundedIndex + @index
 
 		# Go to a specific index
-		goto: (index) ->
+		goto: (index, instant) ->
+			
 			@index = @applyIndexBoundaries index
-			@tweenToIndex @index
+			@tweenToIndex(@index , instant) 
 
 		# Tween to a specific index
-		tweenToIndex: (index) ->
-
+		tweenToIndex: (index , instant) ->
+			
 			# Figure out the new x position
 			x = if @paginateBySlide
 			then index * @slideWidth * -1
@@ -104,7 +105,7 @@ export default
 			@targetX = @applyXBoundaries x
 
 			# Start tweening
-			@startTweening()
+			@startTweening(instant)
 
 		# Creates a px value to represent adjustments that should be made to
 		# account for incommplete pages of slides when looping is enabled. Like

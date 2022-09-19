@@ -15,6 +15,7 @@ export default
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 		tweening: false # If there is a current RAF based tween running
+		instant: false # If the current twin has instant animation
 
 	# Stop any animations that are in flight
 	beforeDestroy: -> window.cancelAnimationFrame @rafId
@@ -34,9 +35,10 @@ export default
 
 		# Start tweening to target location if necessary and if not already
 		# tweening
-		startTweening: ->
+		startTweening: (instant) ->
 			return if @tweening
 			return if @currentX == @targetX
+			@instant = instant
 			@tweening = true
 
 		# The watcher on this will kill active tweens
@@ -45,7 +47,8 @@ export default
 		# Tween the currentX to the targetX
 		tweenToTarget: ->
 			@currentX = @currentX + (@targetX - @currentX) * @tweenDampening
-			if Math.abs(@targetX - @currentX) < 1 # Stops tweening
+			if Math.abs(@targetX - @currentX) < 1 || @instant  # Stops tweening
 				@currentX = @targetX
 				@tweening = false
+				@instant = false
 			else @rafId = window.requestAnimationFrame @tweenToTarget
