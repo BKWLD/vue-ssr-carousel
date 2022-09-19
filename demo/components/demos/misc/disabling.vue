@@ -1,12 +1,14 @@
 <template>
 
 <ssr-carousel
+	data-cy='disabling'
   show-arrows
   show-dots
   :slides-per-page='3'
   :responsive='[
     {
       maxWidth: 767,
+      gutter: 10,
       slidesPerPage: 1
     }
   ]'>
