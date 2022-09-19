@@ -21,14 +21,14 @@ export default
 			# margin on the track so that we don't increase the specifity on the
 			# slide style, like would be the case if adding :not(:last-child) to the
 			# slide.
-			clearGutter = """
-				#{@scopeSelector} .ssr-carousel-track {
-					margin-right: calc(#{@autoUnit(gutter)} * -1);
-				}
-			""" if @isDisabledAtBreakpoint breakpoint
+			gutterClear = if @isDisabledAtBreakpoint breakpoint
+			then "calc(#{@autoUnit(gutter)} * -1)" else "0px"
 
 			# Render styles
 			"""
+			#{@scopeSelector} .ssr-carousel-track {
+				margin-right: #{gutterClear};
+			}
 			#{@scopeSelector} .ssr-carousel-slide {
 				margin-right: #{@autoUnit(gutter)};
 			}
