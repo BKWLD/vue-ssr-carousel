@@ -11,8 +11,6 @@ insert_final_newline = true
 
 [*.md]
 trim_trailing_whitespace = false
-
-[README.md]
 indent_style = space
 
 [*.yml]
