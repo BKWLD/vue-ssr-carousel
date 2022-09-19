@@ -18,12 +18,15 @@ export default
 
 			# If carousel would be disabled for not having enough slides, then remove
 			# gutter from last slide.
-			notLastSlide = if @isDisabledAtBreakpoint breakpoint
-			then ':not(:last-child)' else ''
+			lastChildGutter = if @isDisabledAtBreakpoint breakpoint
+			then 0 else gutter
 
 			# Render styles
 			"""
-			#{@scopeSelector} .ssr-carousel-slide#{notLastSlide} {
+			#{@scopeSelector} .ssr-carousel-slide {
 				margin-right: #{@autoUnit(gutter)};
+			}
+			#{@scopeSelector} .ssr-carousel-slide:is(:last-child) {
+				margin-right: #{@autoUnit(lastChildGutter)};
 			}
 			"""
