@@ -1,6 +1,6 @@
 <template>
 
-<div>
+<div data-cy='await-slides'>
 	<ssr-carousel show-dots :key='slides.length'>
 		<slide
 			v-for='slide in slides'
