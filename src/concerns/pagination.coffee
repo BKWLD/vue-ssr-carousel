@@ -8,8 +8,13 @@ export default
 		# If true, advance whole pages when navigating
 		paginateBySlide: Boolean
 
+		# Syncs to the `index` value via v-model
+		value:
+			type: Number
+			default: 0
+
 	data: ->
-		index: 0 # The current page; when looping may exceed slideCount
+		index: @value # The current page; when looping may exceed slideCount
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 
@@ -72,8 +77,18 @@ export default
 
 	watch:
 
+		# Treat v-model input as a "goto" request. Immediately fire an input
+		# event if the index was not changed, like when an edge is reached, to
+		# update the parent component.
+		value: ->
+			@goto @value
+			if @value != @boundedIndex
+			then @$emit 'input', @boundedIndex
+
 		# Emit events on index change
-		boundedIndex: -> @$emit 'change', index: @boundedIndex
+		boundedIndex: ->
+			@$emit 'change', index: @boundedIndex
+			@$emit 'input', @boundedIndex # For v-model
 
 	methods:
 
