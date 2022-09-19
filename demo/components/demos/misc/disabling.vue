@@ -9,7 +9,7 @@
     {
       maxWidth: 767,
       gutter: 10,
-      slidesPerPage: 2
+      slidesPerPage: 1
     }
   ]'>
   <slide :index='1'></slide>

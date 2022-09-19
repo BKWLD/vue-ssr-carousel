@@ -16,20 +16,14 @@ export default
 		makeBreakpointSlideGutterStyle: (breakpoint) ->
 			gutter = @getResponsiveValue 'gutter', breakpoint
 
-			# If carousel would be disabled for not having enough slides, then
-			# effectively remove the gutter from the last slide.  Using a negative
-			# margin on the track so that we don't increase the specifity on the
-			# slide style, like would be the case if adding :not(:last-child) to the
-			# slide.
-			gutterClear = if @isDisabledAtBreakpoint breakpoint
-			then "calc(#{@autoUnit(gutter)} * -1)" else "0px"
+			# If carousel would be disabled for not having enough slides, then remove
+			# gutter from last slide.
+			notLastSlide = if @isDisabledAtBreakpoint breakpoint
+			then ':not(:last-child)' else ''
 
 			# Render styles
 			"""
-			#{@scopeSelector} .ssr-carousel-track {
-				margin-right: #{gutterClear};
-			}
-			#{@scopeSelector} .ssr-carousel-slide {
+			#{@scopeSelector} .ssr-carousel-slide#{notLastSlide} {
 				margin-right: #{@autoUnit(gutter)};
 			}
 			"""
