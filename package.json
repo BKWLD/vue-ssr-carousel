@@ -33,7 +33,7 @@
 		"@cypress/code-coverage": "^3.10.0",
 		"@nuxt/content": "1.14.0",
 		"babel-plugin-istanbul": "^6.1.1",
-		"cypress": "^10.1.0",
+		"cypress": "10.8.0",
 		"mini-css-extract-plugin": "^1.0.0",
 		"nuxt": "^2.15.7",
 		"prism-themes": "^1.9.0",
