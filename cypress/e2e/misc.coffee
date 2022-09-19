@@ -16,3 +16,19 @@ context 'misc', ->
 				.get '.ssr-carousel-slide'
 				.first()
 				.should 'have.css', 'margin-right', '10px'
+
+	it 'supports dynamically adding slides', ->
+
+		cy.get '[data-cy=await-slides]'
+		.within ->
+
+			# Add 2 slides
+			cy.get('button').click().click()
+
+			# Verify there are two slides and then can be navigated to
+			cy.pages 2
+				.slideVisible 1
+				.slideHidden 2
+				.dragLeft()
+				.slideVisible 2
+				.slideHidden 1
