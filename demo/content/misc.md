@@ -16,6 +16,7 @@ Note how this carousel is enabled on mobile viewports but automatically disables
   :responsive='[
     {
       maxWidth: 767,
+      gutter: 10,
       slidesPerPage: 1
     }
   ]'>
