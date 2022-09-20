@@ -106,7 +106,7 @@ When you add slides, a `:key` on the root element will cause `vue-ssr-carousel` 
 ```vue
 <template>
 <div>
-  <ssr-carousel show-dots>
+  <ssr-carousel show-dots :key='slides.length'>
     <slide
       v-for='slide in slides'
       :key='slide'
