@@ -35,5 +35,6 @@ button
   border 1px solid currentColor
   padding .5em
   border-radius .5em
+  margin-bottom 1em
 
 </style>
