@@ -1452,14 +1452,17 @@ Code related to the gutters between slides
   methods: {
     // Apply gutters between slides via margins
     makeBreakpointSlideGutterStyle: function (breakpoint) {
-      var gutter, notLastSlide;
+      var gutter, lastChildGutter;
       gutter = this.getResponsiveValue('gutter', breakpoint); // If carousel would be disabled for not having enough slides, then remove
       // gutter from last slide.
 
-      notLastSlide = this.isDisabledAtBreakpoint(breakpoint) ? ':not(:last-child)' : ''; // Render styles
+      lastChildGutter = this.isDisabledAtBreakpoint(breakpoint) ? 0 : gutter; // Render styles
 
-      return `${this.scopeSelector} .ssr-carousel-slide${notLastSlide} {
+      return `${this.scopeSelector} .ssr-carousel-slide {
 	margin-right: ${this.autoUnit(gutter)};
+}
+${this.scopeSelector} .ssr-carousel-slide:is(:last-child) {
+	margin-right: ${this.autoUnit(lastChildGutter)};
 }`;
     }
   }
@@ -1595,11 +1598,16 @@ Code related to dealing with advancing between pages
 /* harmony default export */ var pagination_coffee = ({
   props: {
     // If true, advance whole pages when navigating
-    paginateBySlide: Boolean
+    paginateBySlide: Boolean,
+    // Syncs to the `index` value via v-model
+    value: {
+      type: Number,
+      default: 0
+    }
   },
   data: function () {
     return {
-      index: 0,
+      index: this.value,
       // The current page; when looping may exceed slideCount
       currentX: 0,
       // The actual left offset of the slides container
@@ -1682,11 +1690,22 @@ Code related to dealing with advancing between pages
     }
   },
   watch: {
+    // Treat v-model input as a "goto" request. Immediately fire an input
+    // event if the index was not changed, like when an edge is reached, to
+    // update the parent component.
+    value: function () {
+      this.goto(this.value);
+
+      if (this.value !== this.boundedIndex) {
+        return this.$emit('input', this.boundedIndex);
+      }
+    },
     // Emit events on index change
     boundedIndex: function () {
-      return this.$emit('change', {
+      this.$emit('change', {
         index: this.boundedIndex
       });
+      return this.$emit('input', this.boundedIndex); // For v-model
     }
   },
   methods: {
@@ -2138,7 +2157,9 @@ Code related to tweening the position of the track
       // The actual left offset of the slides container
       targetX: 0,
       // Where we may be tweening the slide to
-      tweening: false // If there is a current RAF based tween running
+      tweening: false,
+      // If there is a current RAF based tween running
+      firstTween: true // Has the first tween been triggered
 
     };
   },
@@ -2153,7 +2174,8 @@ Code related to tweening the position of the track
         this.$emit('tween:start', {
           index: this.index
         });
-        return this.tweenToTarget();
+        this.tweenToTarget();
+        return this.firstTween = false;
       } else {
         window.cancelAnimationFrame(this.rafId);
         return this.$emit('tween:end', {
@@ -2182,7 +2204,12 @@ Code related to tweening the position of the track
     },
     // Tween the currentX to the targetX
     tweenToTarget: function () {
-      this.currentX = this.currentX + (this.targetX - this.currentX) * this.tweenDampening;
+      var dampening; // If on the first tween and the first page was set to something other
+      // than 0 by v-model, then instantly jump to the final destination
+
+      dampening = this.firstTween && this.value !== 0 ? 1 : this.tweenDampening; // Apply tween math
+
+      this.currentX = this.currentX + (this.targetX - this.currentX) * dampening;
 
       if (Math.abs(this.targetX - this.currentX) < 1) {
         // Stops tweening
