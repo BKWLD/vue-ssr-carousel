@@ -25,7 +25,8 @@ context 'misc', ->
 		.within ->
 
 			# Add 2 slides
-			cy.get('button').click().click().percySnapshot '2 dynamic slides'
+			cy.get('button').click().click()
+			.percySnapshot '2 dynamic slides'
 
 			# Verify there are two slides that can be navigated to
 			cy.pages 2
