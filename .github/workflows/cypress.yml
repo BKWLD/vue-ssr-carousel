@@ -20,6 +20,7 @@ jobs:
           start: yarn start --cwd=demo
           command-prefix: percy exec -- yarn
           browser: chrome
+          headed: true
           record: true
         env:
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
