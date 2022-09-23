@@ -26,7 +26,7 @@ describe 'introduction', ->
 		# Wait for animation to finish and then capture
 		cy.get '.ssr-carousel'
 			.should 'not.have.class', 'tweening'
-			.percySnapshot 'Pagination: still on final slide'
+		cy.percySnapshot 'Pagination: still on final slide'
 
 	it "can't be dragged right", ->
 
