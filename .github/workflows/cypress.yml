@@ -1,5 +1,5 @@
 name: Cypress E2E Tests
-on: [push]
+on: push
 
 # Based on https://docs.cypress.io/guides/continuous-integration/github-actions
 jobs:
@@ -17,6 +17,7 @@ jobs:
           install-command: yarn --frozen-lockfile --silent
           build: yarn build:cypress
           start: yarn start --cwd=demo
+          command-prefix: percy exec
 
       - name: Report Coverage
         run: |

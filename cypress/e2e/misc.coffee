@@ -11,6 +11,7 @@ context 'misc', ->
 				.get '.ssr-carousel-slide'
 				.first()
 				.should 'have.css', 'margin-right', '20px'
+				.percySnapshot()
 
 			cy.viewport 767, 660
 				.get '.ssr-carousel-slide'
@@ -23,9 +24,9 @@ context 'misc', ->
 		.within ->
 
 			# Add 2 slides
-			cy.get('button').click().click()
+			cy.get('button').click().click().percySnapshot()
 
-			# Verify there are two slides and then can be navigated to
+			# Verify there are two slides that can be navigated to
 			cy.pages 2
 				.slideVisible 1
 				.slideHidden 2
