@@ -12,7 +12,7 @@ describe 'introduction', ->
 				.slideVisible 3
 				.slideVisible 4
 				.pages 3
-				.percySnapshot 'Responsive max width: 3 pages'
+				.percySnapshot 'Responsive 1281px', widths: [1281]
 
 			cy.viewport 1280, 660
 				.slideVisible 1
@@ -20,7 +20,7 @@ describe 'introduction', ->
 				.slideVisible 3
 				.slideHidden 4
 				.pages 4
-				.percySnapshot 'Responsive max width: 4 pages'
+				.percySnapshot 'Responsive 1280px', widths: [1280]
 
 			cy.viewport 1024, 660
 				.slideVisible 1
@@ -28,7 +28,7 @@ describe 'introduction', ->
 				.slideHidden 3
 				.slideHidden 4
 				.pages 5
-				.percySnapshot 'Responsive max width: 5 pages'
+				.percySnapshot 'Responsive 1024px', widths: [1024]
 
 			cy.viewport 767, 660
 				.slideVisible 1
@@ -36,7 +36,7 @@ describe 'introduction', ->
 				.slideHidden 3
 				.slideHidden 4
 				.pages 10
-				.percySnapshot 'Responsive max width: 10 pages'
+				.percySnapshot 'Responsive 767px', widths: [767]
 
 	it 'responds to min-width', ->
 		cy.get '[data-cy=min-width]'
@@ -47,18 +47,16 @@ describe 'introduction', ->
 				.slideVisible 2
 				.slideVisible 3
 				.pages 2
-				.percySnapshot 'Responsive min width: 2 pages'
 
 			cy.viewport 768, 660
 				.slideVisible 1
 				.slideVisible 2
 				.slideHidden 3
 				.pages 3
-				.percySnapshot 'Responsive min width: 3 pages'
+				.percySnapshot 'Responsive 768px', widths: [768]
 
 			cy.viewport 767, 660
 				.slideVisible 1
 				.slideHidden 2
 				.slideHidden 3
 				.pages 6
-				.percySnapshot 'Responsive min width: 6 pages'

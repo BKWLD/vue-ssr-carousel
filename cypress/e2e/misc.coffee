@@ -11,13 +11,13 @@ context 'misc', ->
 				.get '.ssr-carousel-slide'
 				.first()
 				.should 'have.css', 'margin-right', '20px'
-				.percySnapshot '20px gutters'
+				.percySnapshot '20px gutters', widths: [1024]
 
 			cy.viewport 767, 660
 				.get '.ssr-carousel-slide'
 				.first()
 				.should 'have.css', 'margin-right', '10px'
-				.percySnapshot '10px gutters'
+				.percySnapshot '10px gutters', widths: [767]
 
 	it 'supports dynamically adding slides', ->
 
