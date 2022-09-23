@@ -11,12 +11,13 @@ context 'misc', ->
 				.get '.ssr-carousel-slide'
 				.first()
 				.should 'have.css', 'margin-right', '20px'
-				.percySnapshot()
+				.percySnapshot '20px gutters'
 
 			cy.viewport 767, 660
 				.get '.ssr-carousel-slide'
 				.first()
 				.should 'have.css', 'margin-right', '10px'
+				.percySnapshot '10px gutters'
 
 	it 'supports dynamically adding slides', ->
 
@@ -24,7 +25,7 @@ context 'misc', ->
 		.within ->
 
 			# Add 2 slides
-			cy.get('button').click().click().percySnapshot()
+			cy.get('button').click().click().percySnapshot '2 dynamic slides'
 
 			# Verify there are two slides that can be navigated to
 			cy.pages 2
