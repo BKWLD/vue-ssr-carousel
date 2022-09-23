@@ -22,7 +22,7 @@ jobs:
           install-command: yarn --frozen-lockfile --silent
           build: yarn build:cypress
           start: yarn start --cwd=demo
-          command-prefix: percy exec
+          command-prefix: percy exec -- yarn
 
       - name: Report Coverage
         run: |
