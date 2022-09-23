@@ -3,7 +3,9 @@ describe 'introduction', ->
 	beforeEach -> cy.visit '/'
 
 	it 'can be dragged left until last slide reached', ->
-		cy.percySnapshot 'Pagination: initial slide'
+
+		# Capture a snapshot of the page while we're here
+		cy.percySnapshot 'Introduction demo'
 
 		# Drag left to advance
 		cy.dragLeft()
