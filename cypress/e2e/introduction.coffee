@@ -25,9 +25,9 @@ describe 'introduction', ->
 			.slideVisible 3
 
 		# Wait for animation to finish and then capture
-		cy.get '.ssr-carousel-track'
+		cy.get '.ssr-carousel-track', timeout: 10000
 			.should 'have.attr', 'style'
-			.should 'include', 'translateX(-2453px)', timeout: 10000
+			.should 'include', 'translateX(-2453px)'
 			.percySnapshot 'Pagination: still on final slide'
 
 	it "can't be dragged right", ->
