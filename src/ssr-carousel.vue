@@ -6,7 +6,6 @@
 	v-if='$slots.default && $slots.default.length'
 	:key='$slots.default.length'
 	:data-ssrc-id='scopeId'
-	:class='classes'
 	@keyup.tab='onTab')
 
 	//- Render generated styles
@@ -147,10 +146,6 @@ export default
 					mouseleave: @onLeave
 				})
 			}
-
-		# Dynamic classes on root element, currently only used to add E2E related
-		# testing
-		classes: -> { @tweening }
 
 </script>
 

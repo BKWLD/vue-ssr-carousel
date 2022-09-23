@@ -23,11 +23,6 @@ describe 'introduction', ->
 			.slideHidden 2
 			.slideVisible 3
 
-		# Wait for animation to finish and then capture
-		cy.get '.ssr-carousel'
-			.should 'not.have.class', 'tweening'
-		cy.percySnapshot 'Pagination: still on final slide'
-
 	it "can't be dragged right", ->
 
 		# Drag right attempt is rejected
@@ -35,7 +30,6 @@ describe 'introduction', ->
 			.slideVisible 1
 			.slideHidden 2
 			.slideHidden 3
-			.percySnapshot 'Pagination: drag right denied'
 
 	it 'can be dragged left and then right', ->
 
