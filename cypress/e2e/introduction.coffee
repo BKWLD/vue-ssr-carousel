@@ -24,7 +24,7 @@ describe 'introduction', ->
 			.slideVisible 3
 
 		# Capture screenshot of final slide after animation has finished
-		cy.wait(3000).percySnapshot 'Pagination: still on final slide'
+		cy.wait(10000).percySnapshot 'Pagination: still on final slide'
 
 	it "can't be dragged right", ->
 
