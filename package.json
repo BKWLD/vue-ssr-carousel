@@ -32,6 +32,8 @@
 		"@cloak-app/boilerplate": "^1.0.8",
 		"@cypress/code-coverage": "^3.10.0",
 		"@nuxt/content": "1.14.0",
+		"@percy/cli": "^1.10.4",
+		"@percy/cypress": "^3.1.2",
 		"babel-plugin-istanbul": "^6.1.1",
 		"cypress": "10.8.0",
 		"mini-css-extract-plugin": "^1.0.0",

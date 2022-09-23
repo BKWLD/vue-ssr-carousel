@@ -116,7 +116,7 @@ export default
 
 			# Apply adjustments to x value and persist
 			x += @makeIncompletePageOffset index
-			@targetX = @applyXBoundaries x
+			@targetX = Math.round @applyXBoundaries x
 
 			# Start tweening
 			@startTweening()

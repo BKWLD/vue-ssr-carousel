@@ -4,6 +4,9 @@ describe 'introduction', ->
 
 	it 'can be dragged left until last slide reached', ->
 
+		# Capture a snapshot of the page while we're here
+		cy.percySnapshot 'Introduction demo'
+
 		# Drag left to advance
 		cy.dragLeft()
 			.slideHidden 1
