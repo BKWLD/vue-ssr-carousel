@@ -1,5 +1,10 @@
 name: Cypress E2E Tests
-on: push
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 # Based on https://docs.cypress.io/guides/continuous-integration/github-actions
 jobs:
