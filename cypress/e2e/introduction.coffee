@@ -3,7 +3,8 @@ describe 'introduction', ->
 	beforeEach -> cy.visit '/'
 
 	it 'can be dragged left until last slide reached', ->
-		cy.percySnapshot 'Pagination: initial slide'
+		cy.viewport 1280, 660
+			.percySnapshot 'Pagination: initial slide'
 
 		# Drag left to advance
 		cy.dragLeft()
@@ -23,8 +24,11 @@ describe 'introduction', ->
 			.slideHidden 2
 			.slideVisible 3
 
-		# Capture screenshot of final slide after animation has finished
-		cy.wait(10000).percySnapshot 'Pagination: still on final slide'
+		# Wait for animation to finish and then capture
+		cy.get '.ssr-carousel-track'
+			.should 'have.attr', 'style'
+			.should 'include', 'translateX(-2453px)'
+			.percySnapshot 'Pagination: still on final slide'
 
 	it "can't be dragged right", ->
 
