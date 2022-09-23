@@ -6,6 +6,7 @@
 	v-if='$slots.default && $slots.default.length'
 	:key='$slots.default.length'
 	:data-ssrc-id='scopeId'
+	:class='{ tweening }'
 	@keyup.tab='onTab')
 
 	//- Render generated styles
