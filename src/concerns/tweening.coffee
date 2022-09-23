@@ -34,6 +34,9 @@ export default
 
 	methods:
 
+		# Convenience method to tween to a targetX
+		tweenToX: (@targetX)-> @startTweening()
+
 		# Start tweening to target location if necessary and if not already
 		# tweening
 		startTweening: ->
@@ -57,3 +60,6 @@ export default
 				@currentX = @targetX
 				@tweening = false
 			else @rafId = window.requestAnimationFrame @tweenToTarget
+
+		# Tween to stop based on inertia
+		tweenToStop: -> console.log 'tweenToStop'

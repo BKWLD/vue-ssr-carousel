@@ -64,12 +64,12 @@ You can use `max-width` rules:
 </ssr-carousel>
 ```
 
-## Variable width slides (Experimental)
+## Variable width slides (beta)
 
 While it's not the primary use case of this package, you if you set `slidesPerPage` to `null`, the carousel will not touch the width of individual slides.  Some notes:
 
-- If there are not enough slides to fill the viewport, slides will be left aligned rather than center aligned
-- The peeking props don't really make sense in this context and will be ignored.
+- If there are not enough slides to fill the viewport, slides will be left aligned rather than center aligned.
+- This hasn't been tested with responsive props or looping. Peeking doesn't make sense for this use case but care hasn't been taken to disabling it.
 
 <demos-responsive-variable-width></demos-responsive-variable-width>
 

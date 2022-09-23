@@ -88,6 +88,7 @@ import pagination from './concerns/pagination'
 import peeking from './concerns/peeking'
 import responsive from './concerns/responsive'
 import tweening from './concerns/tweening'
+import variableWidth from './concerns/variable-width'
 
 # Component definition
 export default
@@ -107,6 +108,7 @@ export default
 		responsive
 		peeking # After `responsive` so prop can access `gutter` prop
 		tweening
+		variableWidth
 	]
 
 	components: {

@@ -106,6 +106,18 @@ export default
 			@index = @applyIndexBoundaries index
 			@tweenToIndex @index
 
+		# Go to the beginning of track
+		gotoStart: ->
+			if @isVariableWidth
+			then @tweenToX 0
+			else @goto 0
+
+		# Go to the end of the track
+		gotoEnd: ->
+			if @isVariableWidth
+			then @tweenToX @endX
+			else @goto @pages - 1
+
 		# Tween to a specific index
 		tweenToIndex: (index) ->
 
