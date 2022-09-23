@@ -6,6 +6,9 @@ on:
       - main
   pull_request:
 
+env:
+  PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
 # Based on https://docs.cypress.io/guides/continuous-integration/github-actions
 jobs:
  test:
