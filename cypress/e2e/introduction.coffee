@@ -3,28 +3,28 @@ describe 'introduction', ->
 	beforeEach -> cy.visit '/'
 
 	it 'can be dragged left until last slide reached', ->
-		cy.percySnapshot 'Slide 1'
+		cy.percySnapshot 'Pagination: initial slide'
 
 		# Drag left to advance
 		cy.dragLeft()
 			.slideHidden 1
 			.slideVisible 2
 			.slideHidden 3
-			.percySnapshot 'Slide 2'
 
 		# Drag left again to advance to final slide
 		cy.dragLeft()
 			.slideHidden 1
 			.slideHidden 2
 			.slideVisible 3
-			.percySnapshot 'Slide 3'
 
 		# Now on final slide, drag again but get rejected
 		cy.dragLeft()
 			.slideHidden 1
 			.slideHidden 2
 			.slideVisible 3
-			.percySnapshot 'Still on Slide 3'
+
+		# Capture screenshot of final slide after animation has finished
+		cy.wait(3000).percySnapshot 'Pagination: still on final slide'
 
 	it "can't be dragged right", ->
 
@@ -33,7 +33,7 @@ describe 'introduction', ->
 			.slideVisible 1
 			.slideHidden 2
 			.slideHidden 3
-			.percySnapshot 'Slide right denied'
+			.percySnapshot 'Pagination: drag right denied'
 
 	it 'can be dragged left and then right', ->
 
