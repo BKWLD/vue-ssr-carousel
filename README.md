@@ -1,4 +1,4 @@
-# vue-ssr-carousel [![Cypress E2E Tests](https://github.com/BKWLD/vue-ssr-carousel/actions/workflows/cypress.yml/badge.svg)](https://github.com/BKWLD/vue-ssr-carousel/actions/workflows/cypress.yml)
+# vue-ssr-carousel [![Cypress E2E Tests](https://github.com/BKWLD/vue-ssr-carousel/actions/workflows/cypress.yml/badge.svg)](https://github.com/BKWLD/vue-ssr-carousel/actions/workflows/cypress.yml) [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/7531dcbc/vue-ssr-carousel)
 
 A performance focused Vue carousel designed for SSR/SSG environments.
 
