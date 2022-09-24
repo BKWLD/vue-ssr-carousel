@@ -34,7 +34,10 @@ export default
 			else Math.ceil @slidesCount / @currentSlidesPerPage
 
 		# Disable carousel-ness when there aren't enough slides
-		disabled: -> @slidesCount <= @currentSlidesPerPage
+		disabled: ->
+			if @isVariableWidth
+			then @trackWidth <= @carouselWidth
+			else @slidesCount <= @currentSlidesPerPage
 
 		# Get just the slotted slides that are components, ignoring text nodes
 		# which may exist as a result of whitespace
