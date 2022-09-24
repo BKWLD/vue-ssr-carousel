@@ -11,6 +11,11 @@ export default
 			type: Number
 			default: 0.12
 
+		# A multiplier that is applied to the dragVelocity when using tweenToStop
+		tweenInertia:
+			type: Number
+			default: 3
+
 	data: ->
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
@@ -62,4 +67,6 @@ export default
 			else @rafId = window.requestAnimationFrame @tweenToTarget
 
 		# Tween to stop based on inertia
-		tweenToStop: -> console.log 'tweenToStop'
+		tweenToStop: ->
+			@targetX = @applyXBoundaries @currentX + @dragVelocity * @tweenInertia
+			@startTweening()
