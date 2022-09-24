@@ -70,24 +70,25 @@ While it's not the primary use case of this package, you if you set `slidesPerPa
 
 - If there are not enough slides to fill the viewport, slides will be left aligned rather than center aligned.
 - This hasn't been tested with responsive props or looping. Peeking doesn't make sense for this use case but care hasn't been taken to disabling it.
+- Pagination controls aren't supported yet, this is purely drag only.
 
 <demos-responsive-variable-width></demos-responsive-variable-width>
 
 ```vue
 <ssr-carousel :slides-per-page='null'>
-  <slide :index='1' :style='{ width: "60vw", height: "400px"}'></slide>
-  <slide :index='2' :style='{ width: "40vw", height: "400px"}'></slide>
-  <slide :index='3' :style='{ width: "20vw", height: "400px"}'></slide>
+  <slide :index='1' :style='{ width: "65%", height: "30vw"}'></slide>
+  <slide :index='2' :style='{ width: "50%", height: "30vw"}'></slide>
+  <slide :index='3' :style='{ width: "30%", height: "30vw"}'></slide>
 </ssr-carousel>
 ```
 
-Here's an example where there aren't enough slides to fill the viewport:
+Here's an example where there aren't enough slides to exceed the carouel width:
 
 <demos-responsive-variable-width-disabled></demos-responsive-variable-width-disabled>
 
 ```vue
 <ssr-carousel :slides-per-page='null'>
-  <slide :index='1' :style='{ width: "30vw", height: "300px"}'></slide>
-  <slide :index='2' :style='{ width: "50vw", height: "300px"}'></slide>
+  <slide :index='1' :style='{ width: "40%", height: "20vw"}'></slide>
+  <slide :index='2' :style='{ width: "calc(60% - 20px)", height: "20vw"}'></slide>
 </ssr-carousel>
 ```
