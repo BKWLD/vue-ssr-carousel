@@ -97,7 +97,7 @@ See https://vue-ssr-carousel.netlify.app/events
 
 ## Why another carousel component
 
-#### Issues with using [flickity](https://flickity.metafizzy.co/)
+#### Issues with [flickity](https://flickity.metafizzy.co/)
 
 - Not a Vue component, so extra work building a Vue wrapper for it.
 - No SSR support, delaying LCP scoring.
