@@ -1,6 +1,6 @@
 # vue-ssr-carousel [![vue-ssr-carousel](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/b4x3of/main&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/b4x3of/runs) [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/7531dcbc/vue-ssr-carousel)
 
-A performance focused Vue carousel designed for SSR/SSG environments.
+A performance focused Vue carousel designed for SSR/SSG environments. No JS is used to layout the carousel or it's slides. The goal is to improve LCP and CLS scores because there is no layout or markup changes when JS hydates. It's primarily designed for rendering "card" style slides (like for linking to articles or products") where the carousel-ness is conditionally applied based on the number of cards that are slotted in as well as the viewport width.
 
 Check out the demo: https://vue-ssr-carousel.netlify.app.
 
@@ -94,3 +94,20 @@ See https://vue-ssr-carousel.netlify.app/events
 | `drag:end`               | Fired on end of dragging
 | `tween:start({ index })` | Fired when the carousel starts tweening to it's final position
 | `tween:end({ index })`   | Fired when the carousel has finished tweening to it's destination.
+
+## Why another carousel component
+
+#### Issues with using [flickity](https://flickity.metafizzy.co/)
+
+- Not a Vue component, so extra work building a Vue wrapper for it.
+- No SSR support, delaying LCP scoring.
+- When JS hydrates, the slides get nested in a new parent, which affects LCP calculations.
+
+#### Issues with [vue-slick-carousel](https://github.com/gs-shop/vue-slick-carousel)
+
+- Slick applies responsive rules only after JS inits. This also results in getting a `Mismatching childNodes vs. VNodes` error when the page hydrates at a viewport width that changes the `slidesToShow`.
+- It's extra work to make the carousel look the same before and after Slick inits, since you have to style them two different ways.
+- Difficulty determining if there's overflow after Slick inits because when Slick is initialized and `infinite: true`, Slick adds a full set of `.slick-cloned` slides before the "real" slides, and another full set after them
+- Doesn't handle being empty well.
+- When using custom arrows or dots, it would show a warning that the Nodes does not match.
+- Doesn't do a good job of preventing images and links within slides from preventing dragging.
