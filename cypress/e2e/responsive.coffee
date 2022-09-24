@@ -1,4 +1,4 @@
-describe 'introduction', ->
+context 'responsive', ->
 
 	beforeEach -> cy.visit '/responsive'
 
@@ -60,3 +60,19 @@ describe 'introduction', ->
 				.slideHidden 2
 				.slideHidden 3
 				.pages 6
+
+	context 'variable width', ->
+
+		it 'can be dragged', ->
+			cy.get('[data-cy=variable-width]').within ->
+				cy.dragLeft().slideVisible 3
+
+		it "can't be dragged past last slide", ->
+			cy.get('[data-cy=variable-width]').within ->
+				cy.dragLeft().dragLeft()
+				cy.root().trackAtEnd()
+
+		it 'can be disabled', ->
+			cy.get('[data-cy=variable-width-disabled]').within ->
+				cy.get '.ssr-carousel-mask'
+					.should 'have.class', 'disabled'

@@ -36,7 +36,7 @@ export default
 		# Disable carousel-ness when there aren't enough slides
 		disabled: ->
 			if @isVariableWidth
-			then @trackWidth <= @carouselWidth
+			then Math.round(@trackWidth) <= Math.round(@carouselWidth)
 			else @slidesCount <= @currentSlidesPerPage
 
 		# Get just the slotted slides that are components, ignoring text nodes

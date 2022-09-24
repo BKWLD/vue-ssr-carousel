@@ -40,7 +40,9 @@ export default
 	methods:
 
 		# Convenience method to tween to a targetX
-		tweenToX: (@targetX)-> @startTweening()
+		tweenToX: (x)->
+			@targetX = Math.round x
+			@startTweening()
 
 		# Start tweening to target location if necessary and if not already
 		# tweening
