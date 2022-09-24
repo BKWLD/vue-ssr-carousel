@@ -45,7 +45,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 
 | **Props**           | **Default** | **Description**
 |---------------------|-------------|----------------
-| `slides-per-page`   | `1`         | How many slides are shown per page.
+| `slides-per-page`   | `1`         | How many slides are shown per page. Can be set to `null` to allow for flexible widths for slides. See https://vue-ssr-carousel.netlify.app/responsive and note the caveats mentiond within.
 | `gutter`            | `20`        | The size of the space between slides. This can a number or any CSS resolvable string. See https://vue-ssr-carousel.netlify.app/gutters.
 | `paginate-by-slide` | `false`     | When `false`, dragging the carousel or interacting with the arrows will advance a full page of slides at a time.  When `true`, the carousel will come to a rest at each slide.
 | `loop`              | `false`     | Boolean to enable looping / infinite scroll. See https://vue-ssr-carousel.netlify.app/looping.
@@ -58,6 +58,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 | `overflow-visible`  | `false`     | Disables the `overflow:hidden` that wraps the slide track.  You would do this if you want to handle that masking in an ancestor element.  See https://vue-ssr-carousel.netlify.app/peeking.
 | `show-arrows`       | `false`     | Whether to show back/forward arrows. See https://vue-ssr-carousel.netlify.app/ui.
 | `show-dots`         | `false`     | Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
+| `value`             | `undefined` | Used as part of `v-model` to set the initial slide to show.  See https://vue-ssr-carousel.netlify.app/events.
 | `responsive`        | `[]`        | Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
 
 ### Slots
@@ -87,10 +88,11 @@ See https://vue-ssr-carousel.netlify.app/events
 
 | Events                   | Description
 |--------------------------|--------------------------------------------------------------------
-| `change({ index })`      | Fired when the internal index counter changes
-| `press`                  | Fired on mouse or touch down
-| `release`                | Fired on mouse or touch up
-| `drag:start`             | Fired on start of dragging
-| `drag:end`               | Fired on end of dragging
-| `tween:start({ index })` | Fired when the carousel starts tweening to it's final position
+| `change({ index })`      | Fired when the internal index counter changes.
+| `input`                  | Same as `change` but intended for use with `v-model`.
+| `press`                  | Fired on mouse or touch down.
+| `release`                | Fired on mouse or touch up.
+| `drag:start`             | Fired on start of dragging.
+| `drag:end`               | Fired on end of dragging.
+| `tween:start({ index })` | Fired when the carousel starts tweening to it's final position.
 | `tween:end({ index })`   | Fired when the carousel has finished tweening to it's destination.
