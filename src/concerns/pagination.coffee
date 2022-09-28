@@ -56,6 +56,10 @@ export default
 		# viewport. Aka, the count will be equal the currentSlidesPerPage per page.
 		activeSlides: ->
 
+			# If variable width, we're not currently measuring the width of the slides
+			# in JS so we can't know which are active, so treat all of them as active.
+			return [0...@slidesCount] if @isVariableWidth
+
 			# Get the offset of the leftmost slide in the current viewport
 			start = if @paginateBySlide then @boundedIndex
 			else @boundedIndex * @currentSlidesPerPage
