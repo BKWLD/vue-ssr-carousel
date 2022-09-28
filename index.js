@@ -1677,7 +1677,20 @@ Code related to dealing with advancing between pages
     // Get an array of slide offsets of the slides that are 100% in the
     // viewport. Aka, the count will be equal the currentSlidesPerPage per page.
     activeSlides: function () {
-      var ref, start; // Get the offset of the leftmost slide in the current viewport
+      var ref, ref1, start;
+
+      if (this.isVariableWidth) {
+        return function () {
+          var results = [];
+
+          for (var i = 0, ref = this.slidesCount; 0 <= ref ? i < ref : i > ref; 0 <= ref ? i++ : i--) {
+            results.push(i);
+          }
+
+          return results;
+        }.apply(this);
+      } // Get the offset of the leftmost slide in the current viewport
+
 
       start = this.paginateBySlide ? this.boundedIndex : this.boundedIndex * this.currentSlidesPerPage; // Adjust the start if not looping and on the last page of slides and there
       // aren't enough slides to make a full page
@@ -1689,7 +1702,7 @@ Code related to dealing with advancing between pages
       return function () {
         var results = [];
 
-        for (var i = start, ref = start + this.currentSlidesPerPage; start <= ref ? i < ref : i > ref; start <= ref ? i++ : i--) {
+        for (var i = start, ref1 = start + this.currentSlidesPerPage; start <= ref1 ? i < ref1 : i > ref1; start <= ref1 ? i++ : i--) {
           results.push(i);
         }
 
