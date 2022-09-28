@@ -34,7 +34,10 @@ export default
 			else Math.ceil @slidesCount / @currentSlidesPerPage
 
 		# Disable carousel-ness when there aren't enough slides
-		disabled: -> @slidesCount <= @currentSlidesPerPage
+		disabled: ->
+			if @isVariableWidth
+			then Math.round(@trackWidth) <= Math.round(@carouselWidth)
+			else @slidesCount <= @currentSlidesPerPage
 
 		# Get just the slotted slides that are components, ignoring text nodes
 		# which may exist as a result of whitespace
@@ -105,6 +108,18 @@ export default
 		goto: (index) ->
 			@index = @applyIndexBoundaries index
 			@tweenToIndex @index
+
+		# Go to the beginning of track
+		gotoStart: ->
+			if @isVariableWidth
+			then @tweenToX 0
+			else @goto 0
+
+		# Go to the end of the track
+		gotoEnd: ->
+			if @isVariableWidth
+			then @tweenToX @endX
+			else @goto @pages - 1
 
 		# Tween to a specific index
 		tweenToIndex: (index) ->

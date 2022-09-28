@@ -96,7 +96,7 @@ h2
 	line-height 1.2
 
 // Style body text, like notes
-p
+p, ul
 	line-height 1.5
 	color lighten(primary-background, 50%)
 

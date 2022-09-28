@@ -30,7 +30,10 @@ export default
 		slideWidth: -> @pageWidth / @currentSlidesPerPage
 
 		# Calculate the width of the whole track from the slideWidth.
-		trackWidth: -> @slideWidth * @slidesCount
+		trackWidth: ->
+			if @isVariableWidth
+			then @measuredTrackWidth + @gutterWidth
+			else @slideWidth * @slidesCount
 
 		# Figure out the width of the last page, which may not have enough slides
 		# to fill it.
@@ -71,10 +74,12 @@ export default
 			@carouselWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
 			@capturePeekingMeasurements()
+			@captureTrackWidth() if @isVariableWidth
 
 		# Make the width style that gives a slide it's width given
 		# slidesPerPage. Reduce this width by the gutter if present
 		makeBreakpointSlideWidthStyle: (breakpoint) ->
+			return if @isVariableWidth
 			"""
 			#{@scopeSelector} .ssr-carousel-slide {
 				width: #{@makeSlideWidthCalc(breakpoint)};

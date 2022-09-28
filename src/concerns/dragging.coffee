@@ -132,8 +132,11 @@ export default
 
 				# Tween so the track is in bounds if it was out
 				if @isOutOfBounds and not @shouldLoop
-					if @currentX >= 0 then @goto 0
-					else @goto @pages - 1
+					if @currentX >= 0 then @gotoStart()
+					else @gotoEnd()
+
+				# If rendering variable width slides, don't come to a rest at an index
+				else if @isVariableWidth then @tweenToStop()
 
 				# If user was vertically dragging, reset the index
 				else if @isVerticalDrag then @goto @index
