@@ -1,9 +1,11 @@
 <template>
 
 <ssr-carousel
-	data-cy='disabling'
+  data-cy='disabling'
   show-arrows
   show-dots
+  loop
+  :peek='20'
   :slides-per-page='3'
   :responsive='[
     {

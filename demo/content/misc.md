@@ -12,6 +12,8 @@ Note how this carousel is enabled on mobile viewports but automatically disables
 <ssr-carousel
   show-arrows
   show-dots
+  loop
+  :peek='20'
   :slides-per-page='3'
   :responsive='[
     {

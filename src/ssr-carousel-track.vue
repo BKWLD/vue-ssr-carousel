@@ -171,4 +171,9 @@ export default
 .ssr-carousel-slide
 	flex-shrink 0
 
+// When the carousel is disabled (not enough slides to fill width), hide any
+// clones that have created for other breakpoints (those with aria-hidden=true).
+.ssr-carousel-mask.disabled .ssr-carousel-slide[aria-hidden='true']
+	display none
+
 </style>
