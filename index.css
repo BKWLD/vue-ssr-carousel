@@ -144,6 +144,9 @@
 .ssr-carousel-slide {
   flex-shrink: 0;
 }
+.ssr-carousel-mask.disabled .ssr-carousel-slide[aria-hidden='true'] {
+  display: none;
+}
 
 .ssr-carousel {
   touch-action: pan-y;
