@@ -99,7 +99,7 @@ module.exports = require("lodash/throttle");
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=32374ac2&lang=pug&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=7e684191&lang=pug&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c
@@ -273,7 +273,7 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=32374ac2&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=7e684191&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
 var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function render() {
@@ -961,7 +961,11 @@ Code related to measuring the size of the carousel after mounting
     },
     // Calculate the width of the whole track from the slideWidth.
     trackWidth: function () {
-      return this.slideWidth * this.slidesCount;
+      if (this.isVariableWidth) {
+        return this.measuredTrackWidth + this.gutterWidth;
+      } else {
+        return this.slideWidth * this.slidesCount;
+      }
     },
     // Figure out the width of the last page, which may not have enough slides
     // to fill it.
@@ -1015,11 +1019,19 @@ Code related to measuring the size of the carousel after mounting
       this.gutterWidth = parseInt(getComputedStyle(firstSlide).marginRight);
       this.carouselWidth = this.$el.getBoundingClientRect().width + this.gutterWidth;
       this.viewportWidth = window.innerWidth;
-      return this.capturePeekingMeasurements();
+      this.capturePeekingMeasurements();
+
+      if (this.isVariableWidth) {
+        return this.captureTrackWidth();
+      }
     },
     // Make the width style that gives a slide it's width given
     // slidesPerPage. Reduce this width by the gutter if present
     makeBreakpointSlideWidthStyle: function (breakpoint) {
+      if (this.isVariableWidth) {
+        return;
+      }
+
       return `${this.scopeSelector} .ssr-carousel-slide {
 	width: ${this.makeSlideWidthCalc(breakpoint)};
 }`;
@@ -1206,11 +1218,13 @@ notPassive = {
         // The pointer is up, so tween to final position
         if (this.isOutOfBounds && !this.shouldLoop) {
           if (this.currentX >= 0) {
-            this.goto(0);
+            this.gotoStart();
           } else {
-            this.goto(this.pages - 1);
-          } // If user was vertically dragging, reset the index
+            this.gotoEnd();
+          } // If rendering variable width slides, don't come to a rest at an index
 
+        } else if (this.isVariableWidth) {
+          this.tweenToStop(); // If user was vertically dragging, reset the index
         } else if (this.isVerticalDrag) {
           this.goto(this.index);
         } else {
@@ -1635,7 +1649,11 @@ Code related to dealing with advancing between pages
     },
     // Disable carousel-ness when there aren't enough slides
     disabled: function () {
-      return this.slidesCount <= this.currentSlidesPerPage;
+      if (this.isVariableWidth) {
+        return Math.round(this.trackWidth) <= Math.round(this.carouselWidth);
+      } else {
+        return this.slidesCount <= this.currentSlidesPerPage;
+      }
     },
     // Get just the slotted slides that are components, ignoring text nodes
     // which may exist as a result of whitespace
@@ -1727,6 +1745,22 @@ Code related to dealing with advancing between pages
       this.index = this.applyIndexBoundaries(index);
       return this.tweenToIndex(this.index);
     },
+    // Go to the beginning of track
+    gotoStart: function () {
+      if (this.isVariableWidth) {
+        return this.tweenToX(0);
+      } else {
+        return this.goto(0);
+      }
+    },
+    // Go to the end of the track
+    gotoEnd: function () {
+      if (this.isVariableWidth) {
+        return this.tweenToX(this.endX);
+      } else {
+        return this.goto(this.pages - 1);
+      }
+    },
     // Tween to a specific index
     tweenToIndex: function (index) {
       var x; // Figure out the new x position
@@ -1734,7 +1768,7 @@ Code related to dealing with advancing between pages
       x = this.paginateBySlide ? index * this.slideWidth * -1 : index * this.pageWidth * -1; // Apply adjustments to x value and persist
 
       x += this.makeIncompletePageOffset(index);
-      this.targetX = this.applyXBoundaries(x); // Start tweening
+      this.targetX = Math.round(this.applyXBoundaries(x)); // Start tweening
 
       return this.startTweening();
     },
@@ -2149,6 +2183,11 @@ Code related to tweening the position of the track
     tweenDampening: {
       type: Number,
       default: 0.12
+    },
+    // A multiplier that is applied to the dragVelocity when using tweenToStop
+    tweenInertia: {
+      type: Number,
+      default: 3
     }
   },
   data: function () {
@@ -2185,6 +2224,11 @@ Code related to tweening the position of the track
     }
   },
   methods: {
+    // Convenience method to tween to a targetX
+    tweenToX: function (x) {
+      this.targetX = Math.round(x);
+      return this.startTweening();
+    },
     // Start tweening to target location if necessary and if not already
     // tweening
     startTweening: function () {
@@ -2218,6 +2262,38 @@ Code related to tweening the position of the track
       } else {
         return this.rafId = window.requestAnimationFrame(this.tweenToTarget);
       }
+    },
+    // Tween to stop based on inertia
+    tweenToStop: function () {
+      this.targetX = this.applyXBoundaries(this.currentX + this.dragVelocity * this.tweenInertia);
+      return this.startTweening();
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/concerns/variable-width.coffee
+/*
+Functionality related to supporting variable width slides
+*/
+/* harmony default export */ var variable_width_coffee = ({
+  data: function () {
+    return {
+      measuredTrackWidth: 0
+    };
+  },
+  computed: {
+    // Is the carousel in variable width mode
+    isVariableWidth: function () {
+      return this.slidesPerPage === null;
+    }
+  },
+  methods: {
+    // Measure the width of the track
+    captureTrackWidth: function () {
+      if (!this.$refs.track) {
+        return;
+      }
+
+      return this.measuredTrackWidth = this.$refs.track.$el.scrollWidth;
     }
   }
 });
@@ -2238,12 +2314,13 @@ Code related to tweening the position of the track
 
 
 
+
 /* harmony default export */ var ssr_carouselvue_type_script_lang_coffee_ = ({
   // Component definition
   name: 'SsrCarousel',
   // Load concerns
   mixins: [accessibility_coffee, autoplay_coffee, dimensions_coffee, dragging_coffee, feathering_coffee, focus_coffee, gutters_coffee, looping_coffee, pagination_coffee, responsive_coffee, peeking_coffee, // After `responsive` so prop can access `gutter` prop
-  tweening_coffee],
+  tweening_coffee, variable_width_coffee],
   components: {
     SsrCarouselArrows: ssr_carousel_arrows,
     SsrCarouselDots: ssr_carousel_dots,
@@ -2288,10 +2365,10 @@ Code related to tweening the position of the track
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=32374ac2&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=7e684191&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=32374ac2&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=7e684191&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 
