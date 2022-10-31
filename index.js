@@ -99,7 +99,7 @@ module.exports = require("lodash/throttle");
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=7e684191&lang=pug&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c
@@ -145,6 +145,7 @@ var render = function render() {
                       pressing: _vm.pressing,
                       disabled: _vm.disabled,
                       "no-mask": _vm.overflowVisible,
+                      "not-draggable": _vm.noDrag,
                     },
                   },
                   _vm.maskListeners
@@ -273,7 +274,7 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=7e684191&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
 var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function render() {
@@ -1091,7 +1092,9 @@ notPassive = {
     verticalDragTreshold: {
       type: Number,
       default: 1
-    }
+    },
+    // Turn off draggability
+    noDrag: Boolean
   },
   data: function () {
     return {
@@ -2365,9 +2368,10 @@ Functionality related to supporting variable width slides
         return {};
       }
 
-      return {
-        mousedown: this.onPointerDown,
-        touchstart: this.onPointerDown,
+      return { ...(this.noDrag ? {} : {
+          mousedown: this.onPointerDown,
+          touchstart: this.onPointerDown
+        }),
         ...(!this.watchesHover ? {} : {
           mouseenter: this.onEnter,
           mouseleave: this.onLeave
@@ -2378,10 +2382,10 @@ Functionality related to supporting variable width slides
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=7e684191&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=7e684191&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 

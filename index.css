@@ -163,11 +163,11 @@
 .ssr-carousel-mask:not(.no-mask) {
   overflow: hidden;
 }
-.ssr-carousel-mask:not(.disabled) {
+.ssr-carousel-mask:not(.disabled):not(.not-draggable) {
   cursor: -webkit-grab;
   cursor: grab;
 }
-.ssr-carousel-mask:not(.disabled).pressing {
+.ssr-carousel-mask:not(.disabled):not(.not-draggable).pressing {
   cursor: -webkit-grabbing;
   cursor: grabbing;
 }
