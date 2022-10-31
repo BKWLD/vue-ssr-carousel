@@ -25,6 +25,9 @@ export default
 			type: Number
 			default: 1
 
+		# Turn off draggability
+		noDrag: Boolean
+
 	data: ->
 		pressing: false # The user pressing pointer down
 		dragging: false # The user has translated while pointer was down

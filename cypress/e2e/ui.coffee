@@ -24,3 +24,17 @@ context 'ui', ->
 			cy.get('.ssr-carousel-dot-button[aria-label="Page 2"]').click()
 				.slideHidden 1
 				.slideVisible 2
+
+	it 'can disable dragging', ->
+		cy.get('[data-cy=no-drag]').within ->
+
+			# Try to drag but have it not take effect
+			cy.dragLeft()
+				.slideVisible 1
+				.slideHidden 2
+				.slideHidden 3
+
+			# But clicking next does still advance
+			cy.get('.ssr-carousel-next-button').click()
+				.slideHidden 1
+				.slideVisible 2

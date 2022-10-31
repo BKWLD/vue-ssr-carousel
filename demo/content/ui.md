@@ -68,3 +68,17 @@ title: 'UI Options'
   <slide :index='6'></slide>
 </ssr-carousel>
 ```
+
+## Disable dragging
+
+Also, you can use the `no-drag` prop to disable dragging.
+
+<demos-ui-no-drag></demos-ui-no-drag>
+
+```vue
+<ssr-carousel no-drag show-arrows>
+  <slide :index='1'></slide>
+  <slide :index='2'></slide>
+  <slide :index='3'></slide>
+</ssr-carousel>
+```
