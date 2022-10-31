@@ -23,8 +23,13 @@
 		//- The overflow mask and drag target
 		.ssr-carousel-mask(
 			ref='mask'
-			:class='{ pressing, disabled, "no-mask": overflowVisible }'
-			v-on='maskListeners')
+			v-on='maskListeners'
+			:class=`{
+				pressing,
+				disabled,
+				"no-mask": overflowVisible,
+				"not-draggable": noDrag,
+			}`)
 
 			//- The container of the slides that animates
 			ssr-carousel-track(
@@ -141,8 +146,10 @@ export default
 		maskListeners: ->
 			return {} if @disabled
 			{
-				mousedown: @onPointerDown
-				touchstart: @onPointerDown
+				...(if @noDrag then {} else {
+					mousedown: @onPointerDown
+					touchstart: @onPointerDown
+				})
 				...(unless @watchesHover then {} else {
 					mouseenter: @onEnter
 					mouseleave: @onLeave
@@ -178,7 +185,7 @@ export default
 	position relative
 
 	// When pressing, show drag cursor
-	&:not(.disabled)
+	&:not(.disabled):not(.not-draggable)
 		cursor grab
 		&.pressing
 			cursor grabbing
