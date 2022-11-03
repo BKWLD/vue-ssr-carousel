@@ -61,6 +61,8 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 | `show-dots`         | `false`     | Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
 | `value`             | `undefined` | Used as part of `v-model` to set the initial slide to show.  See https://vue-ssr-carousel.netlify.app/events.
 | `responsive`        | `[]`        | Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
+| `autoplay`        | `undefined`        | Add a delay in seconds for auto playing the slides.
+| `loop`        | `false`        | Allow the carousel to infinitely loop through slides.
 
 ### Slots
 
