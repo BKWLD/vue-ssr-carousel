@@ -48,6 +48,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 | `slides-per-page`   | `1`         | How many slides are shown per page. Can be set to `null` to allow for flexible widths for slides. See https://vue-ssr-carousel.netlify.app/responsive and note the caveats mentiond within.
 | `gutter`            | `20`        | The size of the space between slides. This can a number or any CSS resolvable string. See https://vue-ssr-carousel.netlify.app/gutters.
 | `paginate-by-slide` | `false`     | When `false`, dragging the carousel or interacting with the arrows will advance a full page of slides at a time.  When `true`, the carousel will come to a rest at each slide.
+| `autoplay`        | `undefined`        | Add a delay in seconds for auto playing the slides. See https://vue-ssr-carousel.netlify.app/misc#autoplay.
 | `loop`              | `false`     | Boolean to enable looping / infinite scroll. See https://vue-ssr-carousel.netlify.app/looping.
 | `center`            | `false`     | Render the first slide in the middle of the carousel.  Should only be used with odd numbers of `slides-per-page`.  This results in the slides being rendered visually in a different order than the DOM [which is an accessibility concern](https://developer.mozilla.org/en-US/docs/Web/CSS/order#accessibility_concerns). See https://vue-ssr-carousel.netlify.app/looping.
 | `peek`              | `0`         | A width value for how far adjacent cards should peek into the carousel canvas. This can a number or any CSS resolvable string. See https://vue-ssr-carousel.netlify.app/peeking.
@@ -61,8 +62,6 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 | `show-dots`         | `false`     | Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
 | `value`             | `undefined` | Used as part of `v-model` to set the initial slide to show.  See https://vue-ssr-carousel.netlify.app/events.
 | `responsive`        | `[]`        | Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
-| `autoplay`        | `undefined`        | Add a delay in seconds for auto playing the slides.
-| `loop`        | `false`        | Allow the carousel to infinitely loop through slides.
 
 ### Slots
 
