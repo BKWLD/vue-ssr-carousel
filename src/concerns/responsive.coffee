@@ -69,7 +69,7 @@ export default
 	watch:
 
 		# Fix alignment of slides while resizing
-		pageWidth: -> @tweenToIndex @index
+		pageWidth: -> @jumpToIndex @index
 
 		# If resizing the browser leads to disabling, reset the slide to the first
 		# page.  Like if a user had switched to the 2nd page on mobile and then
