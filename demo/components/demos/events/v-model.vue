@@ -2,7 +2,7 @@
 
 <div data-cy='v-model'>
 
-  <ssr-carousel v-model='page'>
+  <ssr-carousel v-model='page' :loop='loop'>
     <slide :index='1'></slide>
     <slide :index='2'></slide>
     <slide :index='3'></slide>
@@ -18,6 +18,9 @@
 
 <script>
 export default {
+  props: {
+    loop: Boolean
+  },
   data() {
     return {
       page: 1,
