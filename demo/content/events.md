@@ -24,6 +24,30 @@ You can set the initial index with `:value`. Or use `v-model` to track the curre
 
   </div>
 </template>
+```
+
+This also works with looping:
+
+<demos-events-v-model loop></demos-events-v-model>
+
+```vue
+<template>
+  <div>
+
+    <ssr-carousel v-model='page' loop>
+      <slide :index='1'></slide>
+      <slide :index='2'></slide>
+      <slide :index='3'></slide>
+    </ssr-carousel>
+
+    <span class="now">Current Page: {{ page + 1 }}</span>
+    <button @click='page--'>Back</button>
+    <button @click='page++'>Next</button>
+
+  </div>
+</template>
+
+
 
 <script>
 export default {

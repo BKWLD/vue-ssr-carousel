@@ -84,13 +84,17 @@ export default
 
 	watch:
 
-		# Treat v-model input as a "goto" request. Immediately fire an input
-		# event if the index was not changed, like when an edge is reached, to
-		# update the parent component.
+		# Treat v-model input as a "goto" request
 		value: ->
-			@goto @value
-			if @value != @boundedIndex
+
+			# If the value exceeds the bounds, immediately emit a new input event
+			# with the corrected value
+			if @value != @applyIndexBoundaries @value
 			then @$emit 'input', @boundedIndex
+
+			# Else if the incoming value is different than the current value
+			# then tween to it
+			else if @value != @boundedIndex then @goto @value
 
 		# Emit events on index change
 		boundedIndex: ->
