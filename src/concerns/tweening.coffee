@@ -20,7 +20,6 @@ export default
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 		tweening: false # If there is a current RAF based tween running
-		firstTween: true # Has the first tween been triggered
 
 	# Stop any animations that are in flight
 	beforeDestroy: -> window.cancelAnimationFrame @rafId
@@ -32,7 +31,6 @@ export default
 			if @tweening
 				@$emit 'tween:start', { @index }
 				@tweenToTarget()
-				@firstTween = false
 			else
 				window.cancelAnimationFrame @rafId
 				@$emit 'tween:end', { @index }
@@ -57,12 +55,8 @@ export default
 		# Tween the currentX to the targetX
 		tweenToTarget: ->
 
-			# If on the first tween and the first page was set to something other
-			# than 0 by v-model, then instantly jump to the final destination
-			dampening = if @firstTween and @value != 0 then 1 else @tweenDampening
-
 			# Apply tween math
-			@currentX = @currentX + (@targetX - @currentX) * dampening
+			@currentX = @currentX + (@targetX - @currentX) * @tweenDampening
 			if Math.abs(@targetX - @currentX) < 1 # Stops tweening
 				@currentX = @targetX
 				@tweening = false
