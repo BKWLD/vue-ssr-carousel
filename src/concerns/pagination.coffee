@@ -127,6 +127,15 @@ export default
 
 		# Tween to a specific index
 		tweenToIndex: (index) ->
+			@targetX = @getXForIndex index
+			@startTweening()
+
+		# Jump to an index with no tween
+		jumpToIndex: (index) ->
+			@currentX = @targetX = @getXForIndex index
+
+		# Calculate the X value given an index
+		getXForIndex: (index) ->
 
 			# Figure out the new x position
 			x = if @paginateBySlide
@@ -135,10 +144,7 @@ export default
 
 			# Apply adjustments to x value and persist
 			x += @makeIncompletePageOffset index
-			@targetX = Math.round @applyXBoundaries x
-
-			# Start tweening
-			@startTweening()
+			return Math.round @applyXBoundaries x
 
 		# Creates a px value to represent adjustments that should be made to
 		# account for incommplete pages of slides when looping is enabled. Like

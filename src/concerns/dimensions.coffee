@@ -1,7 +1,6 @@
 ###
 Code related to measuring the size of the carousel after mounting
 ###
-import throttle from 'lodash/throttle'
 export default
 
 	data: ->
@@ -12,11 +11,10 @@ export default
 	# Add resize listening
 	mounted: ->
 		@onResize()
-		@onResizeThrottled = throttle @onResize, 200
-		window.addEventListener 'resize', @onResizeThrottled
+		window.addEventListener 'resize', @onResize
 
 	# Cleanup listeners
-	beforeDestroy: -> window.removeEventListener 'resize', @onResizeThrottled
+	beforeDestroy: -> window.removeEventListener 'resize', @onResize
 
 	computed:
 
