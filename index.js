@@ -82,17 +82,11 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
-
-module.exports = require("lodash/throttle");
-
-/***/ }),
-/* 1 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -918,15 +912,10 @@ Code related to auotplay features of the carousel
     }
   }
 });
-// EXTERNAL MODULE: external "lodash/throttle"
-var throttle_ = __webpack_require__(0);
-var throttle_default = /*#__PURE__*/__webpack_require__.n(throttle_);
-
 // CONCATENATED MODULE: ./src/concerns/dimensions.coffee
 /*
 Code related to measuring the size of the carousel after mounting
 */
-
 /* harmony default export */ var dimensions_coffee = ({
   data: function () {
     return {
@@ -941,12 +930,11 @@ Code related to measuring the size of the carousel after mounting
   // Add resize listening
   mounted: function () {
     this.onResize();
-    this.onResizeThrottled = throttle_default()(this.onResize, 200);
-    return window.addEventListener('resize', this.onResizeThrottled);
+    return window.addEventListener('resize', this.onResize);
   },
   // Cleanup listeners
   beforeDestroy: function () {
-    return window.removeEventListener('resize', this.onResizeThrottled);
+    return window.removeEventListener('resize', this.onResize);
   },
   computed: {
     // The width of a page of slides, which may be less than the carouselWidth
@@ -1724,14 +1712,15 @@ Code related to dealing with advancing between pages
     }
   },
   watch: {
-    // Treat v-model input as a "goto" request. Immediately fire an input
-    // event if the index was not changed, like when an edge is reached, to
-    // update the parent component.
+    // Treat v-model input as a "goto" request
     value: function () {
-      this.goto(this.value);
-
-      if (this.value !== this.boundedIndex) {
-        return this.$emit('input', this.boundedIndex);
+      // If the value exceeds the bounds, immediately emit a new input event
+      // with the corrected value
+      if (this.value !== this.applyIndexBoundaries(this.value)) {
+        return this.$emit('input', this.boundedIndex); // Else if the incoming value is different than the current value
+        // then tween to it
+      } else if (this.value !== this.boundedIndex) {
+        return this.goto(this.value);
       }
     },
     // Emit events on index change
@@ -1779,14 +1768,21 @@ Code related to dealing with advancing between pages
     },
     // Tween to a specific index
     tweenToIndex: function (index) {
+      this.targetX = this.getXForIndex(index);
+      return this.startTweening();
+    },
+    // Jump to an index with no tween
+    jumpToIndex: function (index) {
+      return this.currentX = this.targetX = this.getXForIndex(index);
+    },
+    // Calculate the X value given an index
+    getXForIndex: function (index) {
       var x; // Figure out the new x position
 
       x = this.paginateBySlide ? index * this.slideWidth * -1 : index * this.pageWidth * -1; // Apply adjustments to x value and persist
 
       x += this.makeIncompletePageOffset(index);
-      this.targetX = Math.round(this.applyXBoundaries(x)); // Start tweening
-
-      return this.startTweening();
+      return Math.round(this.applyXBoundaries(x));
     },
     // Creates a px value to represent adjustments that should be made to
     // account for incommplete pages of slides when looping is enabled. Like
@@ -2038,7 +2034,7 @@ Code related to changing the slides per page at different viewport widths
   watch: {
     // Fix alignment of slides while resizing
     pageWidth: function () {
-      return this.tweenToIndex(this.index);
+      return this.jumpToIndex(this.index);
     },
     // If resizing the browser leads to disabling, reset the slide to the first
     // page.  Like if a user had switched to the 2nd page on mobile and then
@@ -2212,9 +2208,7 @@ Code related to tweening the position of the track
       // The actual left offset of the slides container
       targetX: 0,
       // Where we may be tweening the slide to
-      tweening: false,
-      // If there is a current RAF based tween running
-      firstTween: true // Has the first tween been triggered
+      tweening: false // If there is a current RAF based tween running
 
     };
   },
@@ -2229,8 +2223,7 @@ Code related to tweening the position of the track
         this.$emit('tween:start', {
           index: this.index
         });
-        this.tweenToTarget();
-        return this.firstTween = false;
+        return this.tweenToTarget();
       } else {
         window.cancelAnimationFrame(this.rafId);
         return this.$emit('tween:end', {
@@ -2264,12 +2257,8 @@ Code related to tweening the position of the track
     },
     // Tween the currentX to the targetX
     tweenToTarget: function () {
-      var dampening; // If on the first tween and the first page was set to something other
-      // than 0 by v-model, then instantly jump to the final destination
-
-      dampening = this.firstTween && this.value !== 0 ? 1 : this.tweenDampening; // Apply tween math
-
-      this.currentX = this.currentX + (this.targetX - this.currentX) * dampening;
+      // Apply tween math
+      this.currentX = this.currentX + (this.targetX - this.currentX) * this.tweenDampening;
 
       if (Math.abs(this.targetX - this.currentX) < 1) {
         // Stops tweening
