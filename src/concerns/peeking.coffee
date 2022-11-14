@@ -12,20 +12,20 @@ export default
 		# Set both peeking values at once
 		peek:
 			type: Number | String
-			default: ->
+			default: (props) ->
 
 				# Prevent subpixel rounding issues from causing a sliver of offscreen
 				# slide from peaking in.
-				unless @peekGutter then 0
-				else "calc(#{@gutter} - 1px)"
+				unless props.peekGutter then 0
+				else "calc(#{props.gutter} - 1px)"
 
 		# Distinct left/right peeking values
 		peekLeft:
 			type: Number | String
-			default: -> @peek
+			default: (props) -> props.peek
 		peekRight:
 			type: Number | String
-			default: -> @peek
+			default: -> (props) -> props.peek
 
 		# When true, the peekLeft is used for the peekRight if the carousel is
 		# disabled.  This behavior is expecting that there may be a different
