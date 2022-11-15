@@ -41,7 +41,7 @@ export default
 
 		# Get just the slotted slides that are components, ignoring text nodes
 		# which may exist as a result of whitespace
-		slides: -> (@$slots.default || []).filter (vnode) -> !vnode.text
+		slides: -> ((@$slots.default && @slots.default()) || []).filter (vnode) -> !vnode.text
 
 		# Get the total number of slides
 		slidesCount: -> @slides.length
@@ -90,7 +90,7 @@ export default
 			# If the value exceeds the bounds, immediately emit a new input event
 			# with the corrected value
 			if @modelValue != @applyIndexBoundaries @modelValue
-			then @$emit 'update:modelValue', @boundedIndex
+			then @$emit 'update:modelValues', @boundedIndex
 
 			# Else if the incoming value is different than the current value
 			# then tween to it

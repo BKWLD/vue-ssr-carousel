@@ -92,7 +92,7 @@ export default
 		# Get the list of non-text slides, including peeking clones. This doesn't
 		# work as a computed function
 		getSlideComponents: ->
-			[...(@$slots.default || []), ...(@$slots.clones || [])]
+			[...((@$slots.default && @slots.default()) || []), ...((@$slots.clones && @slots.clones()) || [])]
 			.filter (vnode) -> !vnode.text
 
 		# Makes a clone of the vnode properties we'll be updating so the changes

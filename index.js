@@ -688,7 +688,7 @@ interactiveSelector = 'a, button, input, textarea, select';
     // Get the list of non-text slides, including peeking clones. This doesn't
     // work as a computed function
     getSlideComponents: function () {
-      return [...(this.$slots.default || []), ...(this.$slots.clones || [])].filter(function (vnode) {
+      return [...(this.$slots.default && this.slots.default() || []), ...(this.$slots.clones && this.slots.clones() || [])].filter(function (vnode) {
         return !vnode.text;
       });
     },
@@ -770,10 +770,10 @@ interactiveSelector = 'a, button, input, textarea, select';
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_trackvue_type_script_lang_coffee_ = (ssr_carousel_trackvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=01145ade&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=05b35619&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=01145ade&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=05b35619&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue
 var ssr_carousel_track_render, ssr_carousel_track_staticRenderFns
@@ -1649,7 +1649,7 @@ Code related to dealing with advancing between pages
     // Get just the slotted slides that are components, ignoring text nodes
     // which may exist as a result of whitespace
     slides: function () {
-      return (this.$slots.default || []).filter(function (vnode) {
+      return (this.$slots.default && this.slots.default() || []).filter(function (vnode) {
         return !vnode.text;
       });
     },
@@ -1717,7 +1717,7 @@ Code related to dealing with advancing between pages
       // If the value exceeds the bounds, immediately emit a new input event
       // with the corrected value
       if (this.modelValue !== this.applyIndexBoundaries(this.modelValue)) {
-        return this.$emit('update:modelValue', this.boundedIndex); // Else if the incoming value is different than the current value
+        return this.$emit('update:modelValues', this.boundedIndex); // Else if the incoming value is different than the current value
         // then tween to it
       } else if (this.modelValue !== this.boundedIndex) {
         return this.goto(this.modelValue);
