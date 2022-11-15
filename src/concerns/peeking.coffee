@@ -11,7 +11,7 @@ export default
 
 		# Set both peeking values at once
 		peek:
-			type: Number | String
+			type: [Number, String]
 			default: (props) ->
 
 				# Prevent subpixel rounding issues from causing a sliver of offscreen
@@ -21,11 +21,11 @@ export default
 
 		# Distinct left/right peeking values
 		peekLeft:
-			type: Number | String
+			type: [Number, String]
 			default: (props) -> props.peek
 		peekRight:
-			type: Number | String
-			default: -> (props) -> props.peek
+			type: [Number, String]
+			default: (props) -> props.peek
 
 		# When true, the peekLeft is used for the peekRight if the carousel is
 		# disabled.  This behavior is expecting that there may be a different

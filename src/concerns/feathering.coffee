@@ -7,7 +7,7 @@ export default
 
 		# Shorthand for enabling boolean and setting it's width
 		feather:
-			type: Boolean | String | Number
+			type: [Boolean, String, Number]
 			default: false
 
 	methods:

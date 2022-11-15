@@ -1360,7 +1360,7 @@ Code related to implementing feathering effect.
   props: {
     // Shorthand for enabling boolean and setting it's width
     feather: {
-      type: Boolean | String | Number,
+      type: [Boolean, String, Number],
       default: false
     }
   },
@@ -1820,7 +1820,7 @@ gutter space.
     peekGutter: Boolean,
     // Set both peeking values at once
     peek: {
-      type: Number | String,
+      type: [Number, String],
       default: function (props) {
         // Prevent subpixel rounding issues from causing a sliver of offscreen
         // slide from peaking in.
@@ -1833,17 +1833,15 @@ gutter space.
     },
     // Distinct left/right peeking values
     peekLeft: {
-      type: Number | String,
+      type: [Number, String],
       default: function (props) {
         return props.peek;
       }
     },
     peekRight: {
-      type: Number | String,
-      default: function () {
-        return function (props) {
-          return props.peek;
-        };
+      type: [Number, String],
+      default: function (props) {
+        return props.peek;
       }
     },
     // When true, the peekLeft is used for the peekRight if the carousel is
