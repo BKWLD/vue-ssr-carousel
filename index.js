@@ -1450,7 +1450,7 @@ Code related to the gutters between slides
   props: {
     // The gutters between slides
     gutter: {
-      type: Number | String,
+      type: [Number, String],
       default: 20
     }
   },
@@ -1605,14 +1605,14 @@ Code related to dealing with advancing between pages
     // If true, advance whole pages when navigating
     paginateBySlide: Boolean,
     // Syncs to the `index` value via v-model
-    value: {
+    modelValue: {
       type: Number,
       default: 0
     }
   },
   data: function () {
     return {
-      index: this.value,
+      index: this.modelValue,
       // The current page; when looping may exceed slideCount
       currentX: 0,
       // The actual left offset of the slides container
@@ -1716,11 +1716,11 @@ Code related to dealing with advancing between pages
     value: function () {
       // If the value exceeds the bounds, immediately emit a new input event
       // with the corrected value
-      if (this.value !== this.applyIndexBoundaries(this.value)) {
-        return this.$emit('input', this.boundedIndex); // Else if the incoming value is different than the current value
+      if (this.modelValue !== this.applyIndexBoundaries(this.modelValue)) {
+        return this.$emit('update:modelValue', this.boundedIndex); // Else if the incoming value is different than the current value
         // then tween to it
-      } else if (this.value !== this.boundedIndex) {
-        return this.goto(this.value);
+      } else if (this.modelValue !== this.boundedIndex) {
+        return this.goto(this.modelValue);
       }
     },
     // Emit events on index change
@@ -1728,7 +1728,7 @@ Code related to dealing with advancing between pages
       this.$emit('change', {
         index: this.boundedIndex
       });
-      return this.$emit('input', this.boundedIndex); // For v-model
+      return this.$emit('update:modelValue', this.boundedIndex); // For v-model
     }
   },
   methods: {

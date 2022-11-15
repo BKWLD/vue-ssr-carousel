@@ -9,12 +9,12 @@ export default
 		paginateBySlide: Boolean
 
 		# Syncs to the `index` value via v-model
-		value:
+		modelValue:
 			type: Number
 			default: 0
 
 	data: ->
-		index: @value # The current page; when looping may exceed slideCount
+		index: @modelValue # The current page; when looping may exceed slideCount
 		currentX: 0 # The actual left offset of the slides container
 		targetX: 0 # Where we may be tweening the slide to
 
@@ -89,17 +89,17 @@ export default
 
 			# If the value exceeds the bounds, immediately emit a new input event
 			# with the corrected value
-			if @value != @applyIndexBoundaries @value
-			then @$emit 'input', @boundedIndex
+			if @modelValue != @applyIndexBoundaries @modelValue
+			then @$emit 'update:modelValue', @boundedIndex
 
 			# Else if the incoming value is different than the current value
 			# then tween to it
-			else if @value != @boundedIndex then @goto @value
+			else if @modelValue != @boundedIndex then @goto @modelValue
 
 		# Emit events on index change
 		boundedIndex: ->
 			@$emit 'change', index: @boundedIndex
-			@$emit 'input', @boundedIndex # For v-model
+			@$emit 'update:modelValue', @boundedIndex # For v-model
 
 	methods:
 

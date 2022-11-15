@@ -7,7 +7,7 @@ export default
 
 		# The gutters between slides
 		gutter:
-			type: Number | String
+			type: [Number, String]
 			default: 20
 
 	methods:
