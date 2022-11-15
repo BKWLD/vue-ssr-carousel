@@ -1,6 +1,6 @@
 {
 	"name": "@darksupah/vue-ssr-carousel",
-	"version": "1.9.0",
+	"version": "1.9.1",
 	"description": "A performance focused Vue carousel designed for SSR/SSG environments.",
 	"main": "index.js",
 	"scripts": {
