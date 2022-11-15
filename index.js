@@ -1821,27 +1821,29 @@ gutter space.
     // Set both peeking values at once
     peek: {
       type: Number | String,
-      default: function () {
+      default: function (props) {
         // Prevent subpixel rounding issues from causing a sliver of offscreen
         // slide from peaking in.
-        if (!this.peekGutter) {
+        if (!props.peekGutter) {
           return 0;
         } else {
-          return `calc(${this.gutter} - 1px)`;
+          return `calc(${props.gutter} - 1px)`;
         }
       }
     },
     // Distinct left/right peeking values
     peekLeft: {
       type: Number | String,
-      default: function () {
-        return this.peek;
+      default: function (props) {
+        return props.peek;
       }
     },
     peekRight: {
       type: Number | String,
       default: function () {
-        return this.peek;
+        return function (props) {
+          return props.peek;
+        };
       }
     },
     // When true, the peekLeft is used for the peekRight if the carousel is
