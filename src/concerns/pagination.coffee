@@ -41,7 +41,7 @@ export default
 
 		# Get just the slotted slides that are components, ignoring text nodes
 		# which may exist as a result of whitespace
-		slides: -> ((@$slots.default && @slots.default()) || []).filter (vnode) -> !vnode.text
+		slides: -> ((@$slots.default && @$slots.default()) || []).filter (vnode) -> !vnode.text
 
 		# Get the total number of slides
 		slidesCount: -> @slides.length
