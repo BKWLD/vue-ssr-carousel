@@ -1,6 +1,6 @@
 # vue-ssr-carousel [![vue-ssr-carousel](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/b4x3of/main&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/b4x3of/runs) [![This project is using Percy.io for visual regression testing.](https://percy.io/static/images/percy-badge.svg)](https://percy.io/7531dcbc/vue-ssr-carousel)
 
-A performance focused Vue carousel designed for SSR/SSG environments. No JS is used to layout the carousel or it's slides. The goal is to improve LCP and CLS scores because there is no layout or markup changes when JS hydates. It's primarily designed for rendering "card" style slides (like for linking to articles or products") where the carousel-ness is conditionally applied based on the number of cards that are slotted in as well as the viewport width.
+A performance focused Vue carousel designed for SSR/SSG environments. No JS is used to layout the carousel or it's slides. The goal is to improve LCP and CLS scores because there is no layout or markup changes when JS hydates. It's primarily designed for rendering "card" style slides (like for linking to articles or products) where the carousel-ness is conditionally applied based on the number of cards that are slotted in as well as the viewport width.
 
 Check out the demo: https://vue-ssr-carousel.netlify.app.
 
