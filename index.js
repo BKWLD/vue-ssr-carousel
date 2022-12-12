@@ -93,15 +93,15 @@ module.exports =
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=b5a05fa0&lang=pug&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c
-  return _vm.$slots.default && _vm.$slots.default.length
+  return _vm.$slots.default
     ? _c(
         "div",
         {
-          key: _vm.$slots.default.length,
+          key: _vm.$slots.default,
           staticClass: "ssr-carousel",
           attrs: { "data-ssrc-id": _vm.scopeId },
           on: {
@@ -268,7 +268,7 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=b5a05fa0&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
 var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function render() {
@@ -688,7 +688,7 @@ interactiveSelector = 'a, button, input, textarea, select';
     // Get the list of non-text slides, including peeking clones. This doesn't
     // work as a computed function
     getSlideComponents: function () {
-      return [...(this.$slots.default || []), ...(this.$slots.clones || [])].filter(function (vnode) {
+      return [...(this.$slots.default && this.$slots.default() || []), ...(this.$slots.clones && this.$slots.clones() || [])].filter(function (vnode) {
         return !vnode.text;
       });
     },
@@ -770,10 +770,10 @@ interactiveSelector = 'a, button, input, textarea, select';
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_trackvue_type_script_lang_coffee_ = (ssr_carousel_trackvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=01145ade&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=29ede0ed&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=01145ade&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=29ede0ed&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue
 var ssr_carousel_track_render, ssr_carousel_track_staticRenderFns
@@ -1360,7 +1360,7 @@ Code related to implementing feathering effect.
   props: {
     // Shorthand for enabling boolean and setting it's width
     feather: {
-      type: Boolean | String | Number,
+      type: [Boolean, String, Number],
       default: false
     }
   },
@@ -1450,7 +1450,7 @@ Code related to the gutters between slides
   props: {
     // The gutters between slides
     gutter: {
-      type: Number | String,
+      type: [Number, String],
       default: 20
     }
   },
@@ -1605,14 +1605,14 @@ Code related to dealing with advancing between pages
     // If true, advance whole pages when navigating
     paginateBySlide: Boolean,
     // Syncs to the `index` value via v-model
-    value: {
+    modelValue: {
       type: Number,
       default: 0
     }
   },
   data: function () {
     return {
-      index: this.value,
+      index: this.modelValue,
       // The current page; when looping may exceed slideCount
       currentX: 0,
       // The actual left offset of the slides container
@@ -1649,7 +1649,7 @@ Code related to dealing with advancing between pages
     // Get just the slotted slides that are components, ignoring text nodes
     // which may exist as a result of whitespace
     slides: function () {
-      return (this.$slots.default || []).filter(function (vnode) {
+      return (this.$slots.default && this.$slots.default() || []).filter(function (vnode) {
         return !vnode.text;
       });
     },
@@ -1716,11 +1716,11 @@ Code related to dealing with advancing between pages
     value: function () {
       // If the value exceeds the bounds, immediately emit a new input event
       // with the corrected value
-      if (this.value !== this.applyIndexBoundaries(this.value)) {
-        return this.$emit('input', this.boundedIndex); // Else if the incoming value is different than the current value
+      if (this.modelValue !== this.applyIndexBoundaries(this.modelValue)) {
+        return this.$emit('update:modelValues', this.boundedIndex); // Else if the incoming value is different than the current value
         // then tween to it
-      } else if (this.value !== this.boundedIndex) {
-        return this.goto(this.value);
+      } else if (this.modelValue !== this.boundedIndex) {
+        return this.goto(this.modelValue);
       }
     },
     // Emit events on index change
@@ -1728,7 +1728,7 @@ Code related to dealing with advancing between pages
       this.$emit('change', {
         index: this.boundedIndex
       });
-      return this.$emit('input', this.boundedIndex); // For v-model
+      return this.$emit('update:modelValue', this.boundedIndex); // For v-model
     }
   },
   methods: {
@@ -1820,28 +1820,28 @@ gutter space.
     peekGutter: Boolean,
     // Set both peeking values at once
     peek: {
-      type: Number | String,
-      default: function () {
+      type: [Number, String],
+      default: function (props) {
         // Prevent subpixel rounding issues from causing a sliver of offscreen
         // slide from peaking in.
-        if (!this.peekGutter) {
+        if (!props.peekGutter) {
           return 0;
         } else {
-          return `calc(${this.gutter} - 1px)`;
+          return `calc(${props.gutter} - 1px)`;
         }
       }
     },
     // Distinct left/right peeking values
     peekLeft: {
-      type: Number | String,
-      default: function () {
-        return this.peek;
+      type: [Number, String],
+      default: function (props) {
+        return props.peek;
       }
     },
     peekRight: {
-      type: Number | String,
-      default: function () {
-        return this.peek;
+      type: [Number, String],
+      default: function (props) {
+        return props.peek;
       }
     },
     // When true, the peekLeft is used for the peekRight if the carousel is
@@ -2371,10 +2371,10 @@ Functionality related to supporting variable width slides
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=b5a05fa0&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=b5a05fa0&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 

@@ -3,8 +3,8 @@
 <template lang='pug'>
 
 .ssr-carousel(
-	v-if='$slots.default && $slots.default.length'
-	:key='$slots.default.length'
+	v-if='$slots.default'
+	:key='$slots.default'
 	:data-ssrc-id='scopeId'
 	@keyup.tab='onTab')
 

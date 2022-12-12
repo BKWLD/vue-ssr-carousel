@@ -1,6 +1,6 @@
 {
-	"name": "vue-ssr-carousel",
-	"version": "1.9.0",
+	"name": "@darksupah/vue-ssr-carousel",
+	"version": "1.9.7",
 	"description": "A performance focused Vue carousel designed for SSR/SSG environments.",
 	"main": "index.js",
 	"scripts": {
@@ -16,7 +16,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/BKWLD/vue-ssr-carousel.git"
+		"url": "git+https://github.com/DarkSupah/vue-ssr-carousel.git"
 	},
 	"author": "Bukwild <info@bukwild.com>",
 	"license": "MIT",
@@ -38,6 +38,9 @@
 		"mini-css-extract-plugin": "^1.0.0",
 		"nuxt": "^2.15.7",
 		"prism-themes": "^1.9.0",
+		"pug": "^3.0.2",
+		"pug-plain-loader": "^1.1.0",
+		"vue-pug-loader": "^1.1.29",
 		"vue-visual": "^2.6.0",
 		"webpack-cli": "^4.10.0"
 	},
