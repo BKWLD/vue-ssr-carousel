@@ -5,9 +5,12 @@
 .ssr-carousel-dots
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
-		:aria-label='`Page ${i}`'
+		:aria-label='`Go to page ${i}`'
 		:disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
+
+		//- visually hidden text that states the current slide is selected
+		span.visually-hidden(v-if='isDisabled(i)') Selected
 
 		//- Custom dot
 		slot(
@@ -77,5 +80,15 @@ export default
 			opacity 0.85
 		+active()
 			opacity 1
+
+// https://css-tricks.com/inclusively-hidden/
+.visually-hidden
+	height 1px
+	overflow hidden
+	width 1px
+	position absolute
+	clip rect(1px 1px 1px 1px)
+	clip rect(1px, 1px, 1px, 1px)
+	clip-path inset(50%)
 
 </style>
