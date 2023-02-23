@@ -47,7 +47,11 @@ export default
 		slidesCount: -> @slides.length
 
 		# Apply boundaries to the index, which will exceed them when looping
-		boundedIndex: -> Math.abs(@index) % @pages
+		boundedIndex: ->
+			boundedIndex = @index % @pages
+			if boundedIndex < 0
+			then @pages + boundedIndex
+			else boundedIndex
 
 		# The current incomplete page offset
 		currentIncompletePageOffset: -> @makeIncompletePageOffset @index
