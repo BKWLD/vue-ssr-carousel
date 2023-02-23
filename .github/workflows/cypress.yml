@@ -10,10 +10,10 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress Run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           install-command: yarn --frozen-lockfile --silent
           build: yarn build:cypress
