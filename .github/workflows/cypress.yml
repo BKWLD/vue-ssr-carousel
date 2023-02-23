@@ -9,11 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # At the moment, versions greater than 16 were causing
+      # "digital envelope routines::unsupported" errors
+      # https://stackoverflow.com/a/69699772/59160
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Cypress Run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           install-command: yarn --frozen-lockfile --silent
           build: yarn build:cypress
