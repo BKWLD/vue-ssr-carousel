@@ -39,6 +39,11 @@ export default {
 
 For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 
+### Tips
+
+- If your slides are generated with `v-for`, use `key` values that are based on the data you are looping through.  In other words, do `v-for='slide in slides' :key='slide.id'` _rather_ that `v-for='slide, index in slides' :key='index'`.
+- Don't use `v-if` on the root element of slide components.
+
 ## API
 
 ### Props
