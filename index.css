@@ -164,11 +164,9 @@
   overflow: hidden;
 }
 .ssr-carousel-mask:not(.disabled):not(.not-draggable) {
-  cursor: -webkit-grab;
   cursor: grab;
 }
 .ssr-carousel-mask:not(.disabled):not(.not-draggable).pressing {
-  cursor: -webkit-grabbing;
   cursor: grabbing;
 }
 .ssr-carousel-visually-hidden {
