@@ -26,7 +26,6 @@ export default {
 		boilerplate: {
 			siteName: 'vue-ssr-carousel demo',
 			excludedModules: [
-				'fontagon',
 				'generate', // Excluded because it disables the crawler
 			],
 		},
