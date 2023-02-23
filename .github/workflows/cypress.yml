@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # At the moment, versions greater than 16 were causing
+      # "digital envelope routines::unsupported" errors
+      # https://stackoverflow.com/a/69699772/59160
       - uses: actions/setup-node@v3
         with:
           node-version: 16
