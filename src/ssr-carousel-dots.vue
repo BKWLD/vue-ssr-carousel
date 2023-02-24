@@ -6,11 +6,8 @@
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
 		:aria-label='`Go to page ${i}`'
-		:disabled='isDisabled(i)'
+		:aria-disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
-
-		//- visually hidden text that states the current slide is selected
-		span.visually-hidden(v-if='isDisabled(i)') Selected
 
 		//- Custom dot
 		slot(
@@ -67,28 +64,18 @@ export default
 	margin-h 4px
 
 	// Show disabled state (aka, the active state)
-	[disabled] > &
+	[aria-disabled] > &
 		opacity 1
 		background rgba(black, 0.7)
 		cursor default
 
 	// Make a simple hover
 	transition opacity 0.2s
-	:not([disabled]) > &
+	:not([aria-disabled]) > &
 		opacity 0.5
 		+hover()
 			opacity 0.85
 		+active()
 			opacity 1
-
-// https://css-tricks.com/inclusively-hidden/
-.visually-hidden
-	height 1px
-	overflow hidden
-	width 1px
-	position absolute
-	clip rect(1px 1px 1px 1px)
-	clip rect(1px, 1px, 1px, 1px)
-	clip-path inset(50%)
 
 </style>
