@@ -21,7 +21,7 @@ context 'ui', ->
 		cy.get('[data-cy=dots]').within ->
 
 			# Click on page 2 dot
-			cy.get('.ssr-carousel-dot-button[aria-label="Go to page 2"]').click()
+			cy.get('.ssr-carousel-dot-button[aria-label="Go to Page 2"]').click()
 				.slideHidden 1
 				.slideVisible 2
 
