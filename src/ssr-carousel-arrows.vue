@@ -6,7 +6,7 @@
 
 	//- Back arrow
 	button.ssr-carousel-back-button(
-		aria-label='Back'
+		:aria-label='`Previous ${pageLabel}`'
 		:aria-disabled='backDisabled'
 		@click='$emit("back")')
 			slot(name='back' :disabled='backDisabled')
@@ -14,7 +14,7 @@
 
 	//- Next arrow
 	button.ssr-carousel-next-button(
-		aria-label='Next'
+		:aria-label='`Next ${pageLabel}`'
 		:aria-disabled='nextDisabled'
 		@click='$emit("next")')
 			slot(name='next' :disabled='nextDisabled')
@@ -31,6 +31,7 @@ export default
 		index: Number
 		pages: Number
 		shouldLoop: Boolean
+		pageLabel: String
 
 	computed:
 

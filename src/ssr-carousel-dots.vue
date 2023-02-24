@@ -5,7 +5,7 @@
 .ssr-carousel-dots
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
-		:aria-label='`Go to page ${i}`'
+		:aria-label='`Go to ${pageLabel} ${i}`'
 		:aria-disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
 
@@ -28,6 +28,7 @@ export default
 	props:
 		boundedIndex: Number
 		pages: Number
+		pageLabel: String
 
 	methods:
 
