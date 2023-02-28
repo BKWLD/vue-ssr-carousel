@@ -11,6 +11,7 @@ export default
 		activeSlides: Array
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
+		renderAsList: Boolean
 
 	# Set tabindex of inactive slides on mount
 	mounted: ->
@@ -18,6 +19,8 @@ export default
 		@denyTabindex @clonedSlides
 
 	computed:
+		# The HTML element of the track
+		trackHTMLElement: -> if @renderAsList then 'ul' else 'div'
 
 		# Get the count of non-cloned slides
 		uniqueSlidesCount: -> @slideOrder.length
@@ -144,7 +147,7 @@ export default
 
 	# Render the track and slotted slides
 	render: (create) ->
-		create 'div',
+		create @trackHTMLElement,
 			class: [ 'ssr-carousel-track', { @dragging } ]
 			style: @styles
 		, @makeSlides()
