@@ -6,16 +6,16 @@
 
 	//- Back arrow
 	button.ssr-carousel-back-button(
-		aria-label='Back'
-		:disabled='backDisabled'
+		:aria-label='`Previous ${pageLabel}`'
+		:aria-disabled='backDisabled'
 		@click='$emit("back")')
 			slot(name='back' :disabled='backDisabled')
 				span.ssr-carousel-back-icon
 
 	//- Next arrow
 	button.ssr-carousel-next-button(
-		aria-label='Next'
-		:disabled='nextDisabled'
+		:aria-label='`Next ${pageLabel}`'
+		:aria-disabled='nextDisabled'
 		@click='$emit("next")')
 			slot(name='next' :disabled='nextDisabled')
 				span.ssr-carousel-next-icon
@@ -31,6 +31,7 @@ export default
 		index: Number
 		pages: Number
 		shouldLoop: Boolean
+		pageLabel: String
 
 	computed:
 
@@ -68,13 +69,13 @@ export default
 	flex-center()
 
 	// Show disabled state
-	[disabled] > &
+	[aria-disabled] > &
 		opacity 0.1
 		cursor default
 
 	// Make a simple hover
 	transition opacity 0.2s
-	:not([disabled]) > &
+	:not([aria-disabled]) > &
 		opacity 0.5
 		+hover()
 			opacity 0.85

@@ -3,14 +3,23 @@ Code related to supporting keyboard interaction and screen readers
 ###
 export default
 
+	# The label to use for pagination
+	props: paginationLabel: String
+
 	# Store whether the user appears to be using keyboard to navigate
 	data: -> usingKeyboard: false
 
 	computed:
 
+		# Determine the descriptor to use in aria messages
+		pageLabel: -> switch
+			when @paginationLabel then @paginationLabel
+			when @paginateBySlide then "Slide"
+			else "Page"
+
 		# Make the current slide message
 		# https://www.w3.org/WAI/tutorials/carousels/functionality/#announce-the-current-item
-		currentSlideMessage: -> "Item #{@boundedIndex + 1} of #{@pages}"
+		currentSlideMessage: -> "#{@pageLabel} #{@boundedIndex + 1} of #{@pages}"
 
 	watch:
 

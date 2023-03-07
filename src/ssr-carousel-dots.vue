@@ -5,8 +5,8 @@
 .ssr-carousel-dots
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
-		:aria-label='`Page ${i}`'
-		:disabled='isDisabled(i)'
+		:aria-label='`Go to ${pageLabel} ${i}`'
+		:aria-disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
 
 		//- Custom dot
@@ -28,6 +28,7 @@ export default
 	props:
 		boundedIndex: Number
 		pages: Number
+		pageLabel: String
 
 	methods:
 
@@ -64,14 +65,14 @@ export default
 	margin-h 4px
 
 	// Show disabled state (aka, the active state)
-	[disabled] > &
+	[aria-disabled] > &
 		opacity 1
 		background rgba(black, 0.7)
 		cursor default
 
 	// Make a simple hover
 	transition opacity 0.2s
-	:not([disabled]) > &
+	:not([aria-disabled]) > &
 		opacity 0.5
 		+hover()
 			opacity 0.85
