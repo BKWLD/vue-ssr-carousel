@@ -93,7 +93,7 @@ module.exports =
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=40da5be2&lang=pug&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c
@@ -218,6 +218,7 @@ var render = function render() {
                         index: _vm.index,
                         pages: _vm.pages,
                         shouldLoop: _vm.shouldLoop,
+                        pageLabel: _vm.pageLabel,
                       },
                       false
                     )
@@ -246,7 +247,11 @@ var render = function render() {
                     ),
                   },
                   "ssr-carousel-dots",
-                  { boundedIndex: _vm.boundedIndex, pages: _vm.pages },
+                  {
+                    boundedIndex: _vm.boundedIndex,
+                    pages: _vm.pages,
+                    pageLabel: _vm.pageLabel,
+                  },
                   false
                 )
               )
@@ -268,10 +273,10 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=40da5be2&lang=pug&
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
-var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function render() {
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=559c4b35&lang=pug&
+var ssr_carousel_arrowsvue_type_template_id_559c4b35_lang_pug_render = function render() {
   var _vm = this,
     _c = _vm._self._c
   return _c("div", { staticClass: "ssr-carousel-arrows" }, [
@@ -279,7 +284,10 @@ var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function 
       "button",
       {
         staticClass: "ssr-carousel-back-button",
-        attrs: { "aria-label": "Back", disabled: _vm.backDisabled },
+        attrs: {
+          "aria-label": `Previous ${_vm.pageLabel}`,
+          "aria-disabled": _vm.backDisabled,
+        },
         on: {
           click: function ($event) {
             return _vm.$emit("back")
@@ -301,7 +309,10 @@ var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function 
       "button",
       {
         staticClass: "ssr-carousel-next-button",
-        attrs: { "aria-label": "Next", disabled: _vm.nextDisabled },
+        attrs: {
+          "aria-label": `Next ${_vm.pageLabel}`,
+          "aria-disabled": _vm.nextDisabled,
+        },
         on: {
           click: function ($event) {
             return _vm.$emit("next")
@@ -321,18 +332,19 @@ var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function 
     ),
   ])
 }
-var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_staticRenderFns = []
-ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render._withStripped = true
+var ssr_carousel_arrowsvue_type_template_id_559c4b35_lang_pug_staticRenderFns = []
+ssr_carousel_arrowsvue_type_template_id_559c4b35_lang_pug_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=template&id=559c4b35&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
 /* harmony default export */ var ssr_carousel_arrowsvue_type_script_lang_coffee_ = ({
   props: {
     index: Number,
     pages: Number,
-    shouldLoop: Boolean
+    shouldLoop: Boolean,
+    pageLabel: String
   },
   computed: {
     // Determine if button should be disabled because we're at the limits
@@ -350,10 +362,10 @@ ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render._withStripped =
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_arrowsvue_type_script_lang_coffee_ = (ssr_carousel_arrowsvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=433a0819&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=559c4b35&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=433a0819&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-arrows.vue?vue&type=style&index=0&id=559c4b35&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 /* globals __VUE_SSR_CONTEXT__ */
@@ -464,8 +476,8 @@ function normalizeComponent(
 
 var component = normalizeComponent(
   src_ssr_carousel_arrowsvue_type_script_lang_coffee_,
-  ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render,
-  ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_staticRenderFns,
+  ssr_carousel_arrowsvue_type_template_id_559c4b35_lang_pug_render,
+  ssr_carousel_arrowsvue_type_template_id_559c4b35_lang_pug_staticRenderFns,
   false,
   null,
   null,
@@ -474,8 +486,8 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var ssr_carousel_arrows = (component.exports);
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=template&id=f5cb500a&lang=pug&
-var ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render = function render() {
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=template&id=98a1e6f8&lang=pug&
+var ssr_carousel_dotsvue_type_template_id_98a1e6f8_lang_pug_render = function render() {
   var _vm = this,
     _c = _vm._self._c
   return _c(
@@ -487,7 +499,10 @@ var ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render = function re
         {
           key: i,
           staticClass: "ssr-carousel-dot-button",
-          attrs: { "aria-label": `Page ${i}`, disabled: _vm.isDisabled(i) },
+          attrs: {
+            "aria-label": `Go to ${_vm.pageLabel} ${i}`,
+            "aria-disabled": _vm.isDisabled(i),
+          },
           on: {
             click: function ($event) {
               return _vm.$emit("goto", i - 1)
@@ -509,17 +524,18 @@ var ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render = function re
     0
   )
 }
-var ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_staticRenderFns = []
-ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render._withStripped = true
+var ssr_carousel_dotsvue_type_template_id_98a1e6f8_lang_pug_staticRenderFns = []
+ssr_carousel_dotsvue_type_template_id_98a1e6f8_lang_pug_render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=template&id=f5cb500a&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=template&id=98a1e6f8&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/coffee-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
 /* harmony default export */ var ssr_carousel_dotsvue_type_script_lang_coffee_ = ({
   props: {
     boundedIndex: Number,
-    pages: Number
+    pages: Number,
+    pageLabel: String
   },
   methods: {
     // Check if dot index shuold be disabled
@@ -530,10 +546,10 @@ ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render._withStripped = t
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_dotsvue_type_script_lang_coffee_ = (ssr_carousel_dotsvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=style&index=0&id=f5cb500a&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-dots.vue?vue&type=style&index=0&id=98a1e6f8&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=style&index=0&id=f5cb500a&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-dots.vue?vue&type=style&index=0&id=98a1e6f8&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-dots.vue
 
@@ -546,8 +562,8 @@ ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render._withStripped = t
 
 var ssr_carousel_dots_component = normalizeComponent(
   src_ssr_carousel_dotsvue_type_script_lang_coffee_,
-  ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_render,
-  ssr_carousel_dotsvue_type_template_id_f5cb500a_lang_pug_staticRenderFns,
+  ssr_carousel_dotsvue_type_template_id_98a1e6f8_lang_pug_render,
+  ssr_carousel_dotsvue_type_template_id_98a1e6f8_lang_pug_staticRenderFns,
   false,
   null,
   null,
@@ -789,6 +805,10 @@ var ssr_carousel_track_component = normalizeComponent(
 Code related to supporting keyboard interaction and screen readers
 */
 /* harmony default export */ var accessibility_coffee = ({
+  // The label to use for pagination
+  props: {
+    paginationLabel: String
+  },
   // Store whether the user appears to be using keyboard to navigate
   data: function () {
     return {
@@ -796,10 +816,21 @@ Code related to supporting keyboard interaction and screen readers
     };
   },
   computed: {
+    // Determine the descriptor to use in aria messages
+    pageLabel: function () {
+      switch (false) {
+        case !this.paginationLabel:
+          return this.paginationLabel;
+        case !this.paginateBySlide:
+          return "Slide";
+        default:
+          return "Page";
+      }
+    },
     // Make the current slide message
     // https://www.w3.org/WAI/tutorials/carousels/functionality/#announce-the-current-item
     currentSlideMessage: function () {
-      return `Item ${this.boundedIndex + 1} of ${this.pages}`;
+      return `${this.pageLabel} ${this.boundedIndex + 1} of ${this.pages}`;
     }
   },
   watch: {
@@ -2288,10 +2319,10 @@ Functionality related to supporting variable width slides
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=40da5be2&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=40da5be2&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 
