@@ -11,7 +11,9 @@ export default
 		activeSlides: Array
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
-		renderAsList: Boolean
+
+	# Should the track element be an ul
+	data: -> renderAsList: false
 
 	# Set tabindex of inactive slides on mount
 	mounted: ->
@@ -53,6 +55,9 @@ export default
 		# Make the slides to render into the track
 		makeSlides: -> @getSlideComponents().map (vnode, index) =>
 			vnode = @makeReactiveVnode vnode
+
+			# Check if we are rendering a list of elements
+			if !index and vnode.tag == 'li' then @renderAsList = true
 
 			# This is a peeking clone if it's index is greater than the slide count
 			slideCount = @uniqueSlidesCount
