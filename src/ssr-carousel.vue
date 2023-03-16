@@ -52,7 +52,7 @@
 		//- Back / Next navigation
 		ssr-carousel-arrows(
 			v-if='showArrows'
-			v-bind='{ index, pages, shouldLoop }'
+			v-bind='{ index, pages, shouldLoop, pageLabel }'
 			@back='back'
 			@next='next')
 			template(#back='props'): slot(name='back-arrow' v-bind='props')
@@ -61,7 +61,7 @@
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
-		v-bind='{ boundedIndex, pages }'
+		v-bind='{ boundedIndex, pages, pageLabel }'
 		@goto='gotoDot')
 		template(#dot='props'): slot(name='dot' v-bind='props')
 

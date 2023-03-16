@@ -29,3 +29,17 @@ The `loop` feature isn't friendly to keyboard navigation and is disabled once th
   <slide :index='3' to='#3'></slide>
 </ssr-carousel>
 ```
+
+## Customize the label given to pages
+
+By default, pages are referred to as "Page" in aria labels unless using `paginate-by-slide`, in which case they are labeled as "Slide".  The `pagination-label` prop lets you customize this label.
+
+<demos-accessibility-pagination-label></demos-accessibility-pagination-label>
+
+```vue
+<ssr-carousel pagination-label='Story' show-arrows show-dots loop>
+  <slide>Story 1</slide>
+  <slide>Story 2</slide>
+  <slide>Story 3</slide>
+</ssr-carousel>
+```
