@@ -41,7 +41,6 @@
 					activeSlides,
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
-					renderAsList
 				}`)
 
 				//- Render the slotted slides
@@ -128,9 +127,6 @@ export default
 		# UI enabling controls
 		showArrows: Boolean
 		showDots: Boolean
-
-		# Render carousel as a list
-		renderAsList: Boolean
 
 	computed:
 

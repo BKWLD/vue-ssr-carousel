@@ -93,7 +93,7 @@ module.exports =
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=1425fe0b&lang=pug&
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c
@@ -181,7 +181,6 @@ var render = function render() {
                         activeSlides: _vm.activeSlides,
                         leftPeekingSlideIndex: _vm.leftPeekingSlideIndex,
                         rightPeekingSlideIndex: _vm.rightPeekingSlideIndex,
-                        renderAsList: _vm.renderAsList,
                       },
                       false
                     )
@@ -269,7 +268,7 @@ var staticRenderFns = []
 render._withStripped = true
 
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=1425fe0b&lang=pug&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=template&id=cfe1ba04&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--5!./node_modules/pug-plain-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-arrows.vue?vue&type=template&id=433a0819&lang=pug&
 var ssr_carousel_arrowsvue_type_template_id_433a0819_lang_pug_render = function render() {
@@ -654,7 +653,6 @@ interactiveSelector = 'a, button, input, textarea, select';
         vnode = this.makeReactiveVnode(vnode);
 
         if (!index && vnode.tag === 'li') {
-          // Check if we are rendering a list of elements
           this.renderAsList = true;
         } // This is a peeking clone if it's index is greater than the slide count
 
@@ -791,10 +789,10 @@ interactiveSelector = 'a, button, input, textarea, select';
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_trackvue_type_script_lang_coffee_ = (ssr_carousel_trackvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=1124f504&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=47a1014b&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=1124f504&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=47a1014b&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue
 var ssr_carousel_track_render, ssr_carousel_track_staticRenderFns
@@ -2362,9 +2360,7 @@ Functionality related to supporting variable width slides
   props: {
     // UI enabling controls
     showArrows: Boolean,
-    showDots: Boolean,
-    // Render carousel as a list
-    renderAsList: Boolean
+    showDots: Boolean
   },
   computed: {
     // Combine the different factors that come together to determine the x
@@ -2401,10 +2397,10 @@ Functionality related to supporting variable width slides
 });
 // CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carouselvue_type_script_lang_coffee_ = (ssr_carouselvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=1425fe0b&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=1425fe0b&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel.vue?vue&type=style&index=0&id=cfe1ba04&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel.vue
 
