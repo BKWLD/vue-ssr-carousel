@@ -12,12 +12,18 @@ export default
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
 
+	# Should the track element be an ul
+	data: -> renderAsList: false
+
 	# Set tabindex of inactive slides on mount
 	mounted: ->
 		@denyTabindex @inactiveSlides
 		@denyTabindex @clonedSlides
 
 	computed:
+
+		# The HTML element of the track
+		trackHTMLElement: -> if @renderAsList then 'ul' else 'div'
 
 		# Get the count of non-cloned slides
 		uniqueSlidesCount: -> @slideOrder.length
@@ -50,6 +56,9 @@ export default
 		# Make the slides to render into the track
 		makeSlides: -> @getSlideComponents().map (vnode, index) =>
 			vnode = @makeReactiveVnode vnode
+
+			# Check if we are rendering a list of elements
+			@renderAsList = true if index == 0 and vnode.tag == 'li' 
 
 			# This is a peeking clone if it's index is greater than the slide count
 			slideCount = @uniqueSlidesCount
@@ -144,7 +153,7 @@ export default
 
 	# Render the track and slotted slides
 	render: (create) ->
-		create 'div',
+		create @trackHTMLElement,
 			class: [ 'ssr-carousel-track', { @dragging } ]
 			style: @styles
 		, @makeSlides()
