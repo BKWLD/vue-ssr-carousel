@@ -21,6 +21,7 @@ export default
 		@denyTabindex @clonedSlides
 
 	computed:
+
 		# The HTML element of the track
 		trackHTMLElement: -> if @renderAsList then 'ul' else 'div'
 
@@ -57,7 +58,7 @@ export default
 			vnode = @makeReactiveVnode vnode
 
 			# Check if we are rendering a list of elements
-			if !index and vnode.tag == 'li' then @renderAsList = true
+			@renderAsList = true if index == 0 and vnode.tag == 'li' 
 
 			# This is a peeking clone if it's index is greater than the slide count
 			slideCount = @uniqueSlidesCount
