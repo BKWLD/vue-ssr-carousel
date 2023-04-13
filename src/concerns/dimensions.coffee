@@ -7,14 +7,20 @@ export default
 		viewportWidth: null # Width of the viewport, for media query calculation
 		carouselWidth: null # Width of a page of the carousel
 		gutterWidth: 0 # Computed width of gutters, since they support css vars
+		resizeObserver: null
 
 	# Add resize listening
 	mounted: ->
 		@onResize()
-		window.addEventListener 'resize', @onResize
 
-	# Cleanup listeners
-	beforeDestroy: -> window.removeEventListener 'resize', @onResize
+		# resize observer listens for the element itself
+		# changing dimensions
+		@resizeObserver = new ResizeObserver @onResize
+		@resizeObserver.observe @$el
+
+	beforeDestroy: ->
+		if @$el then @resizeObserver.unobserve(@$el)
+		else @resizeObserver.disconnect()
 
 	computed:
 
@@ -106,3 +112,8 @@ export default
 				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -
 				(#{@autoUnit(gutter)} * #{slidesPerPage - 1}) / #{slidesPerPage}
 			)"
+
+	# watch:
+	# 	'carouselWidth': ->
+	# 		console.log @carouselWidth
+	# 		@onResize()
