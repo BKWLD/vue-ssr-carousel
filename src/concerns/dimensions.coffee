@@ -19,8 +19,7 @@ export default
 		@resizeObserver.observe @$el
 
 	beforeDestroy: ->
-		if @$el then @resizeObserver.unobserve(@$el)
-		else @resizeObserver.disconnect()
+		@resizeObserver?.disconnect()
 
 	computed:
 
