@@ -1,6 +1,6 @@
 {
 	"name": "vue-ssr-carousel",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"description": "A performance focused Vue carousel designed for SSR/SSG environments.",
 	"main": "index.js",
 	"scripts": {

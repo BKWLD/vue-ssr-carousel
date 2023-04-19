@@ -965,11 +965,13 @@ Code related to measuring the size of the carousel after mounting
   // Add resize listening
   mounted: function () {
     this.onResize();
-    return window.addEventListener('resize', this.onResize);
+    // Resize observer listens for the element itself to change dimensions
+    this.resizeObserver = new ResizeObserver(this.onResize);
+    return this.resizeObserver.observe(this.$el);
   },
-  // Cleanup listeners
   beforeDestroy: function () {
-    return window.removeEventListener('resize', this.onResize);
+    var ref;
+    return (ref = this.resizeObserver) != null ? ref.disconnect() : void 0;
   },
   computed: {
     // The width of a page of slides, which may be less than the carouselWidth
