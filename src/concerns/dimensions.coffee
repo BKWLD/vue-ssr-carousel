@@ -11,10 +11,13 @@ export default
 	# Add resize listening
 	mounted: ->
 		@onResize()
-		window.addEventListener 'resize', @onResize
 
-	# Cleanup listeners
-	beforeDestroy: -> window.removeEventListener 'resize', @onResize
+		# Resize observer listens for the element itself to change dimensions
+		@resizeObserver = new ResizeObserver @onResize
+		@resizeObserver.observe @$el
+
+	beforeDestroy: ->
+		@resizeObserver?.disconnect()
 
 	computed:
 
