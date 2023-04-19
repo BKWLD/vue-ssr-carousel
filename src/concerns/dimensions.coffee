@@ -12,8 +12,7 @@ export default
 	mounted: ->
 		@onResize()
 
-		# resize observer listens for the element itself
-		# changing dimensions
+		# Resize observer listens for the element itself to change dimensions
 		@resizeObserver = new ResizeObserver @onResize
 		@resizeObserver.observe @$el
 
