@@ -112,8 +112,3 @@ export default
 				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -
 				(#{@autoUnit(gutter)} * #{slidesPerPage - 1}) / #{slidesPerPage}
 			)"
-
-	# watch:
-	# 	'carouselWidth': ->
-	# 		console.log @carouselWidth
-	# 		@onResize()
