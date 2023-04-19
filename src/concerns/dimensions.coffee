@@ -7,7 +7,6 @@ export default
 		viewportWidth: null # Width of the viewport, for media query calculation
 		carouselWidth: null # Width of a page of the carousel
 		gutterWidth: 0 # Computed width of gutters, since they support css vars
-		resizeObserver: null
 
 	# Add resize listening
 	mounted: ->
