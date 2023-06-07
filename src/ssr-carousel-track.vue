@@ -12,8 +12,13 @@ export default
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
 
-	# Should the track element be an ul
-	data: -> renderAsList: false
+	data: ->
+
+		# Should the track element be an ul
+		renderAsList: false
+
+		# Should the track element be a tablist
+		renderAsTablist: false
 
 	# Set tabindex of inactive slides on mount
 	mounted: ->
@@ -58,7 +63,12 @@ export default
 			vnode = @makeReactiveVnode vnode
 
 			# Check if we are rendering a list of elements
-			@renderAsList = true if index == 0 and vnode.tag == 'li' 
+			@renderAsList = true if index == 0 and vnode.tag == 'li'
+
+			# Check if we are rendering a tablist
+			@renderAsTablist = true if index == 0 and vnode?.data?.attrs?.role == 'tab'
+
+			console.log 'should rendre as tablist?', @renderAsTablist
 
 			# This is a peeking clone if it's index is greater than the slide count
 			slideCount = @uniqueSlidesCount
@@ -153,7 +163,9 @@ export default
 
 	# Render the track and slotted slides
 	render: (create) ->
+
 		create @trackHTMLElement,
+			attrs: {role: "tablist" if @renderAsList}
 			class: [ 'ssr-carousel-track', { @dragging } ]
 			style: @styles
 		, @makeSlides()
