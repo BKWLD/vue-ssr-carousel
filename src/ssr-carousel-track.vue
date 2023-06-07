@@ -68,8 +68,6 @@ export default
 			# Check if we are rendering a tablist
 			@renderAsTablist = true if index == 0 and vnode?.data?.attrs?.role == 'tab'
 
-			console.log 'should rendre as tablist?', @renderAsTablist
-
 			# This is a peeking clone if it's index is greater than the slide count
 			slideCount = @uniqueSlidesCount
 			isPeekingClone = index >= slideCount
