@@ -163,7 +163,7 @@ export default
 	render: (create) ->
 
 		create @trackHTMLElement,
-			attrs: {role: "tablist" if @renderAsList}
+			attrs: {role: "tablist" if @renderAsTablist}
 			class: [ 'ssr-carousel-track', { @dragging } ]
 			style: @styles
 		, @makeSlides()
