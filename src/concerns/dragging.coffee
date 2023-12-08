@@ -44,6 +44,8 @@ export default
 		window.removeEventListener 'touchmove', @onPointerMove, passive
 		window.removeEventListener 'touchend', @onPointerUp, passive
 		window.removeEventListener 'touchmove', @onWinMove, notPassive
+		window.removeEventListener 'contextmenu', @onPointerUp, passive
+		window.removeEventListener 'touchmove', @stopEvent, notPassive
 
 	computed:
 
