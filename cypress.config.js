@@ -1,6 +1,7 @@
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
+	projectId: 'b4x3of',
 	e2e: {
 
 		// Assume local testing
