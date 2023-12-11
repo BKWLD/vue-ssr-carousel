@@ -1173,7 +1173,9 @@ notPassive = {
     window.removeEventListener('mouseup', this.onPointerUp, passive);
     window.removeEventListener('touchmove', this.onPointerMove, passive);
     window.removeEventListener('touchend', this.onPointerUp, passive);
-    return window.removeEventListener('touchmove', this.onWinMove, notPassive);
+    window.removeEventListener('touchmove', this.onWinMove, notPassive);
+    window.removeEventListener('contextmenu', this.onPointerUp, passive);
+    return window.removeEventListener('touchmove', this.stopEvent, notPassive);
   },
   computed: {
     // The current slide or page index. It rounds differently depending on the
