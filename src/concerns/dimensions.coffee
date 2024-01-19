@@ -13,8 +13,9 @@ export default
 		@onResize()
 
 		# Resize observer listens for the element itself to change dimensions
-		@resizeObserver = new ResizeObserver @onResize
-		@resizeObserver.observe @$el
+		if @$el?.nodeType == Node.ELEMENT_NODE
+			@resizeObserver = new ResizeObserver @onResize
+			@resizeObserver.observe @$el
 
 	beforeDestroy: ->
 		@resizeObserver?.disconnect()
