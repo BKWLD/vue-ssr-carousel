@@ -92,6 +92,7 @@ import looping from './concerns/looping'
 import pagination from './concerns/pagination'
 import peeking from './concerns/peeking'
 import responsive from './concerns/responsive'
+import rtl from './concerns/rtl'
 import tweening from './concerns/tweening'
 import variableWidth from './concerns/variable-width'
 
@@ -112,6 +113,7 @@ export default
 		pagination
 		responsive
 		peeking # After `responsive` so prop can access `gutter` prop
+		rtl
 		tweening
 		variableWidth
 	]
