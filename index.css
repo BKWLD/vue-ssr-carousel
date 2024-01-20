@@ -1,5 +1,5 @@
-.ssr-carousel-back-button,
-.ssr-carousel-next-button {
+.ssr-carousel-left-button,
+.ssr-carousel-right-button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -17,14 +17,14 @@
           user-select: none;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-.ssr-carousel-back-button {
+.ssr-carousel-left-button {
   left: 2%;
 }
-.ssr-carousel-next-button {
+.ssr-carousel-right-button {
   right: 2%;
 }
-.ssr-carousel-back-icon,
-.ssr-carousel-next-icon {
+.ssr-carousel-left-icon,
+.ssr-carousel-right-icon {
   display: inline-block;
   width: 42px;
   height: 42px;
@@ -35,35 +35,35 @@
   justify-content: center;
   transition: opacity 0.2s;
 }
-[aria-disabled] > .ssr-carousel-back-icon,
-[aria-disabled] > .ssr-carousel-next-icon {
+[aria-disabled] > .ssr-carousel-left-icon,
+[aria-disabled] > .ssr-carousel-right-icon {
   opacity: 0.1;
   cursor: default;
 }
-:not([aria-disabled]) > .ssr-carousel-back-icon,
-:not([aria-disabled]) > .ssr-carousel-next-icon {
+:not([aria-disabled]) > .ssr-carousel-left-icon,
+:not([aria-disabled]) > .ssr-carousel-right-icon {
   opacity: 0.5;
 }
 @media (hover: hover) {
-:not([aria-disabled]) > .ssr-carousel-back-icon:hover,
-  :not([aria-disabled]) > .ssr-carousel-next-icon:hover {
+:not([aria-disabled]) > .ssr-carousel-left-icon:hover,
+  :not([aria-disabled]) > .ssr-carousel-right-icon:hover {
     opacity: 0.85;
 }
 }
-:not([aria-disabled]) > .ssr-carousel-back-icon:active,
-:not([aria-disabled]) > .ssr-carousel-next-icon:active {
+:not([aria-disabled]) > .ssr-carousel-left-icon:active,
+:not([aria-disabled]) > .ssr-carousel-right-icon:active {
   opacity: 1;
 }
-:not([aria-disabled]) > .ssr-carousel-back-icon.active,
-:not([aria-disabled]) > .ssr-carousel-next-icon.active {
+:not([aria-disabled]) > .ssr-carousel-left-icon.active,
+:not([aria-disabled]) > .ssr-carousel-right-icon.active {
   opacity: 1;
 }
-.ssr-carousel-back-icon:before,
-.ssr-carousel-next-icon:before {
+.ssr-carousel-left-icon:before,
+.ssr-carousel-right-icon:before {
   content: '';
   position: relative;
 }
-.ssr-carousel-back-icon:before {
+.ssr-carousel-left-icon:before {
   width: 0;
   height: 0;
   background: 0;
@@ -72,7 +72,7 @@
   border-color: transparent #fff transparent transparent;
   left: -2px;
 }
-.ssr-carousel-next-icon:before {
+.ssr-carousel-right-icon:before {
   width: 0;
   height: 0;
   background: 0;
@@ -150,6 +150,7 @@
 
 .ssr-carousel {
   touch-action: pan-y;
+  direction: ltr;
 }
 .ssr-carousel-slides {
   position: relative;
