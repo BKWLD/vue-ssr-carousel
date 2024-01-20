@@ -35,7 +35,7 @@ export default
 
 		# Make the label for the dot
 		makeLabel: (index) ->
-			pageNumber = if @rtl then @pages - index + 1 else @index
+			pageNumber = if @rtl then @pages - index + 1 else index
 			"Go to #{@pageLabel} #{pageNumber}"
 
 		# Check if dot index shuold be disabled
