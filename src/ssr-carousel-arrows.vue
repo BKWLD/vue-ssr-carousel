@@ -4,21 +4,27 @@
 
 .ssr-carousel-arrows
 
-	//- Back arrow
-	button.ssr-carousel-back-button(
-		:aria-label='`Previous ${pageLabel}`'
-		:aria-disabled='backDisabled'
+	//- Left arrow
+	button.ssr-carousel-left-button(
+		:aria-label='rtl ? nextLabel : backLabel'
+		:aria-disabled='leftDisabled'
+		:class='rtl ? "ssr-carousel-next-button" : "ssr-carousel-back-button"'
 		@click='$emit("back")')
-			slot(name='back' :disabled='backDisabled')
-				span.ssr-carousel-back-icon
+			slot(
+				:name='rtl ? "next" : "back"'
+				:disabled='leftDisabled')
+				span.ssr-carousel-left-icon
 
-	//- Next arrow
-	button.ssr-carousel-next-button(
-		:aria-label='`Next ${pageLabel}`'
-		:aria-disabled='nextDisabled'
+	//- Right arrow
+	button.ssr-carousel-right-button(
+		:aria-label='rtl ? backLabel : nextLabel'
+		:aria-disabled='rightDisabled'
+		:class='rtl ? "ssr-carousel-back-button" : "ssr-carousel-next-button"'
 		@click='$emit("next")')
-			slot(name='next' :disabled='nextDisabled')
-				span.ssr-carousel-next-icon
+			slot(
+				:name='rtl ? "back" : "next"'
+				:disabled='rightDisabled')
+				span.ssr-carousel-right-icon
 
 </template>
 
@@ -32,12 +38,18 @@ export default
 		pages: Number
 		shouldLoop: Boolean
 		pageLabel: String
+		rtl: Boolean
 
 	computed:
 
+		# Make the labels
+		backLabel: -> "Previous #{@pageLabel}"
+		nextLabel: -> "Next #{@pageLabel}"
+
 		# Determine if button should be disabled because we're at the limits
-		backDisabled: -> @index == 0 unless @shouldLoop
-		nextDisabled: -> @index == @pages - 1 unless @shouldLoop
+		leftDisabled: -> @index == 0 unless @shouldLoop
+		rightDisabled: -> @index == @pages - 1 unless @shouldLoop
+
 
 </script>
 
@@ -48,20 +60,20 @@ export default
 @import './utils'
 
 // Vertically center buttons
-.ssr-carousel-back-button
-.ssr-carousel-next-button
+.ssr-carousel-left-button
+.ssr-carousel-right-button
 	v-center()
 	resetButton()
 
 // Align buttons near the edges
-.ssr-carousel-back-button
+.ssr-carousel-left-button
 	left 2%
-.ssr-carousel-next-button
+.ssr-carousel-right-button
 	right 2%
 
 // Make a default icon
-.ssr-carousel-back-icon
-.ssr-carousel-next-icon
+.ssr-carousel-left-icon
+.ssr-carousel-right-icon
 
 	// Make a circle shape
 	display inline-block
@@ -88,12 +100,12 @@ export default
 		position relative
 
 // Make triangle icons in the buttons
-.ssr-carousel-back-icon
+.ssr-carousel-left-icon
 	&:before
 		triangle 12px, 18px, white, 'left'
 		left -2px // Massage center
 
-.ssr-carousel-next-icon
+.ssr-carousel-right-icon
 	&:before
 		triangle 12px, 18px, white, 'right'
 		left 2px // Massage center
