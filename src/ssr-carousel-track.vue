@@ -12,7 +12,7 @@ export default
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
 		rtl: Boolean
-		slideWidth: Number
+		dimensionsKnown: Number
 
 	data: ->
 
@@ -114,12 +114,12 @@ export default
 			slides = [...(@$slots.default || []), ...(@$slots.clones || [])]
 			.filter (vnode) -> !vnode.text
 
-			# Reverses the slide if rtl and if the slide slide width is known. This
+			# Reverses the slide if rtl and if the dimensions are known. This
 			# second condition exists to prevent the reversal from happening on SSR.
 			# Which is important because this logic is paired with setting the
 			# intial index to the last page which can't be known until the slide
 			# width is known.
-			if @rtl and @slideWidth then slides = slides.reverse()
+			if @rtl and @dimensionsKnown then slides = slides.reverse()
 			return slides
 
 		# Makes a clone of the vnode properties we'll be updating so the changes

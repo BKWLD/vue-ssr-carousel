@@ -9,13 +9,13 @@ export default
 	# As an easy way to support rtl, update the index to the final value
 	# when RTL is enabled. This is change is combined with reversing the order
 	# of the slides in `ssr-carousel-track`. We're testing for the
-	# carouselWidth value as way to ensure that the final pages count is known
+	# dimensionsKnown value as way to ensure that the final pages count is known
 	# since it depends on knowing the width of the carousel.
 	mounted: ->
 		return unless @rtl
-		if @carouselWidth
+		if @dimensionsKnown
 		then @setInitialRtlIndex()
-		else unwatch = @$watch 'carouselWidth', =>
+		else unwatch = @$watch 'dimensionsKnown', =>
 			@setInitialRtlIndex()
 			unwatch()
 

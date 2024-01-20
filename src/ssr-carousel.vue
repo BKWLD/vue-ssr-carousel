@@ -42,7 +42,7 @@
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
 					rtl,
-					slideWidth,
+					dimensionsKnown,
 				}`)
 
 				//- Render the slotted slides
