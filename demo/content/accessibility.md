@@ -43,3 +43,19 @@ By default, pages are referred to as "Page" in aria labels unless using `paginat
   <slide>Story 3</slide>
 </ssr-carousel>
 ```
+
+## Support RTL
+
+The `rtl` boolean props adjusts the layout and drag behavior for right-to-left sites (like when the `direction: rtl` CSS property has been set).
+
+<demos-accessibility-rtl></demos-accessibility-rtl>
+
+```vue
+<div :style='{ direction: "rtl" }'>
+	<ssr-carousel rtl>
+		<slide :index='1'></slide>
+		<slide :index='2'></slide>
+		<slide :index='3'></slide>
+	</ssr-carousel>
+</div>
+```

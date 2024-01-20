@@ -64,6 +64,10 @@ export default
 		# Check if the drag is currently out bounds
 		isOutOfBounds: -> @currentX > 0 or @currentX < @endX
 
+		# Helper for things that are triggered once dimensions are known so
+		# they can be more specific about their dependencies
+		dimensionsKnown: -> @carouselWidth and @viewportWidth
+
 	methods:
 
 		# Measure the component width for various calculations. Using

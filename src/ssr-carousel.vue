@@ -41,6 +41,8 @@
 					activeSlides,
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
+					rtl,
+					dimensionsKnown,
 				}`)
 
 				//- Render the slotted slides
@@ -52,7 +54,7 @@
 		//- Back / Next navigation
 		ssr-carousel-arrows(
 			v-if='showArrows'
-			v-bind='{ index, pages, shouldLoop, pageLabel }'
+			v-bind='{ index, pages, shouldLoop, pageLabel, rtl }'
 			@back='back'
 			@next='next')
 			template(#back='props'): slot(name='back-arrow' v-bind='props')
@@ -61,7 +63,7 @@
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
-		v-bind='{ boundedIndex, pages, pageLabel }'
+		v-bind='{ boundedIndex, pages, pageLabel, rtl }'
 		@goto='gotoDot')
 		template(#dot='props'): slot(name='dot' v-bind='props')
 
@@ -92,6 +94,7 @@ import looping from './concerns/looping'
 import pagination from './concerns/pagination'
 import peeking from './concerns/peeking'
 import responsive from './concerns/responsive'
+import rtl from './concerns/rtl'
 import tweening from './concerns/tweening'
 import variableWidth from './concerns/variable-width'
 
@@ -112,6 +115,7 @@ export default
 		pagination
 		responsive
 		peeking # After `responsive` so prop can access `gutter` prop
+		rtl
 		tweening
 		variableWidth
 	]
@@ -165,6 +169,9 @@ export default
 // Prevent webkit from doing elastic dragging horizontally on drag
 .ssr-carousel
 	touch-action pan-y
+
+	// Internal logic expects ltr layout
+	direction ltr
 
 // Posiition arrows relative to this
 .ssr-carousel-slides

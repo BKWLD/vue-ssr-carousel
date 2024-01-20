@@ -11,6 +11,8 @@ export default
 		activeSlides: Array
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
+		rtl: Boolean
+		dimensionsKnown: Number
 
 	data: ->
 
@@ -109,8 +111,16 @@ export default
 		# Get the list of non-text slides, including peeking clones. This doesn't
 		# work as a computed function
 		getSlideComponents: ->
-			[...(@$slots.default || []), ...(@$slots.clones || [])]
+			slides = [...(@$slots.default || []), ...(@$slots.clones || [])]
 			.filter (vnode) -> !vnode.text
+
+			# Reverses the slide if rtl and if the dimensions are known. This
+			# second condition exists to prevent the reversal from happening on SSR.
+			# Which is important because this logic is paired with setting the
+			# intial index to the last page which can't be known until the slide
+			# width is known.
+			if @rtl and @dimensionsKnown then slides = slides.reverse()
+			return slides
 
 		# Makes a clone of the vnode properties we'll be updating so the changes
 		# get rendered. Based on:
@@ -161,7 +171,6 @@ export default
 
 	# Render the track and slotted slides
 	render: (create) ->
-
 		create @trackHTMLElement,
 			attrs: {role: "tablist" if @renderAsTablist}
 			class: [ 'ssr-carousel-track', { @dragging } ]

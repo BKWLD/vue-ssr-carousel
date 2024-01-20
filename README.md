@@ -66,6 +66,7 @@ For more examples, see the demo: https://vue-ssr-carousel.netlify.app.
 | `no-drag`           | `false`     | Disables the ability to drag the carousel.
 | `show-arrows`       | `false`     | Whether to show back/forward arrows. See https://vue-ssr-carousel.netlify.app/ui.
 | `show-dots`         | `false`     | Whether to show dot style pagination dots. See https://vue-ssr-carousel.netlify.app/ui.
+| `rtl`               | `false`     | Adjust layout for right to left sites. See https://vue-ssr-carousel.netlify.app/accessibility.
 | `value`             | `undefined` | Used as part of `v-model` to set the initial slide to show.  See https://vue-ssr-carousel.netlify.app/events.
 | `responsive`        | `[]`        | Adjust settings at breakpoints. See https://vue-ssr-carousel.netlify.app/responsive. Note, `loop` and `paginate-by-slide` cannot be set responsively.
 
