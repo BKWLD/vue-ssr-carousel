@@ -11,6 +11,7 @@ export default
 		activeSlides: Array
 		leftPeekingSlideIndex: Number
 		rightPeekingSlideIndex: Number
+		rtl: Boolean
 
 	data: ->
 
@@ -109,8 +110,10 @@ export default
 		# Get the list of non-text slides, including peeking clones. This doesn't
 		# work as a computed function
 		getSlideComponents: ->
-			[...(@$slots.default || []), ...(@$slots.clones || [])]
+			slides = [...(@$slots.default || []), ...(@$slots.clones || [])]
 			.filter (vnode) -> !vnode.text
+			if @rtl then slides = slides.reverse()
+			return slides
 
 		# Makes a clone of the vnode properties we'll be updating so the changes
 		# get rendered. Based on:
@@ -161,7 +164,6 @@ export default
 
 	# Render the track and slotted slides
 	render: (create) ->
-
 		create @trackHTMLElement,
 			attrs: {role: "tablist" if @renderAsTablist}
 			class: [ 'ssr-carousel-track', { @dragging } ]

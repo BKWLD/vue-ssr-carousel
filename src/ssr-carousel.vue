@@ -41,6 +41,7 @@
 					activeSlides,
 					leftPeekingSlideIndex,
 					rightPeekingSlideIndex,
+					rtl,
 				}`)
 
 				//- Render the slotted slides
@@ -167,6 +168,9 @@ export default
 // Prevent webkit from doing elastic dragging horizontally on drag
 .ssr-carousel
 	touch-action pan-y
+
+	// Internal logic expects ltr layout
+	direction ltr
 
 // Posiition arrows relative to this
 .ssr-carousel-slides
