@@ -5,7 +5,7 @@
 .ssr-carousel-dots
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
-		:aria-label='`Go to ${pageLabel} ${i}`'
+		:aria-label='makeLabel(i)'
 		:aria-disabled='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
 
@@ -29,8 +29,14 @@ export default
 		boundedIndex: Number
 		pages: Number
 		pageLabel: String
+		rtl: Boolean
 
 	methods:
+
+		# Make the label for the dot
+		makeLabel: (index) ->
+			pageNumber = if @rtl then @pages - index + 1 else @index
+			"Go to #{@pageLabel} #{pageNumber}"
 
 		# Check if dot index shuold be disabled
 		isDisabled: (index) -> @boundedIndex == index - 1

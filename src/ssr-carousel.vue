@@ -62,7 +62,7 @@
 	//- Dots navigation
 	ssr-carousel-dots(
 		v-if='showDots'
-		v-bind='{ boundedIndex, pages, pageLabel }'
+		v-bind='{ boundedIndex, pages, pageLabel, rtl }'
 		@goto='gotoDot')
 		template(#dot='props'): slot(name='dot' v-bind='props')
 
