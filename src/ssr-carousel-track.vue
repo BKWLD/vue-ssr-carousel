@@ -173,8 +173,11 @@ export default
 	render: (create) ->
 		create @trackHTMLElement,
 			attrs: {role: "tablist" if @renderAsTablist}
-			class: [ 'ssr-carousel-track', { @dragging } ]
 			style: @styles
+			class: [ 'ssr-carousel-track', {
+				@dragging
+				"ssr-carousel-rtl": @rtl
+			}]
 		, @makeSlides()
 
 </script>
@@ -198,6 +201,10 @@ export default
 // Force the slides to not shrink below their basis
 .ssr-carousel-slide
 	flex-shrink 0
+
+	// Apply direction property which was reset in .ssr-carousel
+	.ssr-carousel-rtl &
+		direction rtl
 
 // When the carousel is disabled (not enough slides to fill width), hide any
 // clones that have created for other breakpoints (those with aria-hidden=true).
