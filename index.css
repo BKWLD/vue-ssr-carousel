@@ -144,6 +144,9 @@
 .ssr-carousel-slide {
   flex-shrink: 0;
 }
+.ssr-carousel-rtl .ssr-carousel-slide {
+  direction: rtl;
+}
 .ssr-carousel-mask.disabled .ssr-carousel-slide[aria-hidden='true'] {
   display: none;
 }

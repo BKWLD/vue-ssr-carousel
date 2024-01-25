@@ -845,19 +845,20 @@ interactiveSelector = 'a, button, input, textarea, select';
       attrs: {
         role: this.renderAsTablist ? "tablist" : void 0
       },
+      style: this.styles,
       class: ['ssr-carousel-track', {
-        dragging: this.dragging
-      }],
-      style: this.styles
+        dragging: this.dragging,
+        "ssr-carousel-rtl": this.rtl
+      }]
     }, this.makeSlides());
   }
 });
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=script&lang=coffee&
  /* harmony default export */ var src_ssr_carousel_trackvue_type_script_lang_coffee_ = (ssr_carousel_trackvue_type_script_lang_coffee_); 
-// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=66e39cd2&prod&lang=stylus&
+// CONCATENATED MODULE: ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src!./node_modules/stylus-loader!./node_modules/vue-loader/lib??vue-loader-options!./src/ssr-carousel-track.vue?vue&type=style&index=0&id=9d2ba830&prod&lang=stylus&
 // extracted by mini-css-extract-plugin
 
-// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=66e39cd2&prod&lang=stylus&
+// CONCATENATED MODULE: ./src/ssr-carousel-track.vue?vue&type=style&index=0&id=9d2ba830&prod&lang=stylus&
 
 // CONCATENATED MODULE: ./src/ssr-carousel-track.vue
 var ssr_carousel_track_render, ssr_carousel_track_staticRenderFns
