@@ -198,13 +198,13 @@ export default
 	&.dragging
 		pointer-events none
 
+	// Apply direction property which was reset in .ssr-carousel
+	&.ssr-carousel-rtl 
+		direction rtl
+
 // Force the slides to not shrink below their basis
 .ssr-carousel-slide
 	flex-shrink 0
-
-	// Apply direction property which was reset in .ssr-carousel
-	.ssr-carousel-rtl &
-		direction rtl
 
 // When the carousel is disabled (not enough slides to fill width), hide any
 // clones that have created for other breakpoints (those with aria-hidden=true).
