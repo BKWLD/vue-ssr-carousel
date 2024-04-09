@@ -1384,7 +1384,9 @@ notPassive = {
   methods: {
     // Cancel an Event
     stopEvent: function (e) {
-      return e.preventDefault();
+      if (e.cancelable) {
+        return e.preventDefault();
+      }
     },
     // Keep track of whether user is dragging
     onPointerDown: function (pointerEvent) {
