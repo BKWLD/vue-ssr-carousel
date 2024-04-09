@@ -185,7 +185,9 @@ export default
 	methods:
 
 		# Cancel an Event
-		stopEvent: (e) -> e.preventDefault()
+		stopEvent: (e) ->
+			if e.cancelable
+			then e.preventDefault()
 
 		# Keep track of whether user is dragging
 		onPointerDown: (pointerEvent) ->
