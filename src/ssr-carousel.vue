@@ -1,6 +1,6 @@
 <!-- Vue SSR Carousel -->
 
-<template lang='pug'>
+<template lang="pug">
 
 .ssr-carousel(
 	v-if='$slots.default && $slots.default.length'
@@ -65,6 +65,13 @@
 		@goto='gotoDot')
 		template(#dot='props'): slot(name='dot' v-bind='props')
 
+	//- Scrollbar navigation
+	ssr-carousel-scrollbar(
+		v-if='showScrollbar'
+		v-bind='{ trackTranslateX, measuredTrackWidth, carouselWidth }'
+		@gotoPercentage='gotoPercentage'
+	)
+
 	//- Live region, for announcing the current slide position
 	.ssr-carousel-visually-hidden(aria-live='polite' aria-atomic='true')
 		| {{ currentSlideMessage }}
@@ -73,11 +80,12 @@
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<script lang='coffee'>
+<script lang="coffee">
 
 # Child components
 import SsrCarouselArrows from './ssr-carousel-arrows'
 import SsrCarouselDots from './ssr-carousel-dots'
+import SsrCarouselScrollbar from './ssr-carousel-scrollbar'
 import SsrCarouselTrack from './ssr-carousel-track'
 
 # Concerns
@@ -119,6 +127,7 @@ export default
 	components: {
 		SsrCarouselArrows
 		SsrCarouselDots
+		SsrCarouselScrollbar
 		SsrCarouselTrack
 	}
 
@@ -127,6 +136,7 @@ export default
 		# UI enabling controls
 		showArrows: Boolean
 		showDots: Boolean
+		showScrollbar: Boolean
 
 	computed:
 
@@ -155,12 +165,11 @@ export default
 					mouseleave: @onLeave
 				})
 			}
-
 </script>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<style lang='stylus'>
+<style lang="stylus">
 
 // Prevent webkit from doing elastic dragging horizontally on drag
 .ssr-carousel
@@ -203,5 +212,4 @@ export default
 	position absolute
 	width 1px
 	white-space nowrap
-
 </style>

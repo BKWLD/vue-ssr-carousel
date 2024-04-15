@@ -133,6 +133,13 @@ export default
 			then @tweenToX @endX
 			else @goto @pages - 1
 
+		# Go to a percentage of the carousel (useful for scrollbars)
+		gotoPercentage: (percentage) ->
+			targetPercentage = Math.max 0, Math.min 100, percentage
+			@targetX = @getXFromPercentage percentage
+			console.log(percentage, @targetX)
+			@startTweening()
+
 		# Tween to a specific index
 		tweenToIndex: (index) ->
 			@targetX = @getXForIndex index
@@ -152,6 +159,17 @@ export default
 
 			# Apply adjustments to x value and persist
 			x += @makeIncompletePageOffset index
+			return Math.round @applyXBoundaries x
+
+		# Calculate the X value given a percentage
+		getXFromPercentage: (percentage) ->
+			x = (@measuredTrackWidth - @carouselWidth) * (percentage / 100) * -1
+
+			console.log('width: ', @measuredTrackWidth - @carouselWidth)
+
+			console.log('x: ', x)
+
+
 			return Math.round @applyXBoundaries x
 
 		# Creates a px value to represent adjustments that should be made to
