@@ -80,7 +80,7 @@ export default
 			@carouselWidth = @$el.getBoundingClientRect().width + @gutterWidth
 			@viewportWidth = window.innerWidth
 			@capturePeekingMeasurements()
-			@captureTrackWidth() if @isVariableWidth
+			@captureCarouselDims() if @isVariableWidth
 
 		# Make the width style that gives a slide it's width given
 		# slidesPerPage. Reduce this width by the gutter if present
@@ -114,3 +114,10 @@ export default
 				(#{@autoUnit(peekLeft)} + #{@autoUnit(peekRight)}) / #{slidesPerPage} -
 				(#{@autoUnit(gutter)} * #{slidesPerPage - 1}) / #{slidesPerPage}
 			)"
+
+
+		# Get the target X scroll position of a given slide
+		targetXOfIdx: (idx) ->
+			if @isVariableWidth
+			then @measuredSlidesWidths[idx].targetXScroll
+			else @pageWidth / @currentSlidesPerPage

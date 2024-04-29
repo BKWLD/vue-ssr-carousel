@@ -73,6 +73,8 @@ export default
 		fractionalIndex: ->
 			return 0 unless @trackWidth
 
+			if @isVariableWidth then return @fractionalIndexFromMeasurements
+
 			# Work in positive numbers
 			x = @currentX * -1
 
@@ -103,6 +105,16 @@ export default
 
 			# Return the final value by adding all the passed index values
 			return pageProgressPercent + setIndex * @pages + pageIndex
+
+		fractionalIndexFromMeasurements: ->
+			# Work in positive numbers
+			x = @currentX * -1
+
+			slideIdx = @measuredSlidesWidths.findIndex((measuredSlide) => measuredSlide.targetXScroll > x) - 1
+
+			percentage = (x - @measuredSlidesWidths[slideIdx].targetXScroll) / @measuredSlidesWidths[slideIdx].width
+
+			return slideIdx + percentage
 
 		# Determine if the user is dragging vertically
 		isVerticalDrag: ->
@@ -141,7 +153,7 @@ export default
 					else @gotoEnd()
 
 				# If rendering variable width slides, don't come to a rest at an index
-				else if @isVariableWidth then @tweenToStop()
+				else if @isVariableWidth then @goto @dragIndex
 
 				# If user was vertically dragging, reset the index
 				else if @isVerticalDrag then @goto @index

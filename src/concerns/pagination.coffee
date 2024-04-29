@@ -22,6 +22,8 @@ export default
 
 		# The current number of pages
 		pages: -> switch
+			# When variable width, pages is slide count
+			when @isVariableWidth then @slidesCount
 
 			# When looping and paginating per slide, make a dot per slide
 			when @paginateBySlide and @shouldLoop then @slidesCount
@@ -146,9 +148,10 @@ export default
 		getXForIndex: (index) ->
 
 			# Figure out the new x position
-			x = if @paginateBySlide
-			then index * @slideWidth * -1
-			else index * @pageWidth * -1
+			x = switch
+				when @isVariableWidth then @targetXOfIdx(@applyIndexBoundaries(index)) * -1
+				when @paginateBySlide then index * @slideWidth * -1
+				else index * @pageWidth * -1
 
 			# Apply adjustments to x value and persist
 			x += @makeIncompletePageOffset index
