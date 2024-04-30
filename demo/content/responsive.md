@@ -70,7 +70,10 @@ While it's not the primary use case of this package, you if you set `slidesPerPa
 
 - If there are not enough slides to fill the viewport, slides will be left aligned rather than center aligned.
 - This hasn't been tested with responsive props or looping. Peeking doesn't make sense for this use case but care hasn't been taken to disabling it.
-- Pagination controls aren't supported yet, this is purely drag only.
+- Pagination controls are in beta
+  - Pagination is done on a per slide basis
+  - Looping still has not been implemented
+  - Slides are left aligned
 
 <demos-responsive-variable-width></demos-responsive-variable-width>
 
@@ -79,6 +82,24 @@ While it's not the primary use case of this package, you if you set `slidesPerPa
   <slide :index='1' :style='{ width: "65%", height: "30vw"}'></slide>
   <slide :index='2' :style='{ width: "50%", height: "30vw"}'></slide>
   <slide :index='3' :style='{ width: "30%", height: "30vw"}'></slide>
+</ssr-carousel>
+```
+
+Carousel with variable width and arrows:
+
+<demos-responsive-variable-width-with-arrows></demos-responsive-variable-width-with-arrows>
+
+```vue
+<ssr-carousel data-cy="variable-width" :slides-per-page="null">
+  <slide :index="1" :style="{ width: '65%', height: '30vw' }"></slide>
+  <slide :index="2" :style="{ width: '50%', height: '30vw' }"></slide>
+  <slide :index="3" :style="{ width: '30%', height: '30vw' }"></slide>
+  <slide :index="4" :style="{ width: '65%', height: '30vw' }"></slide>
+  <slide :index="5" :style="{ width: '30%', height: '30vw' }"></slide>
+  <slide :index="6" :style="{ width: '50%', height: '30vw' }"></slide>
+  <slide :index="7" :style="{ width: '50%', height: '30vw' }"></slide>
+  <slide :index="8" :style="{ width: '65%', height: '30vw' }"></slide>
+  <slide :index="9" :style="{ width: '30%', height: '30vw' }"></slide>
 </ssr-carousel>
 ```
 
