@@ -1123,7 +1123,7 @@ Code related to measuring the size of the carousel after mounting
       this.capturePeekingMeasurements();
 
       if (this.isVariableWidth) {
-        return this.captureTrackWidth();
+        return this.captureCarouselDims();
       }
     },
     // Make the width style that gives a slide it's width given
@@ -1159,6 +1159,14 @@ Code related to measuring the size of the carousel after mounting
 
 
       return `calc( ${100 / slidesPerPage}% - (${this.autoUnit(peekLeft)} + ${this.autoUnit(peekRight)}) / ${slidesPerPage} - (${this.autoUnit(gutter)} * ${slidesPerPage - 1}) / ${slidesPerPage} )`;
+    },
+    // Get the target X scroll position of a given slide
+    targetXOfIdx: function (idx) {
+      if (this.isVariableWidth) {
+        return this.measuredSlidesWidths[idx].targetXScroll;
+      } else {
+        return this.pageWidth / this.currentSlidesPerPage;
+      }
     }
   }
 });
@@ -1255,6 +1263,10 @@ notPassive = {
 
       if (!this.trackWidth) {
         return 0;
+      }
+
+      if (this.isVariableWidth) {
+        return this.fractionalIndexFromMeasurements;
       } // Work in positive numbers
 
 
@@ -1289,6 +1301,16 @@ notPassive = {
       pageProgressPercent = distanceIntoPage / pageWidth; // Return the final value by adding all the passed index values
 
       return pageProgressPercent + setIndex * this.pages + pageIndex;
+    },
+    fractionalIndexFromMeasurements: function () {
+      var percentage, slideIdx, x; // Work in positive numbers
+
+      x = this.currentX * -1;
+      slideIdx = this.measuredSlidesWidths.findIndex(measuredSlide => {
+        return measuredSlide.targetXScroll > x;
+      }) - 1;
+      percentage = (x - this.measuredSlidesWidths[slideIdx].targetXScroll) / this.measuredSlidesWidths[slideIdx].width;
+      return slideIdx + percentage;
     },
     // Determine if the user is dragging vertically
     isVerticalDrag: function () {
@@ -1329,7 +1351,7 @@ notPassive = {
           } // If rendering variable width slides, don't come to a rest at an index
 
         } else if (this.isVariableWidth) {
-          this.tweenToStop(); // If user was vertically dragging, reset the index
+          this.goto(this.dragIndex); // If user was vertically dragging, reset the index
         } else if (this.isVerticalDrag) {
           this.goto(this.index);
         } else {
@@ -1740,7 +1762,11 @@ Code related to dealing with advancing between pages
     // The current number of pages
     pages: function () {
       switch (false) {
+        // When variable width, pages is slide count
+        case !this.isVariableWidth:
+          return this.slidesCount;
         // When looping and paginating per slide, make a dot per slide
+
         case !(this.paginateBySlide && this.shouldLoop):
           return this.slidesCount;
         // Else, restrict pages so you the last slide is flush with right edge
@@ -1902,7 +1928,19 @@ Code related to dealing with advancing between pages
     getXForIndex: function (index) {
       var x; // Figure out the new x position
 
-      x = this.paginateBySlide ? index * this.slideWidth * -1 : index * this.pageWidth * -1; // Apply adjustments to x value and persist
+      x = function () {
+        switch (false) {
+          case !this.isVariableWidth:
+            return this.targetXOfIdx(this.applyIndexBoundaries(index)) * -1;
+
+          case !this.paginateBySlide:
+            return index * this.slideWidth * -1;
+
+          default:
+            return index * this.pageWidth * -1;
+        }
+      }.call(this); // Apply adjustments to x value and persist
+
 
       x += this.makeIncompletePageOffset(index);
       return Math.round(this.applyXBoundaries(x));
@@ -2446,7 +2484,8 @@ Functionality related to supporting variable width slides
 /* harmony default export */ var variable_width_coffee = ({
   data: function () {
     return {
-      measuredTrackWidth: 0
+      measuredTrackWidth: 0,
+      measuredSlidesWidths: []
     };
   },
   computed: {
@@ -2456,6 +2495,11 @@ Functionality related to supporting variable width slides
     }
   },
   methods: {
+    // Capture all dimensions of carousel
+    captureCarouselDims: function () {
+      this.captureTrackWidth();
+      return this.captureSlideWidths();
+    },
     // Measure the width of the track
     captureTrackWidth: function () {
       if (!this.$refs.track) {
@@ -2463,6 +2507,22 @@ Functionality related to supporting variable width slides
       }
 
       return this.measuredTrackWidth = this.$refs.track.$el.scrollWidth;
+    },
+    // Capture slide dims and place them into an array of data
+    captureSlideWidths: function () {
+      var ref, ref1;
+
+      if (!this.$refs.track) {
+        return;
+      }
+
+      return this.measuredSlidesWidths = (ref = this.$refs) != null ? (ref1 = ref.track) != null ? ref1.$children.reduce((acc, child, idx, arr) => {
+        var ref2, ref3;
+        return [...acc, {
+          width: child.$el.clientWidth,
+          targetXScroll: (((ref2 = acc[idx - 1]) != null ? ref2.targetXScroll : void 0) || 0) + (((ref3 = acc[idx - 1]) != null ? ref3.width : void 0) || 0) + this.gutter * (idx > 0)
+        }];
+      }, []) : void 0 : void 0;
     }
   }
 });
