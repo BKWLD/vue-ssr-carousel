@@ -73,7 +73,7 @@ export default
 		fractionalIndex: ->
 			return 0 unless @trackWidth
 
-			if @isVariableWidth then return @fractionalIndexFromMeasurements
+			if @isVariableWidthWithPages then return @fractionalIndexFromMeasurements
 
 			# Work in positive numbers
 			x = @currentX * -1
@@ -153,7 +153,9 @@ export default
 					else @gotoEnd()
 
 				# If rendering variable width slides, don't come to a rest at an index
-				else if @isVariableWidth then @goto @dragIndex
+				else if @isVariableWidth
+					if (!!@showArrows or !!@showDots) then @goto @dragIndex
+					else @tweenToStop()
 
 				# If user was vertically dragging, reset the index
 				else if @isVerticalDrag then @goto @index

@@ -33,7 +33,7 @@ export default
 
 		# Calculate the width of the whole track from the slideWidth.
 		trackWidth: ->
-			if @isVariableWidth
+			if @isVariableWidthWithPages
 			then @measuredTrackWidth + @gutterWidth
 			else @slideWidth * @slidesCount
 
@@ -118,6 +118,6 @@ export default
 
 		# Get the target X scroll position of a given slide
 		targetXOfIdx: (idx) ->
-			if @isVariableWidth
+			if @isVariableWidthWithPages
 			then @measuredSlidesWidths[idx].targetXScroll
 			else @pageWidth / @currentSlidesPerPage
