@@ -26,7 +26,7 @@ jobs:
           build: yarn build:cypress
           start: yarn start --cwd=demo
           command-prefix: percy exec -- yarn
-          record: true
+          record: false
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
