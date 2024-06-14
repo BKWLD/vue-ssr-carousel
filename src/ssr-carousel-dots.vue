@@ -6,7 +6,7 @@
 	button.ssr-carousel-dot-button(
 		v-for='i in pages' :key='i'
 		:aria-label='makeLabel(i)'
-		:aria-disabled='isDisabled(i)'
+		:aria-current='isDisabled(i)'
 		@click='$emit("goto", i - 1)')
 
 		//- Custom dot
@@ -71,14 +71,14 @@ export default
 	margin-h 4px
 
 	// Show disabled state (aka, the active state)
-	[aria-disabled] > &
+	[aria-current] > &
 		opacity 1
 		background rgba(black, 0.7)
 		cursor default
 
 	// Make a simple hover
 	transition opacity 0.2s
-	:not([aria-disabled]) > &
+	:not([aria-current]) > &
 		opacity 0.5
 		+hover()
 			opacity 0.85
