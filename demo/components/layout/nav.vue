@@ -1,6 +1,6 @@
 <!-- The navigation menu -->
 
-<template lang='pug'>
+<template lang="pug">
 
 ul.layout-nav
 	li(v-for='link in links' :key='link.path')
@@ -10,7 +10,7 @@ ul.layout-nav
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<script lang='coffee'>
+<script lang="coffee">
 export default
 
 	data: -> links: [
@@ -23,13 +23,13 @@ export default
 		{ title: 'Peeking', path: '/peeking' }
 		{ title: 'Accessibility', path: '/accessibility' }
 		{ title: 'Miscellaneous', path: '/misc' }
+		{ title: 'Test', path: '/test' }
 	]
-
 </script>
 
 <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-<style lang='stylus' scoped>
+<style lang="stylus" scoped>
 
 li
 	display inline-block
@@ -48,5 +48,4 @@ a
 		&:not(.nuxt-link-exact-active)
 			transition-duration .1s
 			opacity 0.8
-
 </style>
