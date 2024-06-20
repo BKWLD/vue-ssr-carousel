@@ -12,6 +12,9 @@ export default
 		# Is the carousel in variable width mode
 		isVariableWidth: -> @slidesPerPage == null
 
+		# Is the carousel in variable width mode and needs pagination
+		isVariableWidthWithPages: -> @isVariableWidth and (@showArrows or @showDots)
+
 	methods:
 		# Capture all dimensions of carousel
 		captureCarouselDims: ->
@@ -31,7 +34,7 @@ export default
 					...acc
 					{
 						width: child.$el.clientWidth
-						targetXScroll: (acc[idx - 1]?.targetXScroll || 0) + (acc[idx - 1]?.width || 0) + @gutter * (idx > 0)
+						targetXScroll: (acc[idx - 1]?.targetXScroll || 0) + (acc[idx - 1]?.width || 0) + @gutter * (idx > 0) # This requires gutter to be a number, not a CSS value
 					}
 				]
 			, [] )
